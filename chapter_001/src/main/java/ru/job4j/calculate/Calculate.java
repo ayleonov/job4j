@@ -1,5 +1,5 @@
 /**
-* Calculate
+* Class Calculate for calculations.
 * 
 * @author Aleksey Leonov (allesh002@mail.ru)
 */
