@@ -1,10 +1,9 @@
+package ru.job4j.calculate;
 /**
 * Class Calculate for calculations.
 * 
 * @author Aleksey Leonov (allesh002@mail.ru)
 */
-package ru.job4j.calculate;
-
 public class Calculate {
 /**
 * Main.
