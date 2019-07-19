@@ -2,8 +2,9 @@ package ru.job4j.condition;
 
 public class SqArea {
     public static int square(int p, int k) {
-        int h = p / (2 * (k + 1));
-        return h * k;
+        int upper = p*p*k;
+        int lower = (int)(4*Math.pow((k+1),2));
+        return upper/lower;
     }
 
     public static void main(String[] args) {
