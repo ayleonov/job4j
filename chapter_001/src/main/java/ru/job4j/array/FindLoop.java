@@ -23,4 +23,19 @@ public class FindLoop {
         }
         return rst;
     }
+
+    public int[] sort(int[] data) {
+        int temp;
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j <= 9; j++) {
+            int currentIndex = indexOf(data, j, 0, data.length-1);
+                if (currentIndex !=-1){
+                    temp = data[i];
+                    data[i]=data[currentIndex];
+                    data[currentIndex]= temp;
+                }
+            }
+        }
+        return data;
+    }
 }
