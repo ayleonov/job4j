@@ -26,15 +26,20 @@ public class FindLoop {
 
     public int[] sort(int[] data) {
         int temp;
+        int tempIndex = -1;
         for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j <= 9; j++) {
-            int currentIndex = indexOf(data, j, 0, data.length-1);
-                if (currentIndex !=-1){
-                    temp = data[i];
-                    data[i]=data[currentIndex];
-                    data[currentIndex]= temp;
+            temp = data[i];
+            tempIndex = i;
+
+            for (int j = i + 1; j < data.length; j++) {
+            if (data[j] < temp){
+                    temp = data[j];
+                    tempIndex = j;
+
                 }
             }
+            data[tempIndex]= data[i];
+            data[i] = temp;
         }
         return data;
     }
