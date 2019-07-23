@@ -9,15 +9,10 @@ public class MatrixCheck {
         boolean tempSecond = data[0][data.length - 1];
 
         for (int i = 0; i < data.length; i++) {
-            if (data[i][i] != tempFirst)
+            if ((data[i][i] != tempFirst) || (data[i][data.length - 1 - i] != tempSecond)) {
                 return false;
+            }
         }
-
-        for (int i = 0; i < data.length; i++) {
-            if (data[i][data.length - 1 - i] != tempSecond)
-                return false;
-        }
-
         return true;
     }
 }
