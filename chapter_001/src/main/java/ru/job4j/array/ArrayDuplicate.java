@@ -21,7 +21,6 @@ public class ArrayDuplicate {
                 }
                 break;
             }
-
             if (m != 1) {
                 i++;
             } else {
@@ -37,8 +36,6 @@ public class ArrayDuplicate {
             arr[k] = arr[k + 1];
         }
         arr[arr.length - 1] = temp;
-
         return arr;
     }
-
 }

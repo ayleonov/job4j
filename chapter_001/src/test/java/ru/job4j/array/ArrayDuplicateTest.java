@@ -10,9 +10,9 @@ public class ArrayDuplicateTest {
 
     @Test
     public void whenRemoveDuplicatesThenArrayWithoutDuplicate(){
-        ArrayDuplicate arrDupl = new ArrayDuplicate();
-        String[] input = new String[]{"one", "two", "three", "one", "two", "five", "four"};
-        String[] result = arrDupl.remove(input);
+        ArrayDuplicate array = new ArrayDuplicate();
+        String[] input = {"one", "two", "three", "one", "two", "five", "four"};
+        String[] result = array.remove(input);
         assertThat(result, is(new String[]{"one", "two", "three", "five", "four"}));
     }
 }

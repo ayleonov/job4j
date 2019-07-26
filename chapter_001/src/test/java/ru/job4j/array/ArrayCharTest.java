@@ -9,15 +9,15 @@ import static org.junit.Assert.assertThat;
 public class ArrayCharTest {
     @Test
     public void whenStartWithPrefixThenTrue() {
-        ArrayChar arrayChar = new ArrayChar();
-        boolean result = arrayChar.startsWith("Hello", "He");
+        ArrayChar array = new ArrayChar();
+        boolean result = array.startsWith("Hello", "He");
         assertThat(result, is(true));
     }
 
     @Test
     public void whenNotStartWithPrefixThenFalse() {
-        ArrayChar arrayChar = new ArrayChar();
-        boolean result = arrayChar.startsWith("Hello", "Hi");
+        ArrayChar array = new ArrayChar();
+        boolean result = array.startsWith("Hello", "Hi");
         assertThat(result, is(false));
     }
 }

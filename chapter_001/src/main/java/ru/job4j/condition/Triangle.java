@@ -48,8 +48,8 @@ public class Triangle {
 
         if (this.exist(a,b ,c )){
         double poluperimetr = period(a, b, c);
-        double underSqrt = poluperimetr*(poluperimetr-a)*(poluperimetr-b)*(poluperimetr-c);
-        return Math.sqrt(underSqrt);
+        double podkorennoe = poluperimetr*(poluperimetr-a)*(poluperimetr-b)*(poluperimetr-c);
+        return Math.sqrt(podkorennoe);
         }   else
         return -1;
     }

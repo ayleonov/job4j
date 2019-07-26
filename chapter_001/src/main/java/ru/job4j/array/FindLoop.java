@@ -35,7 +35,6 @@ public class FindLoop {
             if (data[j] < temp){
                     temp = data[j];
                     tempIndex = j;
-
                 }
             }
             data[tempIndex]= data[i];

@@ -10,7 +10,7 @@ public class MatrixTest {
     public void when2on2() {
         Matrix matrix = new Matrix();
         int[][] result = matrix.multiple(2);
-        int[][] expect = new int[][]{{1, 2}, {2, 4}};
+        int[][] expect = {{1, 2}, {2, 4}};
         assertThat(result, is(expect));
     }
 

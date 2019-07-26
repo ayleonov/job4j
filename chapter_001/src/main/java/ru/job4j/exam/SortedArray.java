@@ -6,7 +6,6 @@ public class SortedArray {
             if (value[0] <= value[1]) {
                 if (value[i] > value[i + 1])
                     return false;
-
             } else if (value[0] >= value[1]) {
                 if (value[i] < value[i + 1])
                     return false;
