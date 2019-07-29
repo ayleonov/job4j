@@ -33,4 +33,47 @@ public class MaxTest {
         int result = max.max(13, 13);
         assertThat(result, is(13));
     }
+
+    @Test
+    public void when12_14_15Then15() {
+        Max maximum = new Max();
+        int result = maximum.max(13, 13, 15);
+        assertThat(result, is(15));
+    }
+
+    @Test
+    public void when32_14_15Then32() {
+        Max maximum = new Max();
+        int result = maximum.max(32, 14, 32);
+        assertThat(result, is(32));
+    }
+
+    @Test
+    public void when12_12_12Then12() {
+        Max maximum = new Max();
+        int result = maximum.max(12, 12, 12);
+        assertThat(result, is(12));
+    }
+
+    @Test
+    public void when0_12_61_74Then74() {
+        Max maximum = new Max();
+        int result = maximum.max(0, 12, 61, 74);
+        assertThat(result, is(74));
+    }
+
+    @Test
+    public void when12_34_0_1Then34() {
+        Max maximum = new Max();
+        int result = maximum.max(12, 34, 0, 1);
+        assertThat(result, is(34));
+    }
+
+    @Test
+    public void when22_12_1_3Then22() {
+        Max maximum = new Max();
+        int result = maximum.max(22, 12, 1, 3);
+        assertThat(result, is(22));
+    }
+
 }
