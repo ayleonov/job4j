@@ -31,4 +31,22 @@ public class PointTest {
         Point second = new Point(2, 2);
         second.info();
     }
+
+    @Test
+    public void whenCheckItself3d() {
+        Point point = new Point(0, 0, 0);
+        double result = point.distance3d(point);
+        assertThat(result, is(0D));
+    }
+
+    @Test
+    public void whenZeroAndThreeAndFourThenFive() {
+        Point first = new Point(0, 0, 0);
+        Point second = new Point(0, 3, 4);
+        double result = first.distance3d(second);
+        System.out.println(String.format("Result is: %s", result));
+        assertThat(result, is(5D));
+    }
+
+
 }
