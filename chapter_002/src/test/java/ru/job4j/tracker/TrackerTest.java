@@ -53,7 +53,7 @@ public class TrackerTest {
         tracker.delete(idFirst);
         int indexsecond = tracker.findIndexThroughId(idSecond);
         assertThat(indexfirst, is(indexsecond));
-        assertThat(indexsecond-indexfirst, is(0) );
+        assertThat(indexsecond - indexfirst, is(0));
     }
 
     @Test

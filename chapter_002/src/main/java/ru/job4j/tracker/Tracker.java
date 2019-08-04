@@ -58,12 +58,12 @@ public class Tracker {
                 temp[count++] = items[index];
             }
         }
-        return Arrays.copyOf(temp,count);
+        return Arrays.copyOf(temp, count);
     }
 
     public Item findById(String id) {
         Item result = null;
-        for (int index = 0; index < this.position ; index++) {
+        for (int index = 0; index < this.position; index++) {
                 if (this.items[index] != null && items[index].getId().equals(id)) {
                     result = items[index];
                     break;
