@@ -46,7 +46,7 @@ public class StartUI {
     public boolean start() throws Exception {
         boolean ifExit = false;
 
-        int selection = validateSelect();
+        int selection = select();
         if (selection == 6) {
             System.out.println("\nВыходим из программы!\n");
             ifExit = true;
@@ -56,20 +56,12 @@ public class StartUI {
         return ifExit;
     }
 
-    public int validateSelect() throws Exception {
+    public int select() throws Exception {
         int res = -1;
         showMenu();
-        while (true) {
-            String answerStr = this.input.ask("Select:");
-
-            if ((answerStr != null) && ((answerStr.matches("[\\d]+")))) {
-                int answer = Integer.parseInt(answerStr);
-                if ((answer >= 0) && (answer <= 6)) {
-                    res = answer;
-                    break;
-                }
-            }
-            System.out.println("Incorrect! Select number from 0 to 6");
+        String answerStr = this.input.ask("Select:");
+        if (answerStr != null) {
+            res = Integer.parseInt(answerStr);
         }
         return res;
     }
@@ -104,7 +96,7 @@ public class StartUI {
             case 5:
                 this.selectByName();
                 break;
-			default:	
+            default:
         }
     }
 
@@ -182,4 +174,4 @@ public class StartUI {
     }
 }
 
- // java -cp target\chapter_002-2.0.jar ru.job4j.tracker.StartUI
+// java -cp target\chapter_002-2.0.jar ru.job4j.tracker.StartUI

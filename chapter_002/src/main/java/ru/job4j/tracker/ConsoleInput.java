@@ -7,17 +7,11 @@ public class ConsoleInput implements Input {
 
     @Override
     public String ask(String question) {
-        String res;
+        String res = null;
         System.out.println(question);
-        while (true) {
-            String scanText = scanner.nextLine();
-            if (scanText != null) {
-                res = scanText;
-                break;
-            } else {
-                System.out.println("Incorrect! Repeat input");
-            }
-        }
+        String scanText = scanner.nextLine();
+        if (scanText != null && scanText !="")
+            res = scanText;
         return res;
     }
 }
