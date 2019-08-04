@@ -10,8 +10,9 @@ public class ConsoleInput implements Input {
         String res = null;
         System.out.println(question);
         String scanText = scanner.nextLine();
-        if (scanText != null && scanText !="")
+        if (scanText != null) {
             res = scanText;
+        }
         return res;
     }
 }
