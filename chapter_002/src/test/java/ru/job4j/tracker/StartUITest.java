@@ -13,8 +13,12 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"0", "один", "первая заявка", "6"});
         new StartUI(input, tracker).init();
         Item[] items = {new Item("один", "первая заявка", System.currentTimeMillis())};
+        Item[] result = tracker.findAll();
+        for (int i = 0; i < result.length ; i++) {
+            assertThat(tracker.findAll()[i].getName(),is(items[i].getName()));
+            assertThat(tracker.findAll()[i].getDesc(),is(items[i].getDesc()));
+        }
 
-        //   assertThat(tracker.findAll(), is(items));
 
     }
 
@@ -32,15 +36,15 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = (new Item("один", "первая заявка", System.currentTimeMillis()));
         tracker.add(item);
-
         Input input = new StubInput(new String[]{"2", item.getId(), "тест замены", "заменили заявку", "6"});
         new StartUI(input, tracker).init();
         Item[] items = {item};
         items[0].setName("тест замены");
         items[0].setDesc("заменили заявку");
-        Item item2 = items[0];
-        for (Item item3 : tracker.findAll()) {
-            assertThat(item3, is(item2));
+        Item[] result = tracker.findAll();
+        for (int i = 0; i < result.length ; i++) {
+            assertThat(result[i].getName(),is(items[i].getName()));
+            assertThat(result[i].getName(),is(items[i].getName()));
         }
     }
 
@@ -53,6 +57,15 @@ public class StartUITest {
         new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0].getName(), is("два"));
     }
+    @Test
+    public void whenDeleteThenFirstItemChangeToSecond2() throws Exception {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
+        Input input = new StubInput(new String[]{"3", first.getId(), "6"});
+        new StartUI(input, tracker).init();
+        assertThat(tracker.findAll(), is(new Item[]{second}));
+    }
 
     @Test
     public void whenSelectByIdItemHasIdThenEqualWithName() throws Exception {
@@ -60,7 +73,7 @@ public class StartUITest {
         Item item = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"4", item.getId(), "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("один"));
+        assertThat(tracker.findAll(), is(new Item[]{item}));
     }
 
     @Test
