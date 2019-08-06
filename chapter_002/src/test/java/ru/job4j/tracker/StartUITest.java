@@ -3,8 +3,7 @@ package ru.job4j.tracker;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class StartUITest {
     @Test
@@ -15,11 +14,9 @@ public class StartUITest {
         Item[] items = {new Item("один", "первая заявка", System.currentTimeMillis())};
         Item[] result = tracker.findAll();
         for (int i = 0; i < result.length ; i++) {
-            assertThat(tracker.findAll()[i].getName(),is(items[i].getName()));
-            assertThat(tracker.findAll()[i].getDesc(),is(items[i].getDesc()));
+           assertThat(result[i].getName(),is(items[i].getName()));
+           assertThat(result[i].getDesc(),is(items[i].getDesc()));
         }
-
-
     }
 
     @Test
