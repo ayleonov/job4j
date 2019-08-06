@@ -12,7 +12,10 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "один", "первая заявка", "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("один"));
+        Item[] items = {new Item("один", "первая заявка", System.currentTimeMillis())};
+
+        //   assertThat(tracker.findAll(), is(items));
+
     }
 
     @Test
@@ -27,10 +30,18 @@ public class StartUITest {
     @Test
     public void whenEditThenTrackerHasUpdatedValue() throws Exception {
         Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item item = (new Item("один", "первая заявка", System.currentTimeMillis()));
+        tracker.add(item);
+
         Input input = new StubInput(new String[]{"2", item.getId(), "тест замены", "заменили заявку", "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("тест замены"));
+        Item[] items = {item};
+        items[0].setName("тест замены");
+        items[0].setDesc("заменили заявку");
+        Item item2 = items[0];
+        for (Item item3 : tracker.findAll()) {
+            assertThat(item3, is(item2));
+        }
     }
 
     @Test
@@ -61,10 +72,10 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"5", first.getName(), "6"});
         new StartUI(input, tracker).init();
         Item itemFirst = (tracker.findByName(first.getName()))[0];
-		Item itemSecond = (tracker.findByName(first.getName()))[1];
-		assertThat(itemFirst.getName(),is("один"));
-		assertThat(itemFirst.getDesc(),is("первая заявка"));
-		assertThat(itemSecond.getName(),is("один"));
-		assertThat(itemSecond.getDesc(),is("третья заявка"));
+        Item itemSecond = (tracker.findByName(first.getName()))[1];
+        assertThat(itemFirst.getName(), is("один"));
+        assertThat(itemFirst.getDesc(), is("первая заявка"));
+        assertThat(itemSecond.getName(), is("один"));
+        assertThat(itemSecond.getDesc(), is("третья заявка"));
     }
 }
