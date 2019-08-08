@@ -134,14 +134,16 @@ public class StartUI {
             String desc = this.input.ask("Введите описание заявки :");
             Item item = new Item(name, desc, System.currentTimeMillis());
             tracker.replace(id, item);
-            System.out.println("\n------------ Исправленнная заявка: " + item.getId() + "--------------");
+            System.out.println("\n------------ Исправленная заявка: ------------");
+            System.out.println(item.getName() + " " + item.getDesc());
+            System.out.println("----------------------------------------------");
         } else {
             System.out.println("заявка не найдена\n");
         }
     }
 
     private void delete() {
-        System.out.println("------------ Исправление заявки --------------");
+        System.out.println("------------ Удаление заявки --------------");
         String id = this.input.ask("Введите id для поиска заявки :");
         boolean result = tracker.delete(id);
         if (result) {
@@ -158,7 +160,7 @@ public class StartUI {
         if (item != null) {
             System.out.println("------------ Найдена заявка: " + item.getName() + " " + item.getDesc() + "--------------");
         } else {
-            System.out.println("заявка не найдена\n");
+            System.out.println("заявка не найдена.\n");
         }
     }
 
@@ -166,12 +168,15 @@ public class StartUI {
         System.out.println("------------ Поиск заявки по слову --------------");
         String key = this.input.ask("Введите слово для поиска заявки :");
         Item[] foundItems = tracker.findByName(key);
-        System.out.println("\n------------ Найдены заявки:  имя описание --------------");
-        for (Item item : foundItems) {
-            System.out.println(item.getName() + " " + item.getDesc());
+        if (foundItems.length != 0) {
+            System.out.println("\n------------ Найдены заявки:  имя описание --------------");
+            for (Item item : foundItems) {
+                System.out.println(item.getName() + " " + item.getDesc());
+            }
+        } else {
+            System.out.println("заявка не найдена.\n");
         }
         System.out.println("---------------------------------------------------------\n");
     }
 }
-
 // java -cp target\chapter_002-2.0.jar ru.job4j.tracker.StartUI
