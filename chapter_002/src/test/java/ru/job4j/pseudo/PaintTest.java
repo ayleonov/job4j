@@ -16,13 +16,13 @@ public class PaintTest {
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
     @Before
-    public void loadOutput(){
+    public void loadOutput() {
         System.out.println("execute before method");
         System.setOut(new PrintStream(out));
     }
 
     @After
-    public void backOutput(){
+    public void backOutput() {
         System.setOut(stdout);
         System.out.println("execute after method");
     }

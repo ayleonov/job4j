@@ -1,14 +1,14 @@
 package ru.job4j.oop;
 
-public class Cat{
+public class Cat {
     private String name;
     private String food;
 
-    private void giveNick(String nick){
+    private void giveNick(String nick) {
         this.name = nick;
     }
 
-    private void show(){
+    private void show() {
         System.out.println(this.name);
         System.out.println(this.food);
 
@@ -18,7 +18,7 @@ public class Cat{
         this.food = meat;
 
     }
-    public static void main(String[] args){
+    public static void main(String[] args) {
         System.out.println("There are gav's food.");
         Cat gav = new Cat();
         gav.eat("kotleta");
