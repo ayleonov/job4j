@@ -1,27 +1,9 @@
 package ru.job4j.tracker;
 
-	class EditItem implements UserAction {
-		public int key() {
-			return 2;
-		}
-		public void execute(Input input, Tracker tracker) {
-			String id = input.ask("Please, enter the task's id: ");
-			String name = input.ask("Please, enter the task's name: ");
-			String desc = input.ask("Please, enter the task's desc: ");			
-			long time = System.currentTimeMillis();				
-			Item item = new Item(name, desc, time);
-			tracker.replace(id, item);
-		System.out.println("Item replaced");	
-		}
-		
-		public String info() {
-			return String.format("%s. %s", this.key(), "Edit existing item");
-		}		
-	}
-
-
 public class MenuTracker {
+	private final int NUMBER_POINTS_MENU = 6;
 	private Input input;
+
 	private Tracker tracker;
 	private UserAction[] actions = new UserAction[6];
 	
@@ -30,14 +12,18 @@ public class MenuTracker {
 		this.tracker = tracker;
 	}
 	
-	public void fillActions() {
-		
+	public int[] fillActions() {
+		int[] menunumbers = new int[NUMBER_POINTS_MENU];
 		this.actions[0] = this.new AddItem();
-		this.actions[1] = new MenuTracker.ShowItems();
-		this.actions[2] = new EditItem();
-		this.actions[3] = new MenuTracker.DeleteItems();
-		this.actions[4] = new MenuTracker.FindById();
-		this.actions[5] = new MenuTracker.FindByName();		
+		this.actions[1] = this.new ShowItems();
+		this.actions[2] = this.new EditItem();
+		this.actions[3] = this.new DeleteItems();
+		this.actions[4] = this.new FindById();
+		this.actions[5] = this.new FindByName();
+		for (int i = 0; i < actions.length ; i++) {
+			menunumbers[i] = actions[i].key();
+		}
+		return menunumbers;
 	}
 	
 	public void select(int key) {
@@ -51,7 +37,6 @@ public class MenuTracker {
 			}
 		}
 	}
-	
 	
 	private class AddItem implements UserAction {
 		public int key() {
@@ -69,7 +54,7 @@ public class MenuTracker {
 		}		
 	}
 	
-	private static class ShowItems implements UserAction {
+	private class ShowItems implements UserAction {
 		public int key() {
 			return 1;
 		}
@@ -86,6 +71,24 @@ public class MenuTracker {
 		}		
 	}
 
+	private class EditItem implements UserAction {
+		public int key() {
+			return 2;
+		}
+		public void execute(Input input, Tracker tracker) {
+			String id = input.ask("Please, enter the task's id: ");
+			String name = input.ask("Please, enter the task's name: ");
+			String desc = input.ask("Please, enter the task's desc: ");
+			long time = System.currentTimeMillis();
+			Item item = new Item(name, desc, time);
+			tracker.replace(id, item);
+			System.out.println("Item replaced");
+		}
+
+		public String info() {
+			return String.format("%s. %s", this.key(), "Edit existing item");
+		}
+	}
 	
 	private class DeleteItems implements UserAction {
 		public int key() {
@@ -110,7 +113,7 @@ public class MenuTracker {
 	}
 	
 		
-	private static class FindById implements UserAction {
+	private class FindById implements UserAction {
 		public int key() {
 			return 4;
 		}
@@ -133,7 +136,7 @@ public class MenuTracker {
 	
 	
 	
-	private static class FindByName implements UserAction {
+	private class FindByName implements UserAction {
 		public int key() {
 			return 5;
 		}
