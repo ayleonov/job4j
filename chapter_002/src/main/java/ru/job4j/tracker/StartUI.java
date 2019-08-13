@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class StartUI {
     private Input input;
-
     public StartUI(Input input) {
         this.input = input;
 
@@ -18,7 +17,7 @@ public class StartUI {
     public void init() throws MenuOutException {
         Tracker tracker = new Tracker();
         MenuTracker menu = new MenuTracker(this.input, tracker);
-        int[] ranges = menu.fillActions();
+       int[] ranges = menu.fillActions();
         do {
             menu.show();
             menu.select(input.ask("Select: ", ranges));
