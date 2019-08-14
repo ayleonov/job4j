@@ -28,7 +28,10 @@ public class StubInput implements Input {
             throw new MenuOutException("Out of menu range");
         }
     }
-
+    //throw new UnsupportedOperationException("Unsupported operation");
 
 }
+
+
+
 

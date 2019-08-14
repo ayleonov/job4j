@@ -11,9 +11,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class StartUITest {
-    private final Tracker tracker = new Tracker();
-    private final Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
-    private final Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
+
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -27,16 +25,6 @@ public class StartUITest {
                 .append("5. Find items by name\r\n")
                 .append("6. Exit program\r\n")
                 .append(insert)
-              /*  .append("0. Add new item\r\n")
-                .append("1. Show all items\r\n")
-                .append("2. Edit item\r\n")
-                .append("3. Delete item\r\n")
-                .append("4. Find item by id\r\n")
-                .append("5. Find items by name\r\n")
-                .append("6. Exit program\r\n")
-                .append("\n")
-                .append("Выходим из программы!\n")
-                .append("\r\n")*/
                 .toString();
         return result;
     }
@@ -57,10 +45,12 @@ public class StartUITest {
     }
 
     @Test
-    public void whenUserAddItemThenTrackerHasItemWithTheSameName() throws Exception {
-
+    public void whenUserAddItemThenTrackerHasItemWithTheSameName() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"0", "три", "третья заявка", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
         //menu.
         Item[] items = {first, second, new Item("три", "третья заявка", System.currentTimeMillis())};
@@ -72,27 +62,34 @@ public class StartUITest {
     }
 
     @Test
-    public void whenUserAddItemThenTrackerInListHasItemWithTheSameNameAndDescription() throws Exception {
+    public void whenUserAddItemThenTrackerInListHasItemWithTheSameNameAndDescription() {
+        Tracker tracker = new Tracker();
 
         Input input = new StubInput(new String[]{"0", "один", "первая заявка", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0].getName(), is("один"));
         assertThat(tracker.findAll()[0].getDesc(), is("первая заявка"));
     }
 
     @Test
-    public void whenSelectAllThenTrackerShowItemFirstSecond() throws Exception {
+    public void whenSelectAllThenTrackerShowItemFirstSecond() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"1", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         Item[] result = {first, second};
         assertThat(tracker.findAll(), is(result));
     }
 
 
     @Test
-    public void whenEditThenTrackerHasUpdatedValue() throws Exception {
+    public void whenEditThenTrackerHasUpdatedValue() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"2", first.getId(), "тест замены", "заменили заявку", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
         Item[] items = {first, second};
         items[0].setName("тест замены");
@@ -105,34 +102,43 @@ public class StartUITest {
     }
 
     @Test
-    public void whenDeleteThenFirstItemChangeToSecond() throws Exception {
-
+    public void whenDeleteThenFirstItemChangeToSecond() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", first.getId(), "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0].getName(), is("два"));
     }
 
     @Test
-    public void whenDeleteThenFirstItemChangeToSecond2() throws Exception {
-
+    public void whenDeleteThenFirstItemChangeToSecond2() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", first.getId(), "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll(), is(new Item[]{second}));
     }
 
     @Test
-    public void whenSelectByIdItemHasIdThenEqualWithName() throws Exception {
-
+    public void whenSelectByIdItemHasIdThenEqualWithName() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"4", first.getId(), "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll(), is(new Item[]{first, second}));
     }
 
     @Test
-    public void whenSelectByNamesOf3ItemsThenFound2Matches() throws Exception {
+    public void whenSelectByNamesOf3ItemsThenFound2Matches() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Item third = tracker.add(new Item("один", "третья заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"5", first.getName(), "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         Item itemFirst = (tracker.findByName(first.getName()))[0];
         Item itemSecond = (tracker.findByName(first.getName()))[1];
         assertThat(itemFirst.getName(), is("один"));
@@ -142,10 +148,12 @@ public class StartUITest {
     }
 
     @Test
-    public void whenAddThenPrinting() throws Exception {
-
+    public void whenAddThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"0", "три", "третья заявка", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
 
         String insert = new StringBuilder("------------ Добавление новой заявки --------------\r\n")
@@ -156,17 +164,20 @@ public class StartUITest {
     }
 
     @Test
-    public void whenSelectAllThenPrinting() throws Exception {
-
+    public void whenSelectAllThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"1", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
         String insert = new StringBuilder(
                 "---------------Items found (name description id): --------------\r\n")
-                //.append("имя заявки:  описание заявки: \r\n")
-                .append("- - - - - - - - - - - - - - - - \r\n")
-                .append("один  первая заявка\r\n")
-                .append("два  вторая заявка\r\n")
+
+
+                .append("один первая заявка " + first.getId() + "\r\n")
+                .append("два вторая заявка " + second.getId() + "\r\n")
+
                 .append("--------------------------------------------\r\n")
                 .toString();
 
@@ -174,15 +185,17 @@ public class StartUITest {
     }
 
     @Test
-    public void whenEditThenPrinting() throws Exception {
-
+    public void whenEditThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"2", first.getId(), "тест замены", "заменили заявку", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Исправление заявки --------------\r\n")
-                .append("\n------------ Исправленная заявка: ------------\r\n")
+        String insert = new StringBuilder("------------ Edit of item --------------\r\n")
+                .append("------------ Edited item: --------------\r\n")
                 .append("тест замены заменили заявку\r\n")
-                .append("----------------------------------------------\r\n")
+                .append("------------ Item replaced --------------\r\n")
                 .toString();
 
         testing(insert);
@@ -190,86 +203,100 @@ public class StartUITest {
 
 
     @Test
-    public void whenDeleteExistingItemThenPrinting() throws Exception {
-
+    public void whenDeleteExistingItemThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", first.getId(), "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
 
-        String insert = new StringBuilder("------------ Удаление заявки --------------\r\n")
-                .append("\n------------ Заявка удалена --------------\r\n")
+        String insert = new StringBuilder("-------------- Delete item --------------\r\n")
+                .append("\n---------- Item deleted -------------\r\n")
+                .append("-----------------------------------------\r\n")
                 .toString();
 
         testing(insert);
     }
 
     @Test
-    public void whenTryDeleteNonExistingItemThenPrinting() throws Exception {
-
+    public void whenTryDeleteNonExistingItemThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", "222", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
 
-        String insert = new StringBuilder("------------ Удаление заявки --------------\r\n")
-                .append("заявка не найдена.\n\r\n")
+        String insert = new StringBuilder("-------------- Delete item --------------\r\n")
+                .append("Item not founded.\r\n")
+                .append("-----------------------------------------\r\n")
                 .toString();
 
         testing(insert);
     }
 
     @Test
-    public void whenSelectExistingItemByIdThenPrinting() throws Exception {
-
+    public void whenSelectExistingItemByIdThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"4", first.getId(), "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
         String insert = new StringBuilder("------------ Id search --------------\r\n")
-                .append("------------ Найдена заявка: " + first.getName() + " " + first.getDesc() + "--------------\r\n")
+                .append(String.format("------------ Item found: %s %s --------------\r\n", first.getName(), first.getDesc()))
                 .toString();
 
         testing(insert);
     }
 
     @Test
-    public void whenTrySelectNonExistingItemByIdThenPrinting() throws Exception {
-
+    public void whenTrySelectNonExistingItemByIdThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"4", "222", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Поиск заявки по идентификатору --------------\r\n")
-                .append("заявка не найдена.\n\r\n")
+        String insert = new StringBuilder("------------ Id search --------------\r\n")
+                .append("Item NOT found.\n\r\n")
                 .toString();
         testing(insert);
     }
 
     @Test
-    public void whenSelectByExistingNameThenPrinting() throws Exception {
+    public void whenSelectByExistingNameThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Item third = tracker.add(new Item("один", "третья заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"5", first.getName(), "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Поиск заявки по слову --------------\r\n")
-                .append("\n------------ Найдены заявки:  имя описание --------------\r\n")
-                .append("" + first.getName() + " " + first.getDesc() + "\r\n")
-                .append("" + first.getName() + " " + third.getDesc() + "\r\n")
+        String insert = new StringBuilder("------------ Search item by name --------------\r\n")
+                .append("------------ Items found:  name description id --------------\r\n")
+                .append(String.format("%s %s %s\r\n", first.getName(), first.getDesc(), first.getId()))
+                .append(String.format("%s %s %s\r\n", first.getName(), third.getDesc(), third.getId()))
                 .append("---------------------------------------------------------\n\r\n")
-
                 .toString();
         testing(insert);
     }
 
     @Test
-    public void whenTrySelectByNonExistingNameThenPrinting() throws Exception {
+    public void whenTrySelectByNonExistingNameThenPrinting() {
+        Tracker tracker = new Tracker();
+        Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
+        Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Item third = tracker.add(new Item("один", "третья заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"5", "222", "y"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Поиск заявки по слову --------------\r\n")
-
-                .append("заявка не найдена.\n\r")
-                .append("\n---------------------------------------------------------\n\r\n")
-
+        String insert = new StringBuilder("------------ Search item by name --------------\r\n")
+                .append("Item NOT found.\r\n")
+                .append("---------------------------------------------------------\n\r\n")
                 .toString();
+
         testing(insert);
     }
 }
