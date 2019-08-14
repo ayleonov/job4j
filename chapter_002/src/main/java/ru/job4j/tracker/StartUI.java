@@ -1,7 +1,5 @@
 package ru.job4j.tracker;
 
-import java.util.Scanner;
-
 public class StartUI {
     private Input input;
     public StartUI(Input input) {

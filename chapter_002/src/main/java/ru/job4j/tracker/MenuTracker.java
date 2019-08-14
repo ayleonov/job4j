@@ -1,11 +1,11 @@
 package ru.job4j.tracker;
 
 public class MenuTracker {
-	private final int NUMBER_POINTS_MENU = 6;
+	private final int NUMBER_POINTS_MENU = 7;
 	private Input input;
 
 	private Tracker tracker;
-	private UserAction[] actions = new UserAction[6];
+	private UserAction[] actions = new UserAction[NUMBER_POINTS_MENU];
 	
 	public MenuTracker(Input input, Tracker tracker) {
 		this.input = input;
@@ -20,6 +20,7 @@ public class MenuTracker {
 		this.actions[3] = this.new DeleteItems();
 		this.actions[4] = this.new FindById();
 		this.actions[5] = this.new FindByName();
+		this.actions[6] = this.new ExitProgram();
 		for (int i = 0; i < actions.length ; i++) {
 			menunumbers[i] = actions[i].key();
 		}
@@ -50,7 +51,7 @@ public class MenuTracker {
 		}
 		
 		public String info() {			
-			return String.format("%s. %s", this.key(), "Add the new item");
+			return String.format("%s. %s", this.key(), "Add new item");
 		}		
 	}
 	
@@ -59,7 +60,7 @@ public class MenuTracker {
 			return 1;
 		}
 		public void execute(Input input, Tracker tracker) {			
-				System.out.println("--------------- Items found (name description id): -------------- ");
+				System.out.println("---------------Items found (name description id): --------------");
 			for (Item item : tracker.findAll()) {
 				System.out.println(String.format("%s %s %s", item.getName(), item.getDesc(), item.getId()));
 			}
@@ -86,7 +87,7 @@ public class MenuTracker {
 		}
 
 		public String info() {
-			return String.format("%s. %s", this.key(), "Edit existing item");
+			return String.format("%s. %s", this.key(), "Edit item");
 		}
 	}
 	
@@ -130,7 +131,7 @@ public class MenuTracker {
 		}
 		
 		public String info() {
-			return String.format("%s. %s", this.key(), "Found by id");
+			return String.format("%s. %s", this.key(), "Find item by id");
 		}		
 	}
 	
@@ -157,11 +158,23 @@ public class MenuTracker {
 		}		
 		
 		public String info() {
-			return String.format("%s. %s", this.key(), "Found by Name");
+			return String.format("%s. %s", this.key(), "Find items by name");
 		}		
 	}
-	
-	
+
+	private class ExitProgram implements UserAction {
+		public int key() {
+			return 6;
+		}
+		public void execute(Input input, Tracker tracker) {
+
+			System.out.println("Exit the program");
+		}
+
+		public String info() {
+			return String.format("%s. %s", this.key(), "Exit program");
+		}
+	}
 	
 	
 	

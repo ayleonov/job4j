@@ -19,24 +19,24 @@ public class StartUITest {
 
     private String showConsole(String insert) {
         String result = new StringBuilder()
-                .append("0. Add new Item\r\n")
+                .append("0. Add new item\r\n")
                 .append("1. Show all items\r\n")
                 .append("2. Edit item\r\n")
                 .append("3. Delete item\r\n")
-                .append("4. Find item by Id\r\n")
+                .append("4. Find item by id\r\n")
                 .append("5. Find items by name\r\n")
-                .append("6. Exit Program\r\n")
+                .append("6. Exit program\r\n")
                 .append(insert)
-                .append("0. Add new Item\r\n")
+              /*  .append("0. Add new item\r\n")
                 .append("1. Show all items\r\n")
                 .append("2. Edit item\r\n")
                 .append("3. Delete item\r\n")
-                .append("4. Find item by Id\r\n")
+                .append("4. Find item by id\r\n")
                 .append("5. Find items by name\r\n")
-                .append("6. Exit Program\r\n")
+                .append("6. Exit program\r\n")
                 .append("\n")
                 .append("Выходим из программы!\n")
-                .append("\r\n")
+                .append("\r\n")*/
                 .toString();
         return result;
     }
@@ -82,7 +82,7 @@ public class StartUITest {
 
     @Test
     public void whenSelectAllThenTrackerShowItemFirstSecond() throws Exception {
-        Input input = new StubInput(new String[]{"1", "6"});
+        Input input = new StubInput(new String[]{"1", "y"});
         new StartUI(input).init();
         Item[] result = {first, second};
         assertThat(tracker.findAll(), is(result));
@@ -162,8 +162,8 @@ public class StartUITest {
         new StartUI(input).init();
 
         String insert = new StringBuilder(
-                "\n------------ Вывод списка заявок --------------\r\n")
-                .append("имя заявки:  описание заявки: \r\n")
+                "---------------Items found (name description id): --------------\r\n")
+                //.append("имя заявки:  описание заявки: \r\n")
                 .append("- - - - - - - - - - - - - - - - \r\n")
                 .append("один  первая заявка\r\n")
                 .append("два  вторая заявка\r\n")
@@ -223,7 +223,7 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"4", first.getId(), "y"});
         new StartUI(input).init();
 
-        String insert = new StringBuilder("------------ Поиск заявки по идентификатору --------------\r\n")
+        String insert = new StringBuilder("------------ Id search --------------\r\n")
                 .append("------------ Найдена заявка: " + first.getName() + " " + first.getDesc() + "--------------\r\n")
                 .toString();
 
