@@ -9,15 +9,15 @@ public class StartUI {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Tracker tracker = new Tracker();
-        Input input = new ValidateInput();
+        Input input = new ValidateInput(new ConsoleInput());
         new StartUI(input, tracker).init();
     }
 
     public void init() throws MenuOutException {
         MenuTracker menu = new MenuTracker(this.input, tracker);
-       int[] ranges = menu.fillActions();
+        int[] ranges = menu.fillActions();
         do {
             menu.show();
             menu.select(input.ask("Select: ", ranges));
