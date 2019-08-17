@@ -1,7 +1,7 @@
 package ru.job4j.tracker;
 
 public class MenuTracker {
-    private final int NUMBER_POINTS_MENU = 7;
+    private final static int NUMBER_POINTS_MENU = 7;
     private Input input;
 
     private Tracker tracker;
@@ -14,13 +14,13 @@ public class MenuTracker {
 
     public int[] fillActions() {
         int[] menunumbers = new int[NUMBER_POINTS_MENU];
-        this.actions[0] = this.new AddItem();
-        this.actions[1] = this.new ShowItems();
-        this.actions[2] = this.new EditItem();
-        this.actions[3] = this.new DeleteItems();
-        this.actions[4] = this.new FindById();
-        this.actions[5] = this.new FindByName();
-        this.actions[6] = this.new ExitProgram();
+        this.actions[0] = this.new AddItem(0, "Add new item");
+        this.actions[1] = this.new ShowItems(1, "Show all items");
+        this.actions[2] = this.new EditItem(2, "Edit item");
+        this.actions[3] = this.new DeleteItems(3, "Delete item");
+        this.actions[4] = this.new FindById(4, "Find item by id");
+        this.actions[5] = this.new FindByName(5, "Find items by name");
+        this.actions[6] = this.new ExitProgram(6, "Exit program");
         for (int i = 0; i < actions.length; i++) {
             menunumbers[i] = actions[i].key();
         }
@@ -39,28 +39,27 @@ public class MenuTracker {
         }
     }
 
-    private class AddItem implements UserAction {
-        public int key() {
-            return 0;
-        }
+    private class AddItem extends BaseAction {
 
+        public AddItem(int key, String name) {
+            super(key, name);
+        }
+        @Override
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Please, enter the task's name: ");
             String desc = input.ask("Please, enter the task's desc: ");
             long time = System.currentTimeMillis();
             tracker.add(new Item(name, desc, time));
         }
-
-        public String info() {
-            return String.format("%s. %s", this.key(), "Add new item");
-        }
     }
 
-    private class ShowItems implements UserAction {
-        public int key() {
-            return 1;
+    private class ShowItems extends BaseAction {
+
+        public ShowItems(int key, String name) {
+            super(key, name);
         }
 
+        @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("---------------Items found (name description id): --------------");
             for (Item item : tracker.findAll()) {
@@ -68,17 +67,14 @@ public class MenuTracker {
             }
             System.out.println("--------------------------------------------");
         }
-
-        public String info() {
-            return String.format("%s. %s", this.key(), "Show all items");
-        }
     }
 
-    private class EditItem implements UserAction {
-        public int key() {
-            return 2;
+    private class EditItem extends BaseAction {
+        public EditItem(int key, String name) {
+            super(key, name);
         }
 
+        @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Please, enter the task's id: ");
             String name = input.ask("Please, enter the task's name: ");
@@ -91,17 +87,14 @@ public class MenuTracker {
             System.out.println(String.format("%s %s", name, desc));
             System.out.println("------------ Item replaced --------------");
         }
-
-        public String info() {
-            return String.format("%s. %s", this.key(), "Edit item");
-        }
     }
 
-    private class DeleteItems implements UserAction {
-        public int key() {
-            return 3;
+    private class DeleteItems extends BaseAction {
+        public DeleteItems(int key, String name) {
+            super(key, name);
         }
 
+        @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Please, enter the task's id: ");
             System.out.println("-------------- Delete item --------------");
@@ -113,18 +106,14 @@ public class MenuTracker {
             }
             System.out.println("-----------------------------------------");
         }
-
-        public String info() {
-            return String.format("%s. %s", this.key(), "Delete item");
-        }
     }
 
+    private class FindById extends BaseAction {
 
-    private class FindById implements UserAction {
-        public int key() {
-            return 4;
+        public FindById(int key, String name) {
+            super(key, name);
         }
-
+        @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("------------ Id search --------------");
             String id = input.ask("Please, enter the task's id: ");
@@ -135,20 +124,16 @@ public class MenuTracker {
                 System.out.println("Item NOT found.\n");
             }
         }
-
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find item by id");
-        }
     }
 
+    private class FindByName extends BaseAction {
 
-    private class FindByName implements UserAction {
-        public int key() {
-            return 5;
+        public FindByName(int key, String name) {
+            super(key, name);
         }
 
+        @Override
         public void execute(Input input, Tracker tracker) {
-
             System.out.println("------------ Search item by name --------------");
             String word = input.ask("Enter name for find the item :");
             Item[] foundItems = tracker.findByName(word);
@@ -162,25 +147,18 @@ public class MenuTracker {
             }
             System.out.println("---------------------------------------------------------\n");
         }
-
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find items by name");
-        }
     }
 
-    private class ExitProgram implements UserAction {
-        public int key() {
-            return 6;
+    private class ExitProgram extends BaseAction {
+        public ExitProgram(int key, String name) {
+            super(key, name);
         }
-
+        @Override
         public void execute(Input input, Tracker tracker) {
 
             System.out.println("Exit the program");
         }
 
-        public String info() {
-            return String.format("%s. %s", this.key(), "Exit program");
-        }
     }
 
 
