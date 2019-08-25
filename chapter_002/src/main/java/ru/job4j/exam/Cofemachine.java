@@ -1,15 +1,13 @@
 package ru.job4j.exam;
 
-import java.lang.reflect.Array;
-
 public class Cofemachine {
-    private int[] changes(int value, int price) {
+    public int[] changes(int value, int price) {
         int[] deltacoins = new int[10];
         int[] result;
         int position = 0;
         int deltatotal = value - price;
         int[] coins = {1, 2, 5, 10};
-        int indexcoins = 3;
+        int indexcoins = coins.length - 1;
 
         while (deltatotal > 0) {
             if (deltatotal >= coins[indexcoins]) {
