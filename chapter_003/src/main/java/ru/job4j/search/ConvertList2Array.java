@@ -1,23 +1,23 @@
 package ru.job4j.search;
 
 import java.util.List;
-import java.util.ListIterator;
 
 public class ConvertList2Array {
+
     public int[][] toArray(List<Integer> list, int rows) {
+        int position = 0;
 
         int cells = (int) (Math.ceil(list.size() / rows)) + 1;
-        ListIterator<Integer> iterator = list.listIterator();
         int[][] result = new int[rows][cells];
-        for (int[] i : result) {
-            for (int j = 0; j < cells; j++) {
-                if (iterator.hasNext()) {
-                    i[j] = iterator.next();
+
+        for (Integer element : list) {
+            for (int[] i : result) {
+                for (int j = 0; j < cells - 1; j++) {
+      //              result[j] = element;
                 }
             }
+            //          }
         }
-
-
         return result;
     }
 }
