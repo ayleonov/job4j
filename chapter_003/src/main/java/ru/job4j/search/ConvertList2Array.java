@@ -9,12 +9,15 @@ public class ConvertList2Array {
 
         int cells = (int) (Math.ceil(list.size() / rows)) + 1;
         int[][] result = new int[rows][cells];
-        Iterator iterator = list.listIterator();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cells; j++) {
-                if (iterator.hasNext()) {
-                    result[i][j] = (int) (iterator.next());
-                }
+        int i = 0;
+        int j = 0;
+
+        for (Integer element : list) {
+            result[i][j++] = element;
+            //if (j + 1 > cells){
+            if (j == result[i].length) {
+                i++;
+                j = 0;
             }
         }
         return result;
