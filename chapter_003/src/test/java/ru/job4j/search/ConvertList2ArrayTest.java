@@ -21,4 +21,23 @@ public class ConvertList2ArrayTest {
         };
         assertThat(result, is(expect));
     }
+
+    @Test
+    public void whenElementsFrom3ArraysConvertInTotalList() {
+        List<int[]> list = new ArrayList();
+        int[] arrayFirst = {1, 2};
+        int[] arraySecond = {3, 4, 5, 6};
+        int[] arrayThird = {7, 8, 9};
+
+        list.add(arrayFirst);
+        list.add(arraySecond);
+        list.add(arrayThird);
+        ConvertList2Array listBefore = new ConvertList2Array();
+        List<Integer> convertedList = listBefore.convert(list);
+        List<Integer> expected = new ArrayList();
+        for (int i = 1; i <= 9; i++) {
+            expected.add(i);
+        }
+        assertThat(convertedList, is(expected));
+    }
 }
