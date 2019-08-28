@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 public class StartUI {
     private Input input;
     private Tracker tracker;
@@ -17,7 +19,7 @@ public class StartUI {
 
     public void init() throws MenuOutException {
         MenuTracker menu = new MenuTracker(this.input, tracker);
-        int[] ranges = menu.fillActions();
+        List<Integer> ranges = menu.fillActions();
         do {
             menu.show();
             menu.select(input.ask("Select: ", ranges));

@@ -1,34 +1,38 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuTracker {
     private final static int NUMBER_POINTS_MENU = 7;
     private Input input;
 
     private Tracker tracker;
-    private UserAction[] actions = new UserAction[NUMBER_POINTS_MENU];
-
+    private List<UserAction> actions = new ArrayList<>(NUMBER_POINTS_MENU);
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
 
-    public int[] fillActions() {
-        int[] menunumbers = new int[NUMBER_POINTS_MENU];
-        this.actions[0] = this.new AddItem(0, "Add new item");
-        this.actions[1] = this.new ShowItems(1, "Show all items");
-        this.actions[2] = this.new EditItem(2, "Edit item");
-        this.actions[3] = this.new DeleteItems(3, "Delete item");
-        this.actions[4] = this.new FindById(4, "Find item by id");
-        this.actions[5] = this.new FindByName(5, "Find items by name");
-        this.actions[6] = this.new ExitProgram(6, "Exit program");
-        for (int i = 0; i < actions.length; i++) {
-            menunumbers[i] = actions[i].key();
+    public List<Integer> fillActions() {
+        List<Integer> menunumbers = new ArrayList<>(NUMBER_POINTS_MENU);
+        actions.add(this.new AddItem(0, "Add new item"));
+        actions.add(this.new ShowItems(1, "Show all items"));
+        actions.add(this.new EditItem(2, "Edit item"));
+        actions.add(this.new DeleteItems(3, "Delete item"));
+        actions.add(this.new FindById(4, "Find item by id"));
+        actions.add(this.new FindByName(5, "Find items by name"));
+        actions.add(this.new ExitProgram(6, "Exit program"));
+
+        for (int i = 0; i < actions.size(); i++) {
+            menunumbers.add(actions.get(i).key());
         }
+
         return menunumbers;
     }
 
     public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+        actions.get(key).execute(this.input,this.tracker);
     }
 
     public void show() {
@@ -136,8 +140,8 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             System.out.println("------------ Search item by name --------------");
             String word = input.ask("Enter name for find the item :");
-            Item[] foundItems = tracker.findByName(word);
-            if (foundItems.length != 0) {
+            List<Item> foundItems = tracker.findByName(word);
+            if (foundItems.size() != 0) {
                 System.out.println("------------ Items found:  name description id --------------");
                 for (Item item : foundItems) {
                     System.out.println(String.format("%s %s %s", item.getName(), item.getDesc(), item.getId()));

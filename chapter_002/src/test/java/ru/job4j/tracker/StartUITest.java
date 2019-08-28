@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -54,10 +56,10 @@ public class StartUITest {
 
         //menu.
         Item[] items = {first, second, new Item("три", "третья заявка", System.currentTimeMillis())};
-        Item[] result = tracker.findAll();
-        for (int i = 0; i < result.length; i++) {
-            assertThat(result[i].getName(), is(items[i].getName()));
-            assertThat(result[i].getDesc(), is(items[i].getDesc()));
+        List<Item> result = tracker.findAll();
+        for (int i = 0; i < result.size(); i++) {
+            assertThat(result.get(i).getName(), is(items[i].getName()));
+            assertThat(result.get(i).getDesc(), is(items[i].getDesc()));
         }
     }
 
@@ -67,8 +69,8 @@ public class StartUITest {
 
         Input input = new StubInput(new String[]{"0", "один", "первая заявка", "y"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("один"));
-        assertThat(tracker.findAll()[0].getDesc(), is("первая заявка"));
+        assertThat(tracker.findAll().get(0).getName(), is("один"));
+        assertThat(tracker.findAll().get(0).getDesc(), is("первая заявка"));
     }
 
     @Test
@@ -78,8 +80,11 @@ public class StartUITest {
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"1", "y"});
         new StartUI(input, tracker).init();
-        Item[] result = {first, second};
-        assertThat(tracker.findAll(), is(result));
+
+        List<Item> expected = new ArrayList();
+        expected.add(first);
+        expected.add(second);
+        assertThat(tracker.findAll(), is(expected));
     }
 
 
@@ -94,10 +99,10 @@ public class StartUITest {
         Item[] items = {first, second};
         items[0].setName("тест замены");
         items[0].setDesc("заменили заявку");
-        Item[] result = tracker.findAll();
-        for (int i = 0; i < result.length; i++) {
-            assertThat(result[i].getName(), is(items[i].getName()));
-            assertThat(result[i].getName(), is(items[i].getName()));
+        List<Item> result = tracker.findAll();
+        for (int i = 0; i < result.size(); i++) {
+            assertThat(result.get(i).getName(), is(items[i].getName()));
+            assertThat(result.get(i).getName(), is(items[i].getName()));
         }
     }
 
@@ -108,7 +113,7 @@ public class StartUITest {
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", first.getId(), "y"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("два"));
+        assertThat(tracker.findAll().get(0).getName(), is("два"));
     }
 
     @Test
@@ -118,7 +123,9 @@ public class StartUITest {
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", first.getId(), "y"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll(), is(new Item[]{second}));
+        List<Item> expected = new ArrayList<Item>();
+        expected.add(second);
+        assertThat(tracker.findAll(), is(expected));
     }
 
     @Test
@@ -128,7 +135,13 @@ public class StartUITest {
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"4", first.getId(), "y"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll(), is(new Item[]{first, second}));
+        List<Item> expected = new ArrayList();
+        expected.add(first);
+        expected.add(second);
+        assertThat(tracker.findAll(), is(expected));
+//        assertThat(tracker.findAll(), is(new Item[]{first, second}));
+
+
     }
 
     @Test
@@ -139,8 +152,8 @@ public class StartUITest {
         Item third = tracker.add(new Item("один", "третья заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"5", first.getName(), "y"});
         new StartUI(input, tracker).init();
-        Item itemFirst = (tracker.findByName(first.getName()))[0];
-        Item itemSecond = (tracker.findByName(first.getName()))[1];
+        Item itemFirst = (tracker.findByName(first.getName())).get(0);
+        Item itemSecond = (tracker.findByName(first.getName())).get(1);
         assertThat(itemFirst.getName(), is("один"));
         assertThat(itemFirst.getDesc(), is("первая заявка"));
         assertThat(itemSecond.getName(), is("один"));
