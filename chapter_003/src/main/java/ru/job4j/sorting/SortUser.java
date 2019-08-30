@@ -16,8 +16,10 @@ public class SortUser {
 
 
     public List<User> sortByAllFields(List<User> list) {
-        Comparator<User> myComparator = new LexicographComparator().thenComparing(new AgeComparator());
-        Collections.sort(list, myComparator);
+        //Comparator<User> myComparator = new LexicographComparator().thenComparing(new AgeComparator());
+        //Collections.sort(list, myComparator);
+        list.sort(Comparator.comparing(User::getName).thenComparing(User::getAge));
+
         return list;
     }
 }
