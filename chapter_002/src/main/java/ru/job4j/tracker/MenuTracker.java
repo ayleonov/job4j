@@ -32,7 +32,7 @@ public class MenuTracker {
     }
 
     public void select(int key) {
-        actions.get(key).execute(this.input,this.tracker);
+        actions.get(key).execute(this.input, this.tracker);
     }
 
     public void show() {

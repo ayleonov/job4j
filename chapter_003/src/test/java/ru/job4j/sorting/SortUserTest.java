@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class SortUserTest {
     @Test
-    public void whenAges32_22_24_20Then20_22_24_32() {
+    public void whenAges32222420Then20222432() {
         SortUser user = new SortUser();
         List<User> list = new ArrayList<>();
         User user1 = new User("", 32);
@@ -46,7 +46,7 @@ public class SortUserTest {
     }
 
     @Test
-    public void whenSortingWithLexicograph_Age() {
+    public void whenSortingWithLexicographAge() {
         User us1 = new User("Сергей", 25);
         User us2 = new User("Иван", 23);
         User us3 = new User("Иван", 24);
