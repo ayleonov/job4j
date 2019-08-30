@@ -21,7 +21,7 @@ public class UserConvert {
         return map;
     }
 
-    public Integer getId() {
+    public int getId() {
         return (int) (System.currentTimeMillis() + RN.nextInt());
     }
 
