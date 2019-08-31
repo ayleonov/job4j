@@ -10,22 +10,23 @@ public class StringsCompare implements Comparator<String> {
         char[] arrright = right.toCharArray();
         int delta = arrleft.length - arrright.length;
         int lenghtMin = delta <= 0 ? arrleft.length : arrright.length;
-        int strcompare = 0;
+        int cyclestatus = 0;
 
         for (int i = 0; i < lenghtMin; i++) {
-            strcompare = Character.compare(arrleft[i], arrright[i]);
             if (arrleft[i] != arrright[i]) {
-                result = strcompare;
+                result = Character.compare(arrleft[i], arrright[i]);;
+                cyclestatus = 1;
                 break;
             }
         }
-        if (delta == 0) {
-            result = 0;
-        } else {
-            result = delta > 0 ? -1 : 1;
+
+        if (cyclestatus != 1) {
+            if (delta == 0) {
+                result = 0;
+            } else {
+                result = delta > 0 ? 1 : -1;
+            }
         }
-
-
         return result;
     }
 }
