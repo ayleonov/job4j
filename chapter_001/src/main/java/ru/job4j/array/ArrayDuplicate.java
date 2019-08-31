@@ -7,7 +7,7 @@ public class ArrayDuplicate {
     public String[] remove(String[] array) {
         int m;
         int limit = array.length;
-        for (int i = 1; i < limit; ) {
+        for (int i = 1; i < limit;) {
             m = 0;
             for (int j = 0; j < i; j++) {
                 if (!(array[j].equals(array[i]))) {
@@ -30,7 +30,7 @@ public class ArrayDuplicate {
         return Arrays.copyOf(array, limit);
     }
 
-    private String[] moving(String arr[], int start) {
+    private String[] moving(String[] arr, int start) {
         String temp = arr[start];
         for (int k = start; k < arr.length - 1; k++) {
             arr[k] = arr[k + 1];

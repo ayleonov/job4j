@@ -83,8 +83,9 @@ public class Logic {
                 summaVertical += table[j][i];
             }
 
-            if ((summaHorisontal == table.length) || (summaVertical == table.length))
+            if ((summaHorisontal == table.length) || (summaVertical == table.length)) {
                 return true;
+            }
         }
         return false;
     }

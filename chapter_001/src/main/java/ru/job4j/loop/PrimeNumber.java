@@ -8,15 +8,15 @@ public class PrimeNumber {
         } else {
             int count = 1;
             for (int i = 3; i <= finish; i++) {
-                int temp=0;
+                int temp = 0;
                 for (int j = 2; j < i; j++) {
                     if (i % j != 0) {
                         continue;
                     }
-                    temp=1;
+                    temp = 1;
                     break;
                 }
-                if (temp!=1) {
+                if (temp != 1) {
                     count++;
                 }
             }

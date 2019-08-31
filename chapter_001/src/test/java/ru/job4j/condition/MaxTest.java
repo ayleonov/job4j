@@ -35,42 +35,42 @@ public class MaxTest {
     }
 
     @Test
-    public void when12_14_15Then15() {
+    public void when12And14And15Then15() {
         Max maximum = new Max();
         int result = maximum.max(13, 13, 15);
         assertThat(result, is(15));
     }
 
     @Test
-    public void when32_14_15Then32() {
+    public void when32And14And15Then32() {
         Max maximum = new Max();
         int result = maximum.max(32, 14, 32);
         assertThat(result, is(32));
     }
 
     @Test
-    public void when12_12_12Then12() {
+    public void when12And12And12Then12() {
         Max maximum = new Max();
         int result = maximum.max(12, 12, 12);
         assertThat(result, is(12));
     }
 
     @Test
-    public void when0_12_61_74Then74() {
+    public void when0And12And61And74Then74() {
         Max maximum = new Max();
         int result = maximum.max(0, 12, 61, 74);
         assertThat(result, is(74));
     }
 
     @Test
-    public void when12_34_0_1Then34() {
+    public void when12And34And0And1Then34() {
         Max maximum = new Max();
         int result = maximum.max(12, 34, 0, 1);
         assertThat(result, is(34));
     }
 
     @Test
-    public void when22_12_1_3Then22() {
+    public void when22And12And1And3Then22() {
         Max maximum = new Max();
         int result = maximum.max(22, 12, 1, 3);
         assertThat(result, is(22));

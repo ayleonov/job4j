@@ -19,13 +19,20 @@ public class StartUITest {
 
     private String showConsole(String insert) {
         String result = new StringBuilder()
-                .append("0. Add new item\r\n")
-                .append("1. Show all items\r\n")
-                .append("2. Edit item\r\n")
-                .append("3. Delete item\r\n")
-                .append("4. Find item by id\r\n")
-                .append("5. Find items by name\r\n")
-                .append("6. Exit program\r\n")
+                .append("0. Add new item")
+                .append(System.lineSeparator())
+                .append("1. Show all items")
+                .append(System.lineSeparator())
+                .append("2. Edit item")
+                .append(System.lineSeparator())
+                .append("3. Delete item")
+                .append(System.lineSeparator())
+                .append("4. Find item by id")
+                .append(System.lineSeparator())
+                .append("5. Find items by name")
+                .append(System.lineSeparator())
+                .append("6. Exit program")
+                .append(System.lineSeparator())
                 .append(insert)
                 .toString();
         return result;
@@ -185,13 +192,14 @@ public class StartUITest {
         new StartUI(input, tracker).init();
 
         String insert = new StringBuilder(
-                "---------------Items found (name description id): --------------\r\n")
-
-
-                .append("один первая заявка " + first.getId() + "\r\n")
-                .append("два вторая заявка " + second.getId() + "\r\n")
-
-                .append("--------------------------------------------\r\n")
+                "---------------Items found (name description id): --------------")
+                .append(System.lineSeparator())
+                .append(String.format("один первая заявка %s", first.getId()))
+                .append(System.lineSeparator())
+                .append(String.format("два вторая заявка %s", second.getId()))
+                .append(System.lineSeparator())
+                .append("--------------------------------------------")
+                .append(System.lineSeparator())
                 .toString();
 
         testing(insert);
@@ -205,10 +213,14 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"2", first.getId(), "тест замены", "заменили заявку", "y"});
         new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Edit of item --------------\r\n")
-                .append("------------ Edited item: --------------\r\n")
-                .append("тест замены заменили заявку\r\n")
-                .append("------------ Item replaced --------------\r\n")
+        String insert = new StringBuilder("------------ Edit of item --------------")
+                .append(System.lineSeparator())
+                .append("------------ Edited item: --------------")
+                .append(System.lineSeparator())
+                .append("тест замены заменили заявку")
+                .append(System.lineSeparator())
+                .append("------------ Item replaced --------------")
+                .append(System.lineSeparator())
                 .toString();
 
         testing(insert);
@@ -224,9 +236,12 @@ public class StartUITest {
         new StartUI(input, tracker).init();
 
 
-        String insert = new StringBuilder("-------------- Delete item --------------\r\n")
-                .append("\n---------- Item deleted -------------\r\n")
-                .append("-----------------------------------------\r\n")
+        String insert = new StringBuilder("-------------- Delete item --------------")
+                .append(System.lineSeparator())
+                .append("\n---------- Item deleted -------------")
+                .append(System.lineSeparator())
+                .append("-----------------------------------------")
+                .append(System.lineSeparator())
                 .toString();
 
         testing(insert);
@@ -241,9 +256,12 @@ public class StartUITest {
         new StartUI(input, tracker).init();
 
 
-        String insert = new StringBuilder("-------------- Delete item --------------\r\n")
-                .append("Item not founded.\r\n")
-                .append("-----------------------------------------\r\n")
+        String insert = new StringBuilder("-------------- Delete item --------------")
+                .append(System.lineSeparator())
+                .append("Item not founded.")
+                .append(System.lineSeparator())
+                .append("-----------------------------------------")
+                .append(System.lineSeparator())
                 .toString();
 
         testing(insert);
@@ -257,8 +275,10 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"4", first.getId(), "y"});
         new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Id search --------------\r\n")
-                .append(String.format("------------ Item found: %s %s --------------\r\n", first.getName(), first.getDesc()))
+        String insert = new StringBuilder("------------ Id search --------------")
+                .append(System.lineSeparator())
+                .append(String.format("------------ Item found: %s %s --------------", first.getName(), first.getDesc()))
+                .append(System.lineSeparator())
                 .toString();
 
         testing(insert);
@@ -272,8 +292,10 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"4", "222", "y"});
         new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Id search --------------\r\n")
-                .append("Item NOT found.\n\r\n")
+        String insert = new StringBuilder("------------ Id search --------------")
+                .append(System.lineSeparator())
+                .append("Item NOT found.\n")
+                .append(System.lineSeparator())
                 .toString();
         testing(insert);
     }
@@ -287,11 +309,16 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"5", first.getName(), "y"});
         new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Search item by name --------------\r\n")
-                .append("------------ Items found:  name description id --------------\r\n")
-                .append(String.format("%s %s %s\r\n", first.getName(), first.getDesc(), first.getId()))
-                .append(String.format("%s %s %s\r\n", first.getName(), third.getDesc(), third.getId()))
-                .append("---------------------------------------------------------\n\r\n")
+        String insert = new StringBuilder("------------ Search item by name --------------")
+                .append(System.lineSeparator())
+                .append("------------ Items found:  name description id --------------")
+                .append(System.lineSeparator())
+                .append(String.format("%s %s %s", first.getName(), first.getDesc(), first.getId()))
+                .append(System.lineSeparator())
+                .append(String.format("%s %s %s", first.getName(), third.getDesc(), third.getId()))
+                .append(System.lineSeparator())
+                .append("---------------------------------------------------------")
+                .append(System.lineSeparator())
                 .toString();
         testing(insert);
     }
@@ -305,9 +332,12 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"5", "222", "y"});
         new StartUI(input, tracker).init();
 
-        String insert = new StringBuilder("------------ Search item by name --------------\r\n")
-                .append("Item NOT found.\r\n")
-                .append("---------------------------------------------------------\n\r\n")
+        String insert = new StringBuilder("------------ Search item by name --------------")
+                .append(System.lineSeparator())
+                .append("Item NOT found.")
+                .append(System.lineSeparator())
+                .append("---------------------------------------------------------")
+                .append(System.lineSeparator())
                 .toString();
 
         testing(insert);

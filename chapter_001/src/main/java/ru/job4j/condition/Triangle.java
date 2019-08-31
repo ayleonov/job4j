@@ -58,8 +58,9 @@ public class Triangle {
             double poluperimetr = period(a, b, c);
             double podkorennoe = poluperimetr * (poluperimetr - a) * (poluperimetr - b) * (poluperimetr - c);
             return Math.sqrt(podkorennoe);
-        } else
+        } else {
             return -1;
+        }
     }
 
 }

@@ -149,7 +149,7 @@ public class MenuTracker {
             } else {
                 System.out.println("Item NOT found.");
             }
-            System.out.println("---------------------------------------------------------\n");
+            System.out.println("---------------------------------------------------------");
         }
     }
 

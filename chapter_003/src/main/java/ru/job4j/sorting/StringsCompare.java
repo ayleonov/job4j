@@ -14,7 +14,7 @@ public class StringsCompare implements Comparator<String> {
 
         for (int i = 0; i < lenghtMin; i++) {
             if (arrleft[i] != arrright[i]) {
-                result = Character.compare(arrleft[i], arrright[i]);;
+                result = Character.compare(arrleft[i], arrright[i]);
                 cyclestatus = 1;
                 break;
             }

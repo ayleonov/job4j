@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 public class ArrayDuplicateTest {
 
     @Test
-    public void whenRemoveDuplicatesThenArrayWithoutDuplicate(){
+    public void whenRemoveDuplicatesThenArrayWithoutDuplicate() {
         ArrayDuplicate array = new ArrayDuplicate();
         String[] input = {"one", "two", "three", "one", "two", "five", "four"};
         String[] result = array.remove(input);

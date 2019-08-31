@@ -32,12 +32,12 @@ public class FindLoop {
             tempIndex = i;
 
             for (int j = i + 1; j < data.length; j++) {
-            if (data[j] < temp){
+                if (data[j] < temp) {
                     temp = data[j];
                     tempIndex = j;
                 }
             }
-            data[tempIndex]= data[i];
+            data[tempIndex] = data[i];
             data[i] = temp;
         }
         return data;
