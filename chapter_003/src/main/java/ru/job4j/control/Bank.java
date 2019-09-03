@@ -59,9 +59,8 @@ public class Bank {
 
         Account account1 = getWithPassportAndRequisite(srcPassport, srcRequisite);
         Account account2 = getWithPassportAndRequisite(destPassport, destRequisite);
-        return this.users.get(getUser(srcPassport)).contains(account1)
-                && this.users.get(getUser(destPassport)).contains(account2)
-                && account1.transfer(account2, amount);
+
+        return account1 != null && account2 != null && account1.transfer(account2, amount);
 
     }
 
