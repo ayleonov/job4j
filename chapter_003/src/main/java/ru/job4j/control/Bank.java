@@ -56,15 +56,13 @@ public class Bank {
     }
 
     public boolean transfer(String srcPassport, String srcRequisite, String destPassport, String destRequisite, double amount) {
-        User user1 = getUser(srcPassport);
-        Account account1 = getAccount(user1, srcRequisite);
-        User user2 = getUser(destPassport);
-        Account account2 = getAccount(user2, destRequisite);
 
-        return this.users.get(user1).contains(account1)
-                && this.users.get(user2).contains(account2)
-                && getActualAccount(user1, account1).transfer(
-                        getActualAccount(user2, account2), amount);
+        Account account1 = getWithPassportAndRequisite(srcPassport, srcRequisite);
+        Account account2 = getWithPassportAndRequisite(destPassport, destRequisite);
+        return this.users.get(getUser(srcPassport)).contains(account1)
+                && this.users.get(getUser(destPassport)).contains(account2)
+                && account1.transfer(account2, amount);
+
     }
 
     public String toString() {
@@ -73,5 +71,11 @@ public class Bank {
 
     public Map<User, List<Account>> getUsers() {
         return users;
+    }
+
+    public Account getWithPassportAndRequisite(String passport, String requisite) {
+        User user = getUser(passport);
+        Account account = getAccount(user, requisite);
+        return account;
     }
 }
