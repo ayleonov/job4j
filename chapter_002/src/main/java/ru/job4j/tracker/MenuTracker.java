@@ -2,16 +2,19 @@ package ru.job4j.tracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MenuTracker {
     private final static int NUMBER_POINTS_MENU = 7;
     private Input input;
-
+    private Consumer<String> output;
     private Tracker tracker;
     private List<UserAction> actions = new ArrayList<>(NUMBER_POINTS_MENU);
-    public MenuTracker(Input input, Tracker tracker) {
+
+    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
     }
 
     public List<Integer> fillActions() {
@@ -38,7 +41,7 @@ public class MenuTracker {
     public void show() {
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(action.info());
+                output.accept(action.info());
             }
         }
     }
@@ -48,6 +51,7 @@ public class MenuTracker {
         public AddItem(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Please, enter the task's name: ");
@@ -65,11 +69,11 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("---------------Items found (name description id): --------------");
+            output.accept("---------------Items found (name description id): --------------");
             for (Item item : tracker.findAll()) {
-                System.out.println(String.format("%s %s %s", item.getName(), item.getDesc(), item.getId()));
+                output.accept(String.format("%s %s %s", item.getName(), item.getDesc(), item.getId()));
             }
-            System.out.println("--------------------------------------------");
+            output.accept("--------------------------------------------");
         }
     }
 
@@ -86,10 +90,10 @@ public class MenuTracker {
             long time = System.currentTimeMillis();
             Item item = new Item(name, desc, time);
             tracker.replace(id, item);
-            System.out.println("------------ Edit of item --------------");
-            System.out.println("------------ Edited item: --------------");
-            System.out.println(String.format("%s %s", name, desc));
-            System.out.println("------------ Item replaced --------------");
+            output.accept("------------ Edit of item --------------");
+            output.accept("------------ Edited item: --------------");
+            output.accept(String.format("%s %s", name, desc));
+            output.accept("------------ Item replaced --------------");
         }
     }
 
@@ -101,14 +105,14 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Please, enter the task's id: ");
-            System.out.println("-------------- Delete item --------------");
+            output.accept("-------------- Delete item --------------");
             boolean result = tracker.delete(id);
             if (result) {
-                System.out.println("\n---------- Item deleted -------------");
+                output.accept("\n---------- Item deleted -------------");
             } else {
-                System.out.println("Item not founded.");
+                output.accept("Item not founded.");
             }
-            System.out.println("-----------------------------------------");
+            output.accept("-----------------------------------------");
         }
     }
 
@@ -117,15 +121,16 @@ public class MenuTracker {
         public FindById(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("------------ Id search --------------");
+            output.accept("------------ Id search --------------");
             String id = input.ask("Please, enter the task's id: ");
             Item item = tracker.findById(id);
             if (item != null) {
-                System.out.println(String.format("------------ Item found: %s %s --------------", item.getName(), item.getDesc()));
+                output.accept(String.format("------------ Item found: %s %s --------------", item.getName(), item.getDesc()));
             } else {
-                System.out.println("Item NOT found.\n");
+                output.accept("Item NOT found.\n");
             }
         }
     }
@@ -138,18 +143,18 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("------------ Search item by name --------------");
+            output.accept("------------ Search item by name --------------");
             String word = input.ask("Enter name for find the item :");
             List<Item> foundItems = tracker.findByName(word);
             if (foundItems.size() != 0) {
-                System.out.println("------------ Items found:  name description id --------------");
+                output.accept("------------ Items found:  name description id --------------");
                 for (Item item : foundItems) {
-                    System.out.println(String.format("%s %s %s", item.getName(), item.getDesc(), item.getId()));
+                    output.accept(String.format("%s %s %s", item.getName(), item.getDesc(), item.getId()));
                 }
             } else {
-                System.out.println("Item NOT found.");
+                output.accept("Item NOT found.");
             }
-            System.out.println("---------------------------------------------------------");
+            output.accept("---------------------------------------------------------");
         }
     }
 
@@ -157,10 +162,11 @@ public class MenuTracker {
         public ExitProgram(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
 
-            System.out.println("Exit the program");
+            output.accept("Exit the program");
         }
 
     }

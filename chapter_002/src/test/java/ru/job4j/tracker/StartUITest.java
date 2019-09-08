@@ -8,14 +8,21 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class StartUITest {
-
-    private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final PrintStream stdout = System.out;
+    private final Consumer<String> output = new Consumer<String>() {
+        @Override
+        public void accept(String s) {
+            System.out.println(s);
+
+        }
+    };
 
     private String showConsole(String insert) {
         String result = new StringBuilder()
@@ -56,10 +63,11 @@ public class StartUITest {
     @Test
     public void whenUserAddItemThenTrackerHasItemWithTheSameName() {
         Tracker tracker = new Tracker();
+
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"0", "три", "третья заявка", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         //menu.
         Item[] items = {first, second, new Item("три", "третья заявка", System.currentTimeMillis())};
@@ -75,7 +83,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
 
         Input input = new StubInput(new String[]{"0", "один", "первая заявка", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0).getName(), is("один"));
         assertThat(tracker.findAll().get(0).getDesc(), is("первая заявка"));
     }
@@ -86,7 +94,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"1", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         List<Item> expected = new ArrayList();
         expected.add(first);
@@ -101,7 +109,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"2", first.getId(), "тест замены", "заменили заявку", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         Item[] items = {first, second};
         items[0].setName("тест замены");
@@ -119,7 +127,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", first.getId(), "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0).getName(), is("два"));
     }
 
@@ -129,7 +137,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", first.getId(), "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         List<Item> expected = new ArrayList<Item>();
         expected.add(second);
         assertThat(tracker.findAll(), is(expected));
@@ -141,7 +149,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"4", first.getId(), "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         List<Item> expected = new ArrayList();
         expected.add(first);
         expected.add(second);
@@ -158,7 +166,7 @@ public class StartUITest {
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Item third = tracker.add(new Item("один", "третья заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"5", first.getName(), "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         Item itemFirst = (tracker.findByName(first.getName())).get(0);
         Item itemSecond = (tracker.findByName(first.getName())).get(1);
         assertThat(itemFirst.getName(), is("один"));
@@ -173,7 +181,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"0", "три", "третья заявка", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
 
         String insert = new StringBuilder("------------ Добавление новой заявки --------------\r\n")
@@ -189,7 +197,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"1", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         String insert = new StringBuilder(
                 "---------------Items found (name description id): --------------")
@@ -211,7 +219,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"2", first.getId(), "тест замены", "заменили заявку", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         String insert = new StringBuilder("------------ Edit of item --------------")
                 .append(System.lineSeparator())
@@ -233,7 +241,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", first.getId(), "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
 
         String insert = new StringBuilder("-------------- Delete item --------------")
@@ -253,7 +261,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"3", "222", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
 
         String insert = new StringBuilder("-------------- Delete item --------------")
@@ -273,7 +281,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"4", first.getId(), "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         String insert = new StringBuilder("------------ Id search --------------")
                 .append(System.lineSeparator())
@@ -290,7 +298,7 @@ public class StartUITest {
         Item first = tracker.add(new Item("один", "первая заявка", System.currentTimeMillis()));
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"4", "222", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         String insert = new StringBuilder("------------ Id search --------------")
                 .append(System.lineSeparator())
@@ -307,7 +315,7 @@ public class StartUITest {
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Item third = tracker.add(new Item("один", "третья заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"5", first.getName(), "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         String insert = new StringBuilder("------------ Search item by name --------------")
                 .append(System.lineSeparator())
@@ -330,7 +338,7 @@ public class StartUITest {
         Item second = tracker.add(new Item("два", "вторая заявка", System.currentTimeMillis()));
         Item third = tracker.add(new Item("один", "третья заявка", System.currentTimeMillis()));
         Input input = new StubInput(new String[]{"5", "222", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
 
         String insert = new StringBuilder("------------ Search item by name --------------")
                 .append(System.lineSeparator())
