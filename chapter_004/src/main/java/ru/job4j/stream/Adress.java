@@ -1,5 +1,7 @@
 package ru.job4j.stream;
 
+import java.util.Objects;
+
 public class Adress {
     private String city;
     private String street;
@@ -43,5 +45,25 @@ public class Adress {
 
     public int getNumberAppartment() {
         return numberApartment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Adress adress = (Adress) o;
+        return numberHouse == adress.numberHouse
+                && numberApartment == adress.numberApartment
+                && city.equals(adress.city)
+                && Objects.equals(street, adress.street);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, street, numberHouse, numberApartment);
     }
 }
