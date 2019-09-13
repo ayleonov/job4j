@@ -12,15 +12,13 @@ public class SortUserTest {
     @Test
     public void whenAges32222420Then20222432() {
         SortUser user = new SortUser();
-        List<User> list = new ArrayList<>();
+
         User user1 = new User("", 32);
         User user2 = new User("", 22);
         User user3 = new User("", 24);
         User user4 = new User("", 20);
-        list.add(user1);
-        list.add(user2);
-        list.add(user3);
-        list.add(user4);
+        List<User> list = List.of(user1, user2, user3, user4);
+
         Set<User> set = user.sort(list);
         User[] result = new User[4];
         set.toArray(result);
