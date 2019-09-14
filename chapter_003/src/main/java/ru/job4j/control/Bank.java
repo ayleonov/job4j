@@ -1,8 +1,6 @@
 package ru.job4j.control;
 
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Stream;
 
 public class Bank {
 
@@ -20,7 +18,7 @@ public class Bank {
         this.users.get(getUser(passport)).add(account);
     }
 
-    public User getUser(String passport) {
+    /*public User getUser(String passport) {
         User result = null;
         for (Map.Entry<User, List<Account>> pair : users.entrySet()) {
             if ((pair.getKey().getPassport()).equals(passport)) {
@@ -29,33 +27,15 @@ public class Bank {
             }
         }
         return result;
+    }*/
+
+    public User getUser(String passport) {
+        //List<User> result = new ArrayList<>();
+        return users.keySet().stream().
+                filter(u->(u.getPassport().equals(passport))).findFirst().orElse(null);
     }
 
-
-    public User getUser1(String passport) {
-        //User result = null;
-        List<User> result = new ArrayList<>();
-        users.forEach((k,v)->{String temp = k.getPassport();
-            if (temp.equals(passport))
-                result.add(k);
-        });
-            return result.get(0);
-    }
-
-    public User getUser2(String passport) {
-        List<User> result = new ArrayList<>();
-        users.entrySet().stream().filter(u->{
-            if (u.getKey().getPassport().equals(passport))
-                result.add(u.getKey());
-            return true;
-        }).findFirst();
-        return result.get(0);
-    }
-
-
-
-
-    public Account getAccount(User user, String requisites) {
+    /*public Account getAccount(User user, String requisites) {
         Account result = null;
         List<Account> temp = getUserAccounts(user);
 
@@ -66,15 +46,13 @@ public class Bank {
             }
         }
         return result;
-    }
+    }*/
 
-    public Account getAccount1(User user, String requisites) {
-        Account result = null;
+    public Account getAccount(User user, String requisites) {
         List<Account> temp = getUserAccounts(user);
 
-        temp.stream().filter(t -> t.getRequisites().equals(requisites)).findFirst().orElse(result);
-        System.out.println(result);
-        return result;
+        return temp.stream().filter(t -> t.getRequisites().equals(requisites)).findFirst().orElse(null);
+
     }
 
 
