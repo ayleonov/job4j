@@ -19,20 +19,22 @@ public class Department {
         Comparator reverseComparator2 = new Comparator() {
             @Override
             public int compare(Object o1, Object o2) {
-                if (((String) o1).length() >= 6 && ((String) o1).length() >= 6)
+                if (((String) o1).length() >= 6 && ((String) o1).length() >= 6) {
                     return Integer.compare(((String) o2).charAt(5), ((String) o1).charAt(5));
-                else
+                } else {
                     return 0;
+                }
             }
         };
 
         Comparator reverseComparator3 = new Comparator() {
             @Override
             public int compare(Object o1, Object o2) {
-                if (((String) o1).length() >= 11 && ((String) o1).length() >= 11)
+                if (((String) o1).length() >= 11 && ((String) o1).length() >= 11) {
                     return Integer.compare(((String) o2).charAt(10), ((String) o1).charAt(10));
-                else
+                } else {
                     return 0;
+                }
             }
         };
 
