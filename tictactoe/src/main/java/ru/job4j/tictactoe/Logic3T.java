@@ -35,33 +35,23 @@ public class Logic3T {
 
     public boolean isWinnerX2() {
         return
-                isAnybodyWin('X');
+                isAnybodyWin(Figure3T::hasMarkX);
     }
 
     public boolean isWinnerO2() {
         return
-                isAnybodyWin('O');
+                isAnybodyWin(Figure3T::hasMarkO);
     }
 
-    public  Predicate refactor(char sign ) {
-        Predicate predicate = null;
-        if  (sign == 'X') {
-            predicate = Figure3T::hasMarkX;
-        }   else {
-            predicate = Figure3T::hasMarkO;
-        }
-        return predicate;
-    }
-
-    public boolean isAnybodyWin(char sign) {
-        return this.fillBy(refactor(sign), 0, 0, 1, 0)
-                || this.fillBy(refactor(sign), 0, 1, 1, 0)
-                || this.fillBy(refactor(sign), 0, 2, 1, 0)
-                || this.fillBy(refactor(sign), 0, 0, 0, 1)
-                || this.fillBy(refactor(sign), 1, 0, 0, 1)
-                || this.fillBy(refactor(sign), 2, 0, 0, 1)
-                || this.fillBy(refactor(sign), 0, 0, 1, 1)
-                || this.fillBy(refactor(sign), 2, 0, -1, 1);
+    public boolean isAnybodyWin(Predicate predicate) {
+    return         this.fillBy(predicate, 0, 0, 1, 0)
+                || this.fillBy(predicate, 0, 1, 1, 0)
+                || this.fillBy(predicate, 0, 2, 1, 0)
+                || this.fillBy(predicate, 0, 0, 0, 1)
+                || this.fillBy(predicate, 1, 0, 0, 1)
+                || this.fillBy(predicate, 2, 0, 0, 1)
+                || this.fillBy(predicate, 0, 0, 1, 1)
+                || this.fillBy(predicate, 2, 0, -1, 1);
     }
 
     public boolean hasGap() {
