@@ -35,26 +35,33 @@ public class Logic3T {
 
     public boolean isWinnerX2() {
         return
-                this.fillBy(Figure3T::hasMarkX, 0, 0, 1, 0)
-                        || this.fillBy(Figure3T::hasMarkX, 0, 1, 1, 0)
-                        || this.fillBy(Figure3T::hasMarkX, 0, 2, 1, 0)
-                        || this.fillBy(Figure3T::hasMarkX, 0, 0, 0, 1)
-                        || this.fillBy(Figure3T::hasMarkX, 1, 0, 0, 1)
-                        || this.fillBy(Figure3T::hasMarkX, 2, 0, 0, 1)
-                        || this.fillBy(Figure3T::hasMarkX, 0, 0, 1, 1)
-                        || this.fillBy(Figure3T::hasMarkX, 2, 0, -1, 1);
+                isAnybodyWin('X');
     }
 
     public boolean isWinnerO2() {
         return
-                this.fillBy(Figure3T::hasMarkO, 0, 0, 1, 0)
-                        || this.fillBy(Figure3T::hasMarkO, 0, 1, 1, 0)
-                        || this.fillBy(Figure3T::hasMarkO, 0, 2, 1, 0)
-                        || this.fillBy(Figure3T::hasMarkO, 0, 0, 0, 1)
-                        || this.fillBy(Figure3T::hasMarkO, 1, 0, 0, 1)
-                        || this.fillBy(Figure3T::hasMarkO, 2, 0, 0, 1)
-                        || this.fillBy(Figure3T::hasMarkO, 0, 0, 1, 1)
-                        || this.fillBy(Figure3T::hasMarkO, 2, 0, -1, 1);
+                isAnybodyWin('O');
+    }
+
+    public  Predicate refactor(char sign ) {
+        Predicate predicate = null;
+        if  (sign == 'X') {
+            predicate = Figure3T::hasMarkX;
+        }   else {
+            predicate = Figure3T::hasMarkO;
+        }
+        return predicate;
+    }
+
+    public boolean isAnybodyWin(char sign) {
+        return this.fillBy(refactor(sign), 0, 0, 1, 0)
+                || this.fillBy(refactor(sign), 0, 1, 1, 0)
+                || this.fillBy(refactor(sign), 0, 2, 1, 0)
+                || this.fillBy(refactor(sign), 0, 0, 0, 1)
+                || this.fillBy(refactor(sign), 1, 0, 0, 1)
+                || this.fillBy(refactor(sign), 2, 0, 0, 1)
+                || this.fillBy(refactor(sign), 0, 0, 1, 1)
+                || this.fillBy(refactor(sign), 2, 0, -1, 1);
     }
 
     public boolean hasGap() {
