@@ -85,6 +85,7 @@ public class Logic3TTest {
         Logic3T login = new Logic3T(table);
         assertThat(login.isWinnerX2(), is(true));
     }
+
     @Test
     public void whenHasXWinner3() {
         Figure3T[][] table = {

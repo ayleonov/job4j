@@ -33,18 +33,24 @@ public class Logic3T {
 
     }
 
+    public void checkWinner() {
+        if (isWinnerX2()) {
+            System.out.println("Победили крестики");
+        } else if (isWinnerO2()) {
+            System.out.println("Победили нолики");
+        }
+    }
+
     public boolean isWinnerX2() {
-        return
-                isAnybodyWin(Figure3T::hasMarkX);
+        return isAnybodyWin(Figure3T::hasMarkX);
     }
 
     public boolean isWinnerO2() {
-        return
-                isAnybodyWin(Figure3T::hasMarkO);
+        return isAnybodyWin(Figure3T::hasMarkO);
     }
 
-    public boolean isAnybodyWin(Predicate predicate) {
-    return         this.fillBy(predicate, 0, 0, 1, 0)
+    public boolean isAnybodyWin(Predicate<Figure3T> predicate) {
+        return this.fillBy(predicate, 0, 0, 1, 0)
                 || this.fillBy(predicate, 0, 1, 1, 0)
                 || this.fillBy(predicate, 0, 2, 1, 0)
                 || this.fillBy(predicate, 0, 0, 0, 1)
