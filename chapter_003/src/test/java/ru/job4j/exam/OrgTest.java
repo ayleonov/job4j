@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -32,19 +33,19 @@ public class OrgTest {
         Org firstSorting = new Org(list);
         firstSorting.sorting(0);
         List<String> result = firstSorting.getNamestring();
-        String[] expect = {"K1", "K1\\SK1", "K1\\SK2", "K1\\SK1\\SSK1",
-                "K1\\SK1\\SSK2", "K2", "K2\\SK1\\SSK1", "K2\\SK1\\SSK2",
-                "K2\\SK1"};
-        assertThat(result, is(expect));
+        String[] expect = {"K1", "K1\\SK1", "K1\\SK1\\SSK1", "K1\\SK1\\SSK2",
+                "K1\\SK2", "K2", "K2\\SK1", "K2\\SK1\\SSK1", "K2\\SK1\\SSK2"
+        };
+        assertThat(result, is(Arrays.asList(expect)));
     }
 
     @Test
     public void whenReverseSorting() {
-        Org firstSorting = new Org(list);
-        firstSorting.sorting(0);
-        List<String> result = firstSorting.getNamestring();
+        Org secondSorting = new Org(list);
+        secondSorting.sorting(1);
+        List<String> result = secondSorting.getNamestring();
         String[] expect = {"K2", "K2\\SK1", "K2\\SK1\\SSK2", "K2\\SK1\\SSK1",
                 "K1", "K1\\SK2", "K1\\SK1", "K1\\SK1\\SSK2", "K1\\SK1\\SSK1"};
-        assertThat(result, is(expect));
+        assertThat(result, is(Arrays.asList(expect)));
     }
 }
