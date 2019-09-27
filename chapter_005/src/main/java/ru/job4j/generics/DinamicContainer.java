@@ -1,5 +1,6 @@
 package ru.job4j.generics;
 
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -20,20 +21,20 @@ public class DinamicContainer<E> implements Iterable<E> {
     }
 
     public void add(E value) {
-        if (position + 1 <= size) {
-            container[position++] = value;
-        } else {
-            size = (int) (size * 1.5);
-            modCount++;
-            Object[] newcontainer = new Object[size];
-            for (int i = 0; i < container.length; i++) {
-                newcontainer[i] = container[i];
-            }
-            newcontainer[position++] = value;
-            this.container = newcontainer;
+        if (position + 1 > size) {
+            basearrayIncrese();
         }
+        container[position++] = value;
+    }
+
+    public void basearrayIncrese() {
+        size = (int) (size * 1.5);
+        modCount++;
+
+        this.container = Arrays.copyOf(container, size);
 
     }
+
 
     public E get(int index) {
         return (E) container[index];
