@@ -49,8 +49,8 @@ public class SimpleStackTest {
     }
 
     @Test
-    public void whenDeletedAndReceiveSecondElement() {
-        dincont.push(3);
-        assertThat(dincont.poll(), is(3));
+    public void whenDeletedAndReceiveElement() {
+        assertThat(dincont.poll(), is(2));
+        assertThat(dincont.get(0), is(1));
     }
 }
