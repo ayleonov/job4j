@@ -17,6 +17,13 @@ public class DinamicContainerLinked<E> implements Iterable<E> {
         this.size++;
     }
 
+    public E delete() {
+        Node<E> deleted = this.first;
+        this.first = this.first.next;
+        this.size--;
+        return deleted.data;
+    }
+
     public E get(int index) {
         Node<E> result = this.first;
         for (int i = 0; i < index; i++) {
@@ -42,7 +49,7 @@ public class DinamicContainerLinked<E> implements Iterable<E> {
 
         return new Iterator() {
             int iterposition = 0;
-
+            Node<E> curr = first;
 
             @Override
             public boolean hasNext() {
@@ -52,12 +59,23 @@ public class DinamicContainerLinked<E> implements Iterable<E> {
 
             @Override
             public Object next() {
+                Node<E> res = null;
+                E resD;
                 if (expectedmodCount != modCount) {
                     throw new ConcurrentModificationException();
                 } else if (!(hasNext())) {
                     throw new NoSuchElementException();
                 } else {
-                    return get(iterposition++);
+                    if (iterposition == 0) {
+                        res = curr;
+                        resD = res.data;
+                    } else {
+                        curr = curr.next;
+                        res = curr;
+                        resD = res.data;
+                    }
+                    iterposition++;
+                    return res.data;
                 }
             }
         };
