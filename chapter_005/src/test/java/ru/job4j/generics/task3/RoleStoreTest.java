@@ -68,4 +68,13 @@ public class RoleStoreTest {
         assertThat(rs.getSimpArr().getArray()[1], is(model3));
         assertThat(result, is(true));
     }
+
+    @Test (expected = NoSuchElementException.class)
+    public void whenLookingElementWhichIsNot() {
+        RoleStore rs = new RoleStore();
+        Base model = new Role("0001");
+        rs.add(model);
+        Base model2 = new Role("0002");
+        System.out.println(rs.replace("0009", model2));
+    }
 }

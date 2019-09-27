@@ -10,7 +10,6 @@ import static org.junit.Assert.assertThat;
 
 public class UserStoreTest {
 
-
     @Test(expected = NoSuchElementException.class)
     public void whenAddUserWithId0001() {
         UserStore us = new UserStore();
@@ -29,7 +28,7 @@ public class UserStoreTest {
 
     @Test
     public void whenAddId0002ThenModel2() {
-        UserStore us = new UserStore<>();
+        UserStore us = new UserStore();
         Base model = new User("0001");
         us.add(model);
         Base model2 = new User("0002");
@@ -42,7 +41,7 @@ public class UserStoreTest {
 
     @Test
     public void whenReplaceUserInArray() {
-        UserStore us = new UserStore<>();
+        UserStore us = new UserStore();
         Base model = new User("0001");
         us.add(model);
         assertThat(us.getSimpArr().getArray()[0], is(model));
@@ -54,7 +53,7 @@ public class UserStoreTest {
 
     @Test
     public void whenRemoveThenTrueAndShiftElements() {
-        UserStore<User> us = new UserStore<>();
+        UserStore us = new UserStore();
         Base model = new User("0001");
         Base model2 = new User("0002");
         Base model3 = new User("0003");
@@ -66,5 +65,14 @@ public class UserStoreTest {
         boolean result = us.getSimpArr().remove(1);
         assertThat(us.getSimpArr().getArray()[1], is(model3));
         assertThat(result, is(true));
+    }
+
+    @Test (expected = NoSuchElementException.class)
+    public void whenLookingElementWhichIsNot() {
+        UserStore us = new UserStore();
+        Base model = new User("0001");
+        us.add(model);
+        Base model2 = new User("0002");
+        System.out.println(us.replace("0009", model2));
     }
 }

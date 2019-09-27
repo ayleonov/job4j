@@ -18,14 +18,7 @@ public abstract class AbstractStore<E extends Base> implements Store<E> {
 
     @Override
     public boolean replace(String id, Base model) {
-        boolean res = false;
-        try {
-            simpArr.set(findIndexById(id), (E) model);
-            res = true;
-        } catch (NoSuchElementException e) {
-            e.getMessage();
-        }
-        return res;
+        return simpArr.set(findIndexById(id), (E) model);
     }
 
     @Override
@@ -56,8 +49,10 @@ public abstract class AbstractStore<E extends Base> implements Store<E> {
     public Integer findIndexById(String id) {
         int index = 0;
         int temp = 0;
-        for (int i = 0; i < simpArr.getArray().length; i++) {
-            if (((E) (simpArr.getArray()[i])).getId().equals(id)) {
+        for (int i = 0; i < simpArr.getPosition(); i++) {
+            E element = (E) (simpArr.getArray()[i]);
+            String elementId = element.getId();
+            if (elementId.equals(id)) {
                 index = i;
                 temp = 1;
                 break;
