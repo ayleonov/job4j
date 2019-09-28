@@ -28,24 +28,22 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public boolean set(int index, T model) {
-        boolean res;
-        if (position > index) {
+        boolean res = false;
+        if (position > index && index != -1) {
             res = true;
             this.array[index] = model;
-        } else {
-            res = false;
         }
+
         return res;
     }
 
     public boolean remove(int index) {
-        boolean res;
-        if (position > index) {
+        boolean res = false;
+
+        if (position > index && index != -1) {
             res = true;
             System.arraycopy(array, index + 1, array, index, array.length - 2);
             position--;
-        } else {
-            res = false;
         }
         return res;
     }

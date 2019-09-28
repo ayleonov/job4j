@@ -18,49 +18,62 @@ public abstract class AbstractStore<E extends Base> implements Store<E> {
 
     @Override
     public boolean replace(String id, Base model) {
-        return simpArr.set(findIndexById(id), (E) model);
+        boolean res = false;
+        try {
+
+            res = simpArr.set(findIndexById(id), (E) model);
+        } catch (NoSuchElementException e) {
+            e.getMessage();
+        }
+        return res;
     }
 
     @Override
     public boolean delete(String id) {
-        simpArr.remove(findIndexById(id));
-        return false;
+        boolean res = false;
+        try {
+            int foundIndex = findIndexById(id);
+            int found = foundIndex;
+            res = simpArr.remove(findIndexById(id));
+        } catch (NoSuchElementException e) {
+            e.getMessage();
+        }
+        return res;
     }
 
     @Override
     public E findById(String id) {
 
         Base object = null;
-        int temp = 0;
 
-        for (Object o : simpArr.getArray()) {
-            if (((E) o).getId().equals(id)) {
-                object = (E) o;
-                temp = 1;
-                break;
+        try {
+            for (Object o : simpArr.getArray()) {
+                if (((E) o).getId().equals(id)) {
+                    object = (E) o;
+                    break;
+                }
             }
-        }
-        if (temp == 0) {
-            throw new NoSuchElementException();
+        } catch (NoSuchElementException e) {
+            e.getMessage();
         }
         return (E) object;
     }
 
     public Integer findIndexById(String id) {
-        int index = 0;
-        int temp = 0;
-        for (int i = 0; i < simpArr.getPosition(); i++) {
-            E element = (E) (simpArr.getArray()[i]);
-            String elementId = element.getId();
-            if (elementId.equals(id)) {
-                index = i;
-                temp = 1;
-                break;
+        int index = -1;
+        try {
+            for (int i = 0; i < simpArr.getPosition(); i++) {
+                E element = (E) (simpArr.getArray()[i]);
+                String elementId = element.getId();
+                if (elementId.equals(id)) {
+                    index = i;
+                    break;
+                }
             }
+        } catch (NoSuchElementException e) {
+            e.getMessage();
         }
-        if (temp == 0) {
-            throw new NoSuchElementException();
-        }
+
         return index;
     }
 }

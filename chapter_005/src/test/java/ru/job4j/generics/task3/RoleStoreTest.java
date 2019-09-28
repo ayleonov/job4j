@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class RoleStoreTest {
 
-    @Test(expected = NoSuchElementException.class)
+    @Test (expected = NoSuchElementException.class)
     public void whenAddRoleWithId0001() {
         RoleStore rs = new RoleStore();
         Base model = new Role("0001");
@@ -51,6 +51,7 @@ public class RoleStoreTest {
         boolean result = rs.replace("0001", model2);
         assertThat(rs.getSimpArr().getArray()[0], is(model2));
         assertThat(result, is(true));
+        assertThat(rs.replace("0009", model2), is(false));
     }
 
     @Test
@@ -67,14 +68,32 @@ public class RoleStoreTest {
         boolean result = rs.getSimpArr().remove(1);
         assertThat(rs.getSimpArr().getArray()[1], is(model3));
         assertThat(result, is(true));
+        boolean result2 = rs.delete("0001");
+        assertThat(result2, is(true));
+        assertThat(rs.getSimpArr().getArray()[0], is(model3));
+
     }
 
-    @Test (expected = NoSuchElementException.class)
-    public void whenLookingElementWhichIsNot() {
+    @Test
+    public void whenTryReplaceElementWhichIsNot() {
         RoleStore rs = new RoleStore();
         Base model = new Role("0001");
         rs.add(model);
         Base model2 = new Role("0002");
-        System.out.println(rs.replace("0009", model2));
+        boolean result = rs.replace("0009", model2);
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void whenTryRemoveElementWhichIsNot() {
+        RoleStore rs = new RoleStore();
+        Base model = new Role("0001");
+        Base model2 = new Role("0002");
+        rs.add(model);
+        rs.add(model2);
+        assertThat(rs.delete("0001"), is(true));
+        rs.delete("0009");
+        assertThat(rs.delete("0009"), is(false));
+        assertThat(rs.getSimpArr().getArray()[0], is(model2));
     }
 }
