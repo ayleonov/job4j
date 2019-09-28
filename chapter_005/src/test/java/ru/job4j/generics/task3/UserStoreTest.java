@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class UserStoreTest {
 
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void whenAddRoleWithId0001() {
         UserStore us = new UserStore();
         Base model = new User("0001");

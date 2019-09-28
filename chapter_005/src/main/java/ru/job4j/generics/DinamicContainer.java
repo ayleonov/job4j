@@ -25,11 +25,11 @@ public class DinamicContainer<E> implements Iterable<E> {
             basearrayIncrese();
         }
         container[position++] = value;
+        modCount++;
     }
 
     public void basearrayIncrese() {
         size = (int) (size * 1.5);
-        modCount++;
 
         this.container = Arrays.copyOf(container, size);
 
