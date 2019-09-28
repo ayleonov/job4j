@@ -6,8 +6,6 @@ import java.util.NoSuchElementException;
 
 public class SimpleStack<E> implements Iterable<E> {
     DinamicContainerLinked dcl = new DinamicContainerLinked();
-    SimpleArrayList sal = new SimpleArrayList();
-
 
     public void push(E value) {
         dcl.add(value);
