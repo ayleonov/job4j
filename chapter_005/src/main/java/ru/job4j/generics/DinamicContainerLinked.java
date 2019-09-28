@@ -24,6 +24,10 @@ public class DinamicContainerLinked<E> implements Iterable<E> {
         return deleted.data;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public E get(int index) {
         Node<E> result = this.first;
         for (int i = 0; i < index; i++) {
