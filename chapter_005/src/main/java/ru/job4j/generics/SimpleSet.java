@@ -4,7 +4,11 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class SimpleSet<E> implements Iterable<E> {
-    SimpleArray sa = new SimpleArray(5);
+    private SimpleArray sa = new SimpleArray(5);
+
+    public SimpleArray getSa() {
+        return sa;
+    }
 
     public boolean add(E e) {
         boolean res = false;
