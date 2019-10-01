@@ -15,7 +15,7 @@ public class SimpleSetTest {
         SimpleSet<Integer> sset = new SimpleSet();
         boolean result = sset.add(14);
 
-        assertThat(sset.sa.getArray()[0], is(14));
+        assertThat(sset.getSa().getArray()[0], is(14));
         assertThat(result, is(true));
     }
 
@@ -24,7 +24,7 @@ public class SimpleSetTest {
         SimpleSet<Integer> sset = new SimpleSet();
         sset.add(14);
         boolean result = sset.add(14);
-        assertThat(sset.sa.getArray()[0], is(14));
+        assertThat(sset.getSa().getArray()[0], is(14));
         assertThat(result, is(false));
     }
 
