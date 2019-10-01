@@ -8,23 +8,19 @@ import java.util.Map;
 public class Research {
     private User u1;
     private User u2;
-    private Map<User, Object> map = new HashMap<>();
+    private HashMap<User, Object> map = new HashMap<>();
 
+    public HashMap<User, Object> getMap() {
+        return map;
+    }
 
     public void researching() {
         u1 = new User("Иван", 1, null);
         u2 = new User("Иван", 1, null);
-        map.put(u1, 1);
-        map.put(u2, 1);
+
+        map.put(u1, 17);
+        map.put(u2, 19);
         System.out.println(map);
     }
 
-    @Override
-    public String toString() {
-        return "Research{" +
-                "u1=" + u1 +
-                ", u2=" + u2 +
-                ", map=" + map +
-                '}';
-    }
 }
