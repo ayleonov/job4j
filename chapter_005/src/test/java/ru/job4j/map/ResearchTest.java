@@ -26,11 +26,11 @@ public class ResearchTest {
     public void whenCreatedUsersWithoutOverrideEquals() {
         rs.getMap().put(u1, "17");
         rs.getMap().put(u2, "19");
-       // System.out.println(rs.getMap());
-        for (Map.Entry pair : rs.getMap().entrySet()){
-            System.out.println(pair);
+        System.out.println(rs.getMap());
+      /*  for (Map.Entry pair : rs.getMap().entrySet()){
+            System.out.println(pair); */
+        assertThat(rs.getMap().size(), is(2));
         }
-    }
 
     @Test
     public void whenCreatedUsersWithoutOverrideEquals2() {
