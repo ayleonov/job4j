@@ -29,8 +29,12 @@ public class ResearchTest {
         System.out.println(rs.getMap());
       /*  for (Map.Entry pair : rs.getMap().entrySet()){
             System.out.println(pair); */
+        int hash1 = rs.getMap().get(u1).hashCode();
+        int hash2 = rs.getMap().get(u2).hashCode();
+        assertThat( hash1==hash2, is(false));
         assertThat(rs.getMap().size(), is(2));
-        }
+        assertThat(rs.getMap().get(u1).equals(rs.getMap().get(u2)), is(false));
+    }
 
     @Test
     public void whenCreatedUsersWithoutOverrideEquals2() {
