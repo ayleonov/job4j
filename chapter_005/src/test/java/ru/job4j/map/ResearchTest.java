@@ -6,8 +6,7 @@ import org.junit.Test;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class ResearchTest {
     Research rs = new Research();
@@ -27,10 +26,9 @@ public class ResearchTest {
         rs.getMap().put(u1, "17");
         rs.getMap().put(u2, "19");
         System.out.println(rs.getMap());
-      /*  for (Map.Entry pair : rs.getMap().entrySet()){
-            System.out.println(pair); */
         int hash1 = rs.getMap().get(u1).hashCode();
         int hash2 = rs.getMap().get(u2).hashCode();
+        assertEquals(u1.hashCode(), u2.hashCode());
         assertThat( hash1==hash2, is(false));
         assertThat(rs.getMap().size(), is(2));
         assertThat(rs.getMap().get(u1).equals(rs.getMap().get(u2)), is(false));
