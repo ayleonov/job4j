@@ -24,10 +24,10 @@ public class User {
           //&& birthday.equals(user.birthday);
     }
 
-  /*  @Override
+   @Override
     public int hashCode() {
         return Objects.hash(name, children, birthday);
     }
-*/
+
 
 }

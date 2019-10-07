@@ -29,9 +29,9 @@ public class ResearchTest {
         int hash1 = rs.getMap().get(u1).hashCode();
         int hash2 = rs.getMap().get(u2).hashCode();
         System.out.println(u1.hashCode()==u2.hashCode());
-        assertThat(u1.hashCode()==u2.hashCode(), is(false));
-        //assertThat( hash1==hash2, is(false));
-        assertThat(rs.getMap().size(), is(2));
+        assertThat(u1.hashCode()==u2.hashCode(), is(true));
+        assertThat(rs.getMap().size(), is(1));
+        assertThat(rs.getMap().get(u2), is("19"));
         assertThat(u1.equals(u2), is(true));
     }
 
