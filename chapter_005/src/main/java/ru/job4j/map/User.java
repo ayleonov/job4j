@@ -13,7 +13,7 @@ public class User {
         this.children = children;
         this.birthday = birthday;
     }
-/*
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -23,11 +23,11 @@ public class User {
                 && name.equals(user.name);
           //&& birthday.equals(user.birthday);
     }
-*/
-    @Override
+
+  /*  @Override
     public int hashCode() {
         return Objects.hash(name, children, birthday);
     }
-
+*/
 
 }
