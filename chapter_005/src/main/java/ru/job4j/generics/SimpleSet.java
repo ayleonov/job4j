@@ -2,6 +2,7 @@ package ru.job4j.generics;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class SimpleSet<E> implements Iterable<E> {
     private SimpleArray sa = new SimpleArray(5);
@@ -22,12 +23,12 @@ public class SimpleSet<E> implements Iterable<E> {
     public boolean contains(Object[] coll, int position, E e) {
         boolean res = false;
         for (int i = 0; i < position; i++) {
-
-            if ((coll[i].equals(e)) && (coll[i] != null)) {
+            if (Objects.equals(coll[i], e)) {
                 res = true;
                 break;
             }
         }
+
         return res;
     }
 

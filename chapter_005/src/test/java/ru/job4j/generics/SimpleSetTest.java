@@ -41,4 +41,15 @@ public class SimpleSetTest {
         assertThat(it.hasNext(), is(false));
         it.next();
     }
+
+    @Test
+    public void whenTryWithNullElement() {
+        SimpleSet<Integer> sset = new SimpleSet();
+        sset.add(14);
+        sset.add(null);
+        sset.add(4);
+        sset.add(76);
+        assertThat(sset.getSa().getArray()[3], is(76));
+        assertThat(sset.add(4), is(false));
+    }
 }
