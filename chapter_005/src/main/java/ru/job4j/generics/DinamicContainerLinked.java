@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class DinamicContainerLinked<E> implements Iterable<E> {
-    private Node<E> node;
     private int modCount = 0;
     private Node<E> first;
     private int size;
@@ -18,10 +17,14 @@ public class DinamicContainerLinked<E> implements Iterable<E> {
     }
 
     public E delete() {
-        Node<E> deleted = this.first;
-        this.first = this.first.next;
-        this.size--;
-        return deleted.data;
+        if (first == null) {
+            return null;
+        } else {
+            Node<E> deleted = this.first;
+            this.first = this.first.next;
+            this.size--;
+            return deleted.data;
+        }
     }
 
     public int getSize() {
