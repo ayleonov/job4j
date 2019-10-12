@@ -19,11 +19,10 @@ public abstract class AbstractStore<E extends Base> implements Store<E> {
     @Override
     public boolean replace(String id, Base model) {
         boolean res = false;
-        try {
-
-            res = simpArr.set(findIndexById(id), (E) model);
-        } catch (NoSuchElementException e) {
-            e.getMessage();
+        int index = findIndexById(id);
+        if (index != -1) {
+            simpArr.set(index, (E) model);
+            res = true;
         }
         return res;
     }
@@ -31,32 +30,25 @@ public abstract class AbstractStore<E extends Base> implements Store<E> {
     @Override
     public boolean delete(String id) {
         boolean res = false;
-        try {
-            int foundIndex = findIndexById(id);
-            int found = foundIndex;
-            res = simpArr.remove(findIndexById(id));
-        } catch (NoSuchElementException e) {
-            e.getMessage();
+        int index = findIndexById(id);
+        if (index != -1) {
+            simpArr.remove(index);
+            res = true;
         }
+
         return res;
     }
 
     @Override
     public E findById(String id) {
+        E res = null;
 
-        Base object = null;
+        int index = findIndexById(id);
 
-        try {
-            for (Object o : simpArr.getArray()) {
-                if (((E) o).getId().equals(id)) {
-                    object = (E) o;
-                    break;
-                }
-            }
-        } catch (NoSuchElementException e) {
-            e.getMessage();
+        if (index != -1) {
+            res = (E) simpArr.getArray()[index];
         }
-        return (E) object;
+        return (E) res;
     }
 
     public Integer findIndexById(String id) {
@@ -73,7 +65,6 @@ public abstract class AbstractStore<E extends Base> implements Store<E> {
         } catch (NoSuchElementException e) {
             e.getMessage();
         }
-
         return index;
     }
 }
