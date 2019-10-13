@@ -19,22 +19,25 @@ public class SimpleQueueTest {
         sq = new SimpleQueue();
         sq.push(1);
         sq.push(2);
+        sq.push(3);
+        sq.push(4);
     }
 
     @Test
     public void whenAddFiveElementsThenReceiveItFIFO() {
 
-        sq.push(3);
-        sq.push(4);
         sq.push(5);
-
-        //System.out.println("колич элементов: "+sq.firstStack.dcl.countelements());
-        sq.convert();
-        //System.out.println("колич элементов: "+sq.secondStack.dcl.countelements());
         assertThat(sq.secondStack.poll(), is(1));
         assertThat(sq.secondStack.poll(), is(2));
         assertThat(sq.secondStack.poll(), is(3));
+        assertThat(sq.secondStack.poll(), is(4));
+        assertThat(sq.secondStack.poll(), is(5));
     }
 
-
+    @Test
+    public void whenTestingPushPushPushPushPollPushPoll() {
+        assertThat(sq.secondStack.poll(), is(1));
+        sq.push(5);
+        assertThat(sq.secondStack.poll(), is(2));
+    }
 }

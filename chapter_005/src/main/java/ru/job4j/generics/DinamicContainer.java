@@ -16,6 +16,10 @@ public class DinamicContainer<E> implements Iterable<E> {
         this.container = new Object[size];
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public Object[] getContainer() {
         return container;
     }

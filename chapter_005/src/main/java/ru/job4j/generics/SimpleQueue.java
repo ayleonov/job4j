@@ -1,32 +1,26 @@
 package ru.job4j.generics;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 public class SimpleQueue<T> {
     SimpleStack firstStack = new SimpleStack();
     SimpleStack secondStack = new SimpleStack();
-
-    public void convert() {
-        for (int i = 0; i < firstStack.dcl.getSize(); i++) {
-            secondStack.push(firstStack.dcl.get(i));
-        }
-    }
-
-    public void queue(T value) {
-        firstStack.push(value);
-    }
+    int size = 0;
 
     public T poll() {
-        convert();
-        return (T) secondStack.poll();
 
+        return (T) secondStack.poll();
     }
 
     public void push(T value) {
+        for (int i = 0; i < size; i++) {
+            firstStack.push(secondStack.poll());
+        }
 
         firstStack.push(value);
+        size++;
+
+        for (int i = 0; i < size; i++) {
+            secondStack.push(firstStack.poll());
+        }
     }
 }
 
