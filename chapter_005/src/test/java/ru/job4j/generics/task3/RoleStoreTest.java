@@ -48,9 +48,9 @@ public class RoleStoreTest {
         rs.add(model);
         assertThat(rs.getSimpArr().getArray()[0], is(model));
         Base model2 = new Role("0002");
-        boolean result = rs.replace("0001", model2);
+        assertThat(rs.replace("0001", model2), is(true));
         assertThat(rs.getSimpArr().getArray()[0], is(model2));
-        assertThat(result, is(true));
+        rs.replace("0009", model2);
         assertThat(rs.replace("0009", model2), is(false));
     }
 

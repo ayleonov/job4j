@@ -2,6 +2,7 @@ package ru.job4j.generics.task3;
 
 import ru.job4j.generics.SimpleArray;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public abstract class AbstractStore<E extends Base> implements Store<E> {
@@ -53,18 +54,16 @@ public abstract class AbstractStore<E extends Base> implements Store<E> {
 
     public Integer findIndexById(String id) {
         int index = -1;
-        try {
-            for (int i = 0; i < simpArr.getPosition(); i++) {
-                E element = (E) (simpArr.getArray()[i]);
-                String elementId = element.getId();
-                if (elementId.equals(id)) {
-                    index = i;
-                    break;
-                }
+        int count = 0;
+        Iterator it = simpArr.iterator();
+          while(count<simpArr.getPosition()){
+            if (((E)(it.next())).getId().equals(id)) {
+                index = count;
+                break;
             }
-        } catch (NoSuchElementException e) {
-            e.getMessage();
+          count++;
         }
+
         return index;
     }
 }
