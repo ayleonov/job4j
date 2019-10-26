@@ -7,13 +7,13 @@ import java.util.NoSuchElementException;
 
 public class Createmap<K, V> implements Iterable {
     private int position = 0;
-    private static int STARTSIZE = 16;
-    private static int SIZE = STARTSIZE;
+    private final static int STARTSIZE = 16;
+    private static int size = STARTSIZE;
 
     private Node<K, V>[] table;
 
     public Createmap() {
-        this.table = new Node[SIZE];
+        this.table = new Node[size];
     }
 
 
@@ -32,7 +32,7 @@ public class Createmap<K, V> implements Iterable {
             position++;
             res = true;
         } else {
-            if (position > SIZE) {
+            if (position > size) {
                 resize();
             }
             table[position++] = newNode(key, value);
@@ -46,8 +46,8 @@ public class Createmap<K, V> implements Iterable {
 
 
     public V get(K key) {
-        Node<K, V> e;
-        return (e = getNode(key)) == null ? null : e.getValue();
+        Node<K, V> e = getNode(key);
+        return e == null ? null : e.getValue();
     }
 
     public boolean delete(K key) {
@@ -89,12 +89,13 @@ public class Createmap<K, V> implements Iterable {
 
     private int hash(K key) {
         int h;
-        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+        h = key.hashCode();
+        return (key == null) ? 0 : h ^ (h >>> 16);
     }
 
     public void resize() {
-        SIZE *= 2;
-        this.table = Arrays.copyOf(table, SIZE);
+        size *= 2;
+        this.table = Arrays.copyOf(table, size);
     }
 
     @Override

@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
 
 public class MatrixTest {
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void whenTestingSquareMatrixTwoOnTwo() {
         int[][] value = {
                 {1, 2},
@@ -29,9 +29,10 @@ public class MatrixTest {
         assertThat(it.hasNext(), is(false));
         it.next();
     }
+
     @Test
     public void whenTestingNonSquareMatrix() {
-        int[][] value =  {{1},{2, 3, 4, 5,},{6, 7}, {8, 9, 10, 11, 12, 13, 14}};
+        int[][] value = {{1}, {2, 3, 4, 5}, {6, 7}, {8, 9, 10, 11, 12, 13, 14}};
         Matrix matr = new Matrix(value);
         Iterator it = matr.iterator();
 

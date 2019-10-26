@@ -56,12 +56,12 @@ public abstract class AbstractStore<E extends Base> implements Store<E> {
         int index = -1;
         int count = 0;
         Iterator it = simpArr.iterator();
-          while(count<simpArr.getPosition()){
-            if (((E)(it.next())).getId().equals(id)) {
+        while (count < simpArr.getPosition()) {
+            if (((E) (it.next())).getId().equals(id)) {
                 index = count;
                 break;
             }
-          count++;
+            count++;
         }
 
         return index;

@@ -1,7 +1,7 @@
 package ru.job4j.generics;
 
 public class FindFixation {
-    private static int SIZE = 4;
+    private final static int SIZE = 4;
     private Node[] arrayMustBe = new Node[SIZE];
     private Node[] arrayTesting = new Node[SIZE];
 
@@ -35,14 +35,14 @@ public class FindFixation {
 
         boolean res = false;
 
-        for (int i = 0; i <= SIZE -1 ; i++) {
-            if (i < SIZE -1){
-                if (!(arrayTesting[i].equals(arrayMustBe[i]))){
+        for (int i = 0; i <= SIZE - 1; i++) {
+            if (i < SIZE - 1) {
+                if (!(arrayTesting[i].equals(arrayMustBe[i]))) {
                     res = true;
                     break;
                 }
             } else {
-                if (!(arrayTesting[SIZE -1].equals(arrayMustBe[SIZE-1]))) {
+                if (!(arrayTesting[SIZE - 1].equals(arrayMustBe[SIZE - 1]))) {
                     res = true;
                     break;
                 }

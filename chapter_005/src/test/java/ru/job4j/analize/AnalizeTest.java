@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
+
 import ru.job4j.analize.Analize.User;
 import ru.job4j.analize.Analize.Info;
 
@@ -33,6 +34,7 @@ public class AnalizeTest {
         List<User> curr = List.of(us5, us8, us3, us9, us19, us24);
         result = an.diff(prev, curr);
     }
+
     @Test
     public void whenTestintThatChangedTwoUsers() {
 
@@ -43,6 +45,7 @@ public class AnalizeTest {
     public void whenTestintThatDeletedOneUser() {
         assertThat(result.getDeleted(), is(1));
     }
+
     @Test
     public void whenTestThatAddedThreeUsers() {
         assertThat(result.getAdded(), is(3));

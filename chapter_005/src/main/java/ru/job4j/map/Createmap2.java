@@ -3,10 +3,10 @@ package ru.job4j.map;
 import java.util.*;
 
 public class Createmap2<K, V> implements Iterable {
-    private static int CAPACITY = 16;
+    private final static int CAPACITY = 16;
     private int size = CAPACITY;
     Entry<K, V>[] table = new Entry[size];
-    private static double LOADFACTOR = 0.75;
+    private final static double LOADFACTOR = 0.75;
     double threshold = size * LOADFACTOR;
     private int hash;
     private int position = 0;

@@ -16,12 +16,12 @@ public class Analize {
 
         for (int i = 0; i < previous.size(); i++) {
             User temp = previous.get(i);
-            if (idsCurrent.contains(temp.id)){
-                if (!(temp.name.equals(current.get(i).name))){
+            if (idsCurrent.contains(temp.id)) {
+                if (!(temp.name.equals(current.get(i).name))) {
                     info.changed++;
                 }
                 info.added--;
-            }   else {
+            } else {
                 info.deleted++;
             }
         }
@@ -39,8 +39,12 @@ public class Analize {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             User user = (User) o;
             return Objects.equals(name, user.name);
         }
