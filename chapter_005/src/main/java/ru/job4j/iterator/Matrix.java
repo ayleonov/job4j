@@ -27,7 +27,9 @@ public class Matrix implements Iterable {
             @Override
             public Object next() {
                 Object res = null;
-                if (hasNext()) {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                } else {
                     res = value[iterpositionVert][iterpositionHor];
                     if (iterpositionHor + 1 >= (value[iterpositionVert].length)) {
                         if (iterpositionVert + 1 < value.length) {
@@ -40,8 +42,6 @@ public class Matrix implements Iterable {
                     } else {
                         iterpositionHor++;
                     }
-                } else {
-                    throw new NoSuchElementException();
                 }
                 return res;
             }
