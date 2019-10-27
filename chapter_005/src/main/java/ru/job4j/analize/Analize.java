@@ -1,15 +1,13 @@
 package ru.job4j.analize;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Analize {
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
         info.added = current.size();
 
-        ArrayList<Integer> idsCurrent = new ArrayList<>(current.size());
+        Set<Integer> idsCurrent = new HashSet<>(current.size());
         for (int i = 0; i < current.size(); i++) {
             idsCurrent.add(current.get(i).id);
         }
