@@ -24,13 +24,23 @@ public class Zip {
 
     public List<File> seekBy(String root, String ext) {
         List<File> list = new ArrayList();
-
+        File file = new File(root);
+            File[] allFiles = file.listFiles();
+             for(File el :allFiles) {
+                 if (!el.isDirectory()){
+                     if (el.getName().split("\\.")[1].equals(ext)) {
+                         list.add(el);
+                     }
+                 } else {
+                     seekBy(el.getName(), ext);
+                 }
+             }
 
         return list;
     }
 
 
     public static void main(String[] args) {
-        //new Zip().pack(List.of(new File("./chapter_005/pom.xml")), new File("./chapter_005/pom.zip"));
+        new Zip().pack(List.of(new File("./chapter_005/pom.xml")), new File("./chapter_005/pom.zip"));
     }
 }
