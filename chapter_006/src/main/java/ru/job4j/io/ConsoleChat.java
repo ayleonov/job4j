@@ -11,8 +11,8 @@ public class ConsoleChat {
 
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
-        //PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", true));
+        //PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
+        PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", true));
         while (!ifExit) {
             String text = br.readLine();
 
@@ -39,8 +39,8 @@ public class ConsoleChat {
     }
 
     public String answer() throws IOException {
-        //BufferedReader buffRead = new BufferedReader(new FileReader("./data/templates.txt"));
-        BufferedReader buffRead = new BufferedReader(new FileReader("chapter_006/data/templates.txt"));
+        BufferedReader buffRead = new BufferedReader(new FileReader("./data/templates.txt"));
+        //BufferedReader buffRead = new BufferedReader(new FileReader("chapter_006/data/templates.txt"));
         int numberCycles = 0;
         String res = "";
         boolean ifExit = false;
