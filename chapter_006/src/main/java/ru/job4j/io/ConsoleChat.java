@@ -12,7 +12,7 @@ public class ConsoleChat {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
-        PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", true));
+        PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", false));
         while (!ifExit) {
             String text = br.readLine();
 

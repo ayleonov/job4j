@@ -22,11 +22,15 @@ public class ConsoleChat2 {
      *  insertPosition - текущий индекс списка подаваемых значения
      *  в тестировочном режиме.
      *
+     * время написания строк в тестировочном режиме не имеет смысла
+     * в связи с быстротой операций, все строки будут написаны одновременно.
+     *
      * @param insert dates for testing in test mode
      * @param mode  number of mode (receive with dates in test mode).
      * @throws IOException
      */
     public void insertText(List<String> insert, int mode) throws IOException {
+
 
         boolean ifExit = false;
         int key = 0;
@@ -49,23 +53,21 @@ public class ConsoleChat2 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
         PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", true));
-
+        out.println("================================================");
+        out.println("Начало сеанса: " + new Date());
         while (!ifExit) {
             String text = "";
 
             if (mode == 1) {
                 text = br.readLine();
             } else {
-                text = insert.get(insertPosition);
+                text = insert.get(insertPosition++);
             }
 
 
             out.println(String.format("%s: %s", new Date(), text));
 
-            if (insertPosition == insert.size() - 1) {
-                System.out.println("Ряд тестовых данных завершен. Программа завершается");
-                ifExit = true;
-            }
+
             if (text.equals("закончить")) {
                 key = 2;
                 ifExit = true;
@@ -82,9 +84,17 @@ public class ConsoleChat2 {
                 out.println(String.format("%s: %s", currentDate, answer));
                 System.out.println(String.format("%s: %s", currentDate, answer));
             }
+            if (insertPosition == insert.size()) {
+                System.out.println("Ряд тестовых данных завершен. Программа завершается");
+                ifExit = true;
+            }
         }
         br.close();
+        out.println("Конец сеанса: " + new Date());
+        out.println("================================================");
         out.close();
+
+
     }
 
     /** Выбирает фразу из заданных в текстовом файле.
