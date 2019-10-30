@@ -39,44 +39,28 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     }
 
     public Iterator iterator() {
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(root);
+
+            Node<E> el = data.peek();
+            for (Node<E> child : el.leaves()) {
+                data.offer(child);
+            }
 
         return new Iterator() {
-            int iterpos = -2;
-            int sizeChildren;
 
             @Override
             public boolean hasNext() {
-                boolean res = false;
-
-                if (root != null && iterpos == -2) {
-                    iterpos = -1;
-                    res = true;
-
-                } else {
-                    if (iterpos >= -1 && iterpos < sizeChildren) {
-                        res = true;
-                    }
-                }
-                return res;
+                return data.size() > 0;
             }
 
             @Override
             public Object next() {
-                sizeChildren = root.getChildren().size();
-                Node<E> res = null;
+                Node<E> res;
                 if (hasNext()) {
-                    if (iterpos == -1) {
-                        res = root;
-                        iterpos = 0;
-                    } else {
-                        if (iterpos < sizeChildren) {
-                            res = root.getChildren().get(iterpos++);
-                        } else {
-                            throw new NoSuchElementException();
-                        }
-                    }
-                } else {
-                    throw new NoSuchElementException();
+                    res = data.poll();
+                }else {
+                 throw new NoSuchElementException();
                 }
                 return res;
             }
