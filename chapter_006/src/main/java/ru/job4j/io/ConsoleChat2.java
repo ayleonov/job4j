@@ -4,29 +4,32 @@ import java.io.*;
 import java.util.Date;
 import java.util.List;
 
-/** "Консольный чат."
+/**
+ * "Консольный чат."
+ *
  * @author Aleksey Leonov.
  * верс.2.0.
  * 30 Oct 2019.
  */
 public class ConsoleChat2 {
 
-    /**  Вводит данные с консоли в режиме работе с консоли
-     *  или вводит вносимые данные из Тест-класса при тестировании.
-     *
-     *  key характер текущей работы программы, равен:
-     *  0 - в режиме ввод-ответ;
-     *  1 - в режиме ввод;
-     *  2 - идет завершение программы.
-     *
-     *  insertPosition - текущий индекс списка подаваемых значения
-     *  в тестировочном режиме.
-     *
+    /**
+     * Вводит данные с консоли в режиме работе с консоли
+     * или вводит вносимые данные из Тест-класса при тестировании.
+     * <p>
+     * key характер текущей работы программы, равен:
+     * 0 - в режиме ввод-ответ;
+     * 1 - в режиме ввод;
+     * 2 - идет завершение программы.
+     * <p>
+     * insertPosition - текущий индекс списка подаваемых значения
+     * в тестировочном режиме.
+     * <p>
      * время написания строк в тестировочном режиме не имеет смысла
      * в связи с быстротой операций, все строки будут написаны одновременно.
      *
      * @param insert dates for testing in test mode
-     * @param mode  number of mode (receive with dates in test mode).
+     * @param mode   number of mode (receive with dates in test mode).
      * @throws IOException
      */
     public void insertText(List<String> insert, int mode) throws IOException {
@@ -52,7 +55,7 @@ public class ConsoleChat2 {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
-        PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", true));
+        PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", false));
         out.println("================================================");
         out.println("Начало сеанса: " + new Date());
         while (!ifExit) {
@@ -66,13 +69,14 @@ public class ConsoleChat2 {
 
 
             out.println(String.format("%s: %s", new Date(), text));
-
+            System.out.println(String.format("%s: %s", new Date(), text));
 
             if (text.equals("закончить")) {
                 key = 2;
                 ifExit = true;
             }
             if (text.equals("стоп")) {
+
                 key = 1;
             }
             if ((text.equals("продолжить"))) {
@@ -97,9 +101,10 @@ public class ConsoleChat2 {
 
     }
 
-    /** Выбирает фразу из заданных в текстовом файле.
+    /**
+     * Выбирает фразу из заданных в текстовом файле.
      *
-     * @return  рандомная фраза из текстового файла.
+     * @return рандомная фраза из текстового файла.
      * @throws IOException
      */
 
@@ -122,7 +127,8 @@ public class ConsoleChat2 {
 
     }
 
-    /** Точка входа в программу при режиме работы с консолью.
+    /**
+     * Точка входа в программу при режиме работы с консолью.
      *
      * @param args
      * @throws IOException

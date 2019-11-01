@@ -12,11 +12,11 @@ public class ConsoleChat {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
-        PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", false));
+        PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", true));
         while (!ifExit) {
             String text = br.readLine();
 
-            out.println(String.format("%s: %s",new Date(),text));
+            out.println(String.format("%s: %s", new Date(), text));
             if (text.equals("закончить")) {
                 key = 2;
                 ifExit = true;
@@ -30,8 +30,8 @@ public class ConsoleChat {
             if (key == 0) {
                 String answer = answer();
                 Date currentDate = new Date();
-                out.println(String.format("%s: %s", currentDate,answer));
-                System.out.println(String.format("%s: %s", currentDate,answer));
+                out.println(String.format("%s: %s", currentDate, answer));
+                System.out.println(String.format("%s: %s", currentDate, answer));
             }
         }
         br.close();
