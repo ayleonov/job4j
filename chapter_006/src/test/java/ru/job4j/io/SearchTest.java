@@ -18,13 +18,17 @@ public class SearchTest {
         String pathParent = "c:/temp/tmpdir";
         // программа выделяет файлы с указанными расширениями
         List<File> result = sr.findFiles(pathParent, groupExt);
-        // проверяем, что всего файлов с заданными расширениями - 9 шт
-        assertThat(result.size(), is(9));
+        // проверяем, что всего файлов с заданными расширениями - 12 шт
+        assertThat(result.size(), is(12));
         // список имен реальных файлов
-        List<String> realfilesOnComputer = List.of("000.java", "000text.txt", "001.java", "001text.txt", "002_7.txt", "002.java", "002text.txt", "003text.txt", "003.java");
+        List<String> realfilesOnComputer = List.of("000_1.java", "000_1.txt", "000_2.java",
+                "000_2.txt", "001_1.java", "001_1.txt", "001_2.java", "001_2.txt", "002_1.java", "002_1.txt",
+                "002_2.txt", "003_1.java");
 
         for (int i = 0; i < result.size(); i++) {
             assertTrue(realfilesOnComputer.contains(result.get(i).getName()));
         }
+
+
     }
 }
