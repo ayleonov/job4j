@@ -19,8 +19,8 @@ public class Config {
             while (br.ready()) {
                 String str = br.readLine();
                 boolean first = !str.isEmpty();
-                boolean second = str.split("//").length == 1;
-                boolean third = str.split("##").length == 1;
+                boolean second = !str.startsWith("//");
+                boolean third = !str.startsWith("##");
                 boolean fifth = str.split("=").length == 0;
 
                 if (first && second && third) {
@@ -31,7 +31,6 @@ public class Config {
                     }
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
