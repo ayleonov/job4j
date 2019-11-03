@@ -33,7 +33,7 @@ public class TreeTest {
         );
     }
 
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void whenTestingIterator() {
         Tree<Integer> tree = new Tree<>(1);
         tree.add(1, 2);
@@ -48,5 +48,29 @@ public class TreeTest {
         assertThat(((Node) it.next()).getValue(), is(3));
         assertThat(it.hasNext(), is(false));
         it.next();
+    }
+
+    @Test
+    public void whenTestingBinaryTreeThenTrue() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(3, 4);
+        tree.add(4, 5);
+        // проверяем, что дерево бинарное
+
+        assertTrue(tree.isBinary());
+    }
+
+    @Test
+    public void whenTestingNotBinaryTreeThenFalse() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        // проверяем, что дерево не бинарное
+        assertFalse(tree.isBinary());
     }
 }
