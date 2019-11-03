@@ -56,6 +56,7 @@ public class ConsoleChat2 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
         PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", false));
+        String answer = answer();
         out.println("================================================");
         out.println("Начало сеанса: " + new Date());
         while (!ifExit) {
@@ -83,7 +84,7 @@ public class ConsoleChat2 {
                 key = 0;
             }
             if (key == 0) {
-                String answer = answer();
+
                 Date currentDate = new Date();
                 out.println(String.format("%s: %s", currentDate, answer));
                 System.out.println(String.format("%s: %s", currentDate, answer));

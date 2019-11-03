@@ -13,6 +13,7 @@ public class ConsoleChat {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
         PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", true));
+        String answer = answer();
         while (!ifExit) {
             String text = br.readLine();
 
@@ -28,7 +29,7 @@ public class ConsoleChat {
                 key = 0;
             }
             if (key == 0) {
-                String answer = answer();
+
                 Date currentDate = new Date();
                 out.println(String.format("%s: %s", currentDate, answer));
                 System.out.println(String.format("%s: %s", currentDate, answer));
