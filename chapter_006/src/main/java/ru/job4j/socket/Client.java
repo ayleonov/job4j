@@ -20,10 +20,12 @@ public class Client {
             String str;
             do {
                 out.println("Hello oracle");
-                while (!(str = in.readLine()).isEmpty()) {
+                str = in.readLine();
+                while (!(str).isEmpty()) {
                     System.out.println(str);
                 }
-                while (!(str = console.nextLine()).isEmpty()) {
+                str = console.nextLine();
+                while (!(str).isEmpty()) {
                     out.println();
                 }
 

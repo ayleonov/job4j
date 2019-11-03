@@ -8,6 +8,7 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
     List<File> list;
+
     public void pack(List<File> sources, File target) {
 
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
@@ -25,16 +26,16 @@ public class Zip {
     public List<File> seekBy(String root, String ext) {
         List<File> list = new ArrayList();
         File file = new File(root);
-            File[] allFiles = file.listFiles();
-             for(File el :allFiles) {
-                 if (!el.isDirectory()){
-                     if (el.getName().split("\\.")[1].equals(ext)) {
-                         list.add(el);
-                     }
-                 } else {
-                     seekBy(el.getName(), ext);
-                 }
-             }
+        File[] allFiles = file.listFiles();
+        for (File el : allFiles) {
+            if (!el.isDirectory()) {
+                if (el.getName().split("\\.")[1].equals(ext)) {
+                    list.add(el);
+                }
+            } else {
+                seekBy(el.getName(), ext);
+            }
+        }
 
         return list;
     }

@@ -4,21 +4,23 @@ import java.io.File;
 import java.util.List;
 
 public class Args {
-    private List<String> args;
+    private String[] args;
+    private String d = args[0];
+    private String e = args[1];
+    private String o = args[2];
 
-    public Args(List<String> args) {
+    public Args(String[] args) {
         this.args = args;
     }
-    public String directory() {
-        return "./chapter_005";
+    public void directory() {
+        args[0] = "./chapter_006";
     }
 
-    public List<String> exclude() {
-        return List.of("*.xml", "*.java");
+    public void exclude() {
+        args[1] = "*.java";
     }
 
-    public File output() {
-
-        return new File("project.zip");
+    public void output() {
+        args[2] = "project.zip";
     }
 }
