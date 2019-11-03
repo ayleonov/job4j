@@ -5,31 +5,22 @@ import java.util.Date;
 
 public class Analizy {
 
-
     public void unavailable(String source, String target) {
-
-
         int key = 0;
         String dateStart = "";
         String dateFinish = "";
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(source));
-            PrintWriter out = new PrintWriter(new FileOutputStream(target));
-
-
+        try
+                (BufferedReader br = new BufferedReader(new FileReader(source));
+                 PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             while (br.ready()) {
-
                 String str = br.readLine().trim();
-
-                if (!str.isEmpty() && str.split("//").length == 1 && str.split("//").length == 1) {
-
+                if (!str.isEmpty() && !str.startsWith("//") && !str.startsWith("##")) {
                     if (((str.substring(0, 3).equals("400")) || (str.substring(0, 3).equals("500"))) && key == 0) {
                         if (key == 0) {
                             dateStart = str.substring(4, 12);
                             dateFinish = "";
                         }
                         key++;
-
                     }
                     if (!(str.substring(0, 3).equals("400")) && !(str.substring(0, 3).equals("500"))) {
                         dateFinish = str.substring(4, 12);
@@ -40,8 +31,6 @@ public class Analizy {
                     }
                 }
             }
-            br.close();
-            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

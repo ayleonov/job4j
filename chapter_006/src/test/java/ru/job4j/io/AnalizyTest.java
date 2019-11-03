@@ -33,5 +33,4 @@ public class AnalizyTest {
         assertTrue(set.contains(firstTimeout));
         assertTrue(set.contains(secondTimeout));
     }
-
 }
