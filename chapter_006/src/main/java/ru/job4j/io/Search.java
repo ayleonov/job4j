@@ -20,8 +20,7 @@ public class Search {
                 if (file.isDirectory()) {
                     data.offer(file);
                 } else {
-                    String extFile = file.getName().split("\\.")[1];
-                    if (exts.contains(extFile)) {
+                    if (checkExtention(file,exts)) {
                         list.add(file);
                     }
                 }
@@ -30,20 +29,12 @@ public class Search {
         return list;
     }
 
-    public List<File> findFiles2(String parent, List<String> exts) {
-        File file = new File(parent);
-        File[] allFiles = file.listFiles();
-        for (File el : allFiles) {
-            if (!el.isDirectory()) {
-                String name = el.getName();
-                String extEl = el.getName().split("\\.")[1];
-                if (exts.contains(extEl)) {
-                    list.add(new File(el.getPath()));
-                }
-            } else {
-                findFiles2(el.getPath(), exts);
-            }
+    public boolean checkExtention(File file, List<String> exts) {
+        boolean res = false;
+        String extFile = file.getName().split("\\.")[1];
+        if (exts.contains(extFile)){
+            res = true;
         }
-        return list;
+        return res;
     }
 }
