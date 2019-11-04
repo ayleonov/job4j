@@ -4,11 +4,13 @@ import java.io.*;
 import java.util.Date;
 
 public class Analizy {
+    StringBuilder cache = new StringBuilder();
 
     public void unavailable(String source, String target) {
         int key = 0;
         String dateStart = "";
         String dateFinish = "";
+
         try
                 (BufferedReader br = new BufferedReader(new FileReader(source));
                  PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
@@ -26,15 +28,27 @@ public class Analizy {
                         dateFinish = str.substring(4, 12);
                     }
                     if (!dateStart.equals("") && !dateFinish.equals("")) {
-                        out.println(String.format("%s %s", dateStart, dateFinish));
+                        cache.append(String.format("%s %s", dateStart, dateFinish)).append(System.lineSeparator());
                         key = 0;
                     }
+
                 }
             }
+            writeresults(target);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public void writeresults(String target) {
+        try (
+                PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
+            out.println(cache.toString().trim());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args) {
         try (PrintWriter out = new PrintWriter(new FileOutputStream("unavailable.csv"))) {
