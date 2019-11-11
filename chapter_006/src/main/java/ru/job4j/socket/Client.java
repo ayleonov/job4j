@@ -17,19 +17,19 @@ public class Client {
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             Scanner console = new Scanner(System.in);
-            String str;
+            StringBuilder sb = new StringBuilder();
+            out.println("Hello oracle");
+            String str = in.readLine();
+
             do {
-                out.println("Hello oracle");
-                str = in.readLine();
-                while (!(str).isEmpty()) {
+
+                while (str != null) {
+                    str = console.nextLine();
                     System.out.println(str);
-                }
-                str = console.nextLine();
-                while (!(str).isEmpty()) {
-                    out.println();
+                    sb.append(str);
                 }
 
-            } while (!str.equals("exit"));
+            } while (!sb.toString().equals("exit"));
 
         } catch (IOException e) {
             e.printStackTrace();

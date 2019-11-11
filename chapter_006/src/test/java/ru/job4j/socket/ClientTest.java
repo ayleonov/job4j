@@ -1,6 +1,7 @@
 package ru.job4j.socket;
 
 import com.google.common.base.Joiner;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -13,7 +14,20 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+
+
 public class ClientTest {
+    @Before
+    public void loadOutput() {
+        System.setOut(new PrintStream(this.out));
+    }
+
+    @After
+    public void backOutput() {
+        System.setOut(stdout);
+    }
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final PrintStream stdout = System.out;
     private static final String LN = System.getProperty("line.separator");
 
     public void testClient(String input, String expected) throws IOException {
