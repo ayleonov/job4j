@@ -18,8 +18,8 @@ public class Connection2 {
     }
 
     public void start() {
-    readStrings();
-    comparisionStrings();
+        readStrings();
+        comparisionStrings();
     }
 
 
@@ -46,16 +46,16 @@ public class Connection2 {
     public void comparisionStrings() {
 
 
-            for (String[] el : this.list) {
-                for (int i = 0; i < 3; i++) {
+        for (String[] el : this.list) {
+            for (int i = 0; i < 3; i++) {
 
                 if (!map.containsKey(el[i])) {
                     map.put(el[i], new StringBuilder().append(numberString));
-                }   else {
+                } else {
                     map.put(el[i], map.get(el[i]).append(";").append(numberString));
                 }
             }
-                numberString++;
+            numberString++;
         }
 
     }

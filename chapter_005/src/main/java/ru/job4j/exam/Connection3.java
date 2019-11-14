@@ -67,7 +67,7 @@ public class Connection3 {
         return res;
     }
 
-      private void writeGroups() {
+    private void writeGroups() {
         try (PrintWriter out = new PrintWriter(target)) {
             for (int i = 0; i < groups.size(); i++) {
                 out.println("Группа " + (i + 1));
