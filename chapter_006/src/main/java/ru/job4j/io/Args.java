@@ -1,6 +1,8 @@
 package ru.job4j.io;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Args {
@@ -13,14 +15,27 @@ public class Args {
         this.args = args;
     }
     public void directory() {
-        args[0] = "./chapter_006";
+        String dir = "chapter_006";
+        File file = new File(dir);
+        if (file.exists() && file.isDirectory()) {
+            args[0] = dir;
+        }
+
     }
 
     public void exclude() {
-        args[1] = "*.java";
+        List<String> exts = List.of("java","txt","doc", "log");
+        String excl = "*.java";
+
+        if (exts.contains(excl.split("\\."))) {
+            args[1] = "*.java";
+        }
     }
 
-    public void output() {
+    public void output() throws IOException {
+        String target = "project.zip";
+        File file = new File(target);
+        file.createNewFile();
         args[2] = "project.zip";
     }
 }
