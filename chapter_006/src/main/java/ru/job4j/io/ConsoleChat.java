@@ -17,16 +17,17 @@ import java.util.List;
  * 12 Nov 2019.
  */
 public class ConsoleChat {
-    List<String> answers = new ArrayList<>();
+    private List<String> answers = new ArrayList<>();
 
     public void insertText() {
         boolean ifExit = false;
         int key = 0;
         readtemplates();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            new File("chapter_006/data/textconsole.txt").createNewFile();
-            PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.txt", true));
-            //PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.txt", true));
+            File file = new File("chapter_006/data/textconsole.txt");
+                    file .createNewFile();
+            PrintWriter out = new PrintWriter(new FileWriter(file, true));
+
 
             while (!ifExit) {
                 String text = br.readLine();

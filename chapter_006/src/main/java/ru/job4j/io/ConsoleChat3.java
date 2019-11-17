@@ -16,7 +16,7 @@ import java.util.List;
  * 12 Nov 2019.
  */
 public class ConsoleChat3 {
-    List<String> answers = new ArrayList<>();
+    private List<String> answers = new ArrayList<>();
     /**
      * Вводит данные с консоли в режиме работе с консоли
      * или вводит вносимые данные из Тест-класса при тестировании.
@@ -58,8 +58,9 @@ public class ConsoleChat3 {
          */
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            File file = new File("./data/textconsole.log");
             //PrintWriter out = new PrintWriter(new FileWriter("chapter_006/data/textconsole.log", true));
-            PrintWriter out = new PrintWriter(new FileWriter("./data/textconsole.log", false));
+            PrintWriter out = new PrintWriter(new FileWriter(file, false));
             String answer = answer();
             out.println("================================================");
             out.println("Начало сеанса: " + new Date());
