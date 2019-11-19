@@ -17,8 +17,8 @@ public class AnalizyTest {
     @Test
     public void when() throws IOException {
         Analizy analizy = new Analizy();
-        String source = "./data/server.log";
-        String target = "./data/target.log";
+        String source = "./data/server.txt";
+        String target = "./data/target.txt";
         analizy.unavailable(source, target);
         Set set = new HashSet();
         BufferedReader bufread = new BufferedReader(new FileReader(target));

@@ -20,8 +20,10 @@ public class Search {
                 if (file.isDirectory()) {
                     data.offer(file);
                 } else {
-                    if (checkExtention(file,exts)) {
+                    if (checkExtention(file, exts)) {
+                        System.out.println(file.getName());
                         list.add(file);
+
                     }
                 }
             }
@@ -32,7 +34,7 @@ public class Search {
     public boolean checkExtention(File file, List<String> exts) {
         boolean res = false;
         String extFile = file.getName().split("\\.")[1];
-        if (exts.contains(extFile)){
+        if (exts.contains(extFile)) {
             res = true;
         }
         return res;

@@ -14,6 +14,7 @@ public class Args {
     public Args(String[] args) {
         this.args = args;
     }
+
     public void directory() {
         String dir = "chapter_006";
         File file = new File(dir);
@@ -24,7 +25,7 @@ public class Args {
     }
 
     public void exclude() {
-        List<String> exts = List.of("java","txt","doc", "log");
+        List<String> exts = List.of("java", "txt", "doc", "log");
         String excl = "*.java";
 
         if (exts.contains(excl.split("\\."))) {

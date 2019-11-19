@@ -12,11 +12,12 @@ import java.util.List;
  * верс.2.1.
  * Изменения по сравнению с верс 2.0.
  * введено однократное получение текста-ответов.
- *
+ * <p>
  * 12 Nov 2019.
  */
 public class ConsoleChat3 {
     private List<String> answers = new ArrayList<>();
+
     /**
      * Вводит данные с консоли в режиме работе с консоли
      * или вводит вносимые данные из Тест-класса при тестировании.
@@ -42,7 +43,7 @@ public class ConsoleChat3 {
         boolean ifExit = false;
         int key = 0;
         int insertPosition = 0;
-        readtemplates();
+        readTemplates();
         /** Чтобы принять номер режима поступающего с данными тестировочного режима
          *  и установка номера режима при работе с консолью
          *  вводится следующее условие.
@@ -105,23 +106,21 @@ public class ConsoleChat3 {
             out.println("================================================");
 
 
-
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
 
-    private void readtemplates() {{
-             try (BufferedReader br = new BufferedReader(new FileReader("./data/templates.txt"))) {
-            //try (BufferedReader br = new BufferedReader(new FileReader("chapter_006/data/templates.txt"))) {
-                while (br.ready()) {
-                    answers.add(br.readLine());
-                }
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
-        }
+    private void readTemplates() {
 
+        try (BufferedReader br = new BufferedReader(new FileReader("./data/templates.txt"))) {
+            //try (BufferedReader br = new BufferedReader(new FileReader("chapter_006/data/templates.txt"))) {
+            while (br.ready()) {
+                answers.add(br.readLine());
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     /**

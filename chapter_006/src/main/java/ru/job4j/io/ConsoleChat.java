@@ -4,16 +4,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  * "Консольный чат."
  *
  * @author Aleksey Leonov.
  * верс.1.1.
- *
+ * <p>
  * Изменения по отнош к верс.1.0 с доработками:
  * откорректировано однократное получение
  * списка автоответов).
- *
+ * <p>
  * 12 Nov 2019.
  */
 public class ConsoleChat {
@@ -25,7 +26,7 @@ public class ConsoleChat {
         readtemplates();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             File file = new File("chapter_006/data/textconsole.txt");
-                    file .createNewFile();
+            file.createNewFile();
             PrintWriter out = new PrintWriter(new FileWriter(file, true));
 
 
@@ -84,7 +85,7 @@ public class ConsoleChat {
 
     }
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         new ConsoleChat().insertText();
     }
 }
