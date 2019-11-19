@@ -5,10 +5,7 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -20,20 +17,28 @@ public class ConnectionTest {
     @Test
     public void whenTestingCheckconnection() {
 
-        StringBuilder sb001 = new StringBuilder().append("100;200;700");
-        StringBuilder sb002 = new StringBuilder().append("1100;400;1700");
+        Set<String> set = new HashSet();
+        set.add("100");
+        set.add("200");
+        set.add("700");
 
-        conn.getGroups().put(0, sb001);
-        conn.getGroups().put(1, sb002);
-        System.out.println(conn.getGroups().size());
-        System.out.println(conn.getGroups().get(0));
-        System.out.println(conn.getGroups().get(1));
+        Set<String> set2 = new HashSet();
+        set2.add("1100");
+        set2.add("400");
+        set2.add("1700");
+
+        conn.getParts().put(0, set);
+        conn.getParts().put(1, set2);
+        System.out.println(conn.getParts().size());
+        System.out.println(conn.getParts().get(0));
+        System.out.println(conn.getParts().get(1));
 
 
         String str = "300;400;600";
+        String str2 = "110;100;301";
 
-        int res = conn.checkconnection(str);
-        assertThat(res, is(1));
+        assertThat(conn.checkconnection(str), is(1));
+        assertThat(conn.checkconnection(str2), is(0));
     }
 
     @Test
@@ -43,8 +48,9 @@ public class ConnectionTest {
         String str3 = "800;900;960";
 
         conn.writeInMap(str);
-        assertThat(conn.getGroups().size(), is(1));
+        //assertThat(conn.getGroups().size(), is(1));
         conn.writeInMap(str2);
+        conn.getGroups().size();
         assertThat(conn.getGroups().size(), is(1));
         conn.writeInMap(str3);
         assertThat(conn.getGroups().size(), is(2));
@@ -53,7 +59,7 @@ public class ConnectionTest {
     @Test
     public void whenTestingReadStrings() {
         conn.readStrings();
-        assertThat(conn.getGroups().size(), is(3));
+        assertThat(conn.getParts().size(), is(3));
 
     }
 

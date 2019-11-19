@@ -9,8 +9,8 @@ import java.util.*;
 public class Connection {
     private String source;
     private String target;
-    private Map<Integer, Set> groups = new HashMap();
-    //private Map<Integer, TreeSet<String[]>> groups2 = new HashMap();
+    private Map<Integer, Set> parts = new HashMap();
+    private List<StringBuilder> groups = new ArrayList();
 
     public Connection(String source, String target) {
         this.source = source;
@@ -36,23 +36,41 @@ public class Connection {
     public void writeInMap(String received) {
         int numberconnect = checkconnection(received);
         if (numberconnect != -1) {
-            Set<String> set = groups.get(numberconnect);
-            set.add(received);
-            groups.put(numberconnect, set);
+            StringBuilder sb = groups.get(numberconnect);
+            sb.append(received);
+            groups.add(numberconnect, sb);
 
         } else {
-            Set<String> set = new HashSet<>();
-            //StringBuilder sb = new StringBuilder();
-            set.add(received);
-            groups.put(groups.size(), set);
+            StringBuilder sb = new StringBuilder();
+            sb.append(received);
+            groups.add(sb);
         }
     }
 
     public int checkconnection(String strings) {
         int res = -1;
+        // текущая поступившая строка
         String[] dStrings = strings.split(";");
 
-        for (int i = 0; i < groups.size(); i++) {
+
+        for (int i = 0; i < parts.size(); i++) {
+            if (parts.get(i).contains(dStrings[0])) {
+                res = i;
+                saveInSet(i,dStrings);
+                break;
+            } else if (parts.get(i).contains(dStrings[1])) {
+                res = i;
+                saveInSet(i,dStrings);
+                break;
+            } else if (parts.get(i).contains(dStrings[2])) {
+                res = i;
+                saveInSet(i,dStrings);
+                break;
+            }
+
+        }
+
+        /*for (int i = 0; i < groups.size(); i++) {
             if (groups.get(i).toString().indexOf(dStrings[0]) != -1) {
                 res = i;
                 break;
@@ -63,15 +81,23 @@ public class Connection {
                 res = i;
                 break;
             }
-        }
+        }*/
         return res;
+    }
+
+    public void saveInSet(int i, String[] arr){
+         Set<String> temp = parts.get(i);
+        for (int j = 0; j < 3; j++) {
+            temp.add(arr[j]);
+        }
+        parts.put(i, temp);
     }
 
     private void writeGroups() {
         try (PrintWriter out = new PrintWriter(target)) {
-            for (int i = 0; i < groups.size(); i++) {
+            for (int i = 0; i < parts.size(); i++) {
                 out.println("Группа " + (i + 1));
-                String[] a = groups.get(i).toString().split(";");
+                String[] a = parts.get(i).toString().split(";");
                 int b = a.length / 3;
                 for (int j = 0; j < b; j++) {
                     int c = 3 * j;
@@ -87,7 +113,11 @@ public class Connection {
 
     }
 
-    public Map<Integer, Set> getGroups() {
+    public Map<Integer, Set> getParts() {
+        return parts;
+    }
+
+    public List<StringBuilder> getGroups() {
         return groups;
     }
 }
