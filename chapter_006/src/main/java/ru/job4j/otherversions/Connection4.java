@@ -1,12 +1,10 @@
-package ru.job4j.exam;
+package ru.job4j.otherversions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Connection4 {

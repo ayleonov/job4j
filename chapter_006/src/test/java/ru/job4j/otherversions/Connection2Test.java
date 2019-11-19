@@ -1,11 +1,10 @@
-package ru.job4j.exam;
+package ru.job4j.otherversions;
 
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
 
 public class Connection2Test {

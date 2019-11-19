@@ -9,10 +9,8 @@ import java.util.*;
 public class Connection {
     private String source;
     private String target;
-    private List<String[]> arrayofstringslist = new ArrayList<>();
-    private List<String[]> group1 = new ArrayList<>();
-    private List<List<String[]>> groups = new ArrayList();
-    int numberGroup = 1;
+    private Map<Integer, Set> groups = new HashMap();
+    //private Map<Integer, TreeSet<String[]>> groups2 = new HashMap();
 
     public Connection(String source, String target) {
         this.source = source;
@@ -21,18 +19,63 @@ public class Connection {
 
     public void start() {
         readStrings();
-        accumulationInGroups();
         writeGroups();
+    }
+
+    public void readStrings() {
+        try (BufferedReader br = new BufferedReader(new FileReader(source))) {
+            while (br.ready()) {
+                String currString = br.readLine();
+                writeInMap(currString);
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    public void writeInMap(String received) {
+        int numberconnect = checkconnection(received);
+        if (numberconnect != -1) {
+            Set<String> set = groups.get(numberconnect);
+            set.add(received);
+            groups.put(numberconnect, set);
+
+        } else {
+            Set<String> set = new HashSet<>();
+            //StringBuilder sb = new StringBuilder();
+            set.add(received);
+            groups.put(groups.size(), set);
+        }
+    }
+
+    public int checkconnection(String strings) {
+        int res = -1;
+        String[] dStrings = strings.split(";");
+
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups.get(i).toString().indexOf(dStrings[0]) != -1) {
+                res = i;
+                break;
+            } else if (groups.get(i).toString().indexOf(dStrings[1]) != -1) {
+                res = i;
+                break;
+            } else if (groups.get(i).toString().indexOf(dStrings[2]) != -1) {
+                res = i;
+                break;
+            }
+        }
+        return res;
     }
 
     private void writeGroups() {
         try (PrintWriter out = new PrintWriter(target)) {
             for (int i = 0; i < groups.size(); i++) {
                 out.println("Группа " + (i + 1));
-                List<String[]> obj = groups.get(i);
-                for (int j = 0; j < obj.size(); j++) {
-                    String[] summ = obj.get(j);
-                    out.println(String.format("%s;%s;%s", summ[0], summ[1], summ[2]));
+                String[] a = groups.get(i).toString().split(";");
+                int b = a.length / 3;
+                for (int j = 0; j < b; j++) {
+                    int c = 3 * j;
+                    out.println(String.format("%s;%s;%s", a[c], a[c + 1], a[c + 2]));
                     out.flush();
                 }
                 out.println("");
@@ -44,79 +87,7 @@ public class Connection {
 
     }
 
-
-    public void readStrings() {
-
-        try (
-                BufferedReader br = new BufferedReader(new FileReader(source))) {
-            while (br.ready()) {
-                String str = br.readLine();
-                if (!str.isEmpty() && (!str.startsWith("//")) && (!str.startsWith("//"))) {
-                    arrayofstringslist.add(stringToArray(str));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String[] stringToArray(String str) {
-        String[] res = str.split(";");
-        return res;
-    }
-
-    public List<List<String[]>> getGroups() {
+    public Map<Integer, Set> getGroups() {
         return groups;
     }
-
-    public boolean comparisionStrings(String[] arr1, String[] arr2) {
-        boolean res = false;
-        for (int i = 0; i < arr1.length; i++) {
-            for (int j = 0; j < arr2.length; j++) {
-                if (arr1[i].equals(arr2[j])) {
-                    res = true;
-                    break;
-                }
-            }
-        }
-        return res;
-    }
-
-    public List<String[]> getArrayofstringslist() {
-        return arrayofstringslist;
-    }
-
-    public void accumulationInGroups() {
-        //коэффициент "already" alr = 1 если строке уже найдена связь, alr = 0 если связь пока не найдена
-        int alr = 0;
-        groups.add(group1);
-        group1.add(arrayofstringslist.get(0));
-        arrayofstringslist.remove(0);
-
-        for (int i = 0; i < arrayofstringslist.size(); i++) {
-            alr = 0;
-
-            for (int j = 0; j < groups.size(); j++) {
-                if (alr == 1) {
-                    break;
-                }
-                int size = groups.get(j).size();
-                for (int k = 0; k < size; k++) {
-                    if (comparisionStrings(arrayofstringslist.get(i), groups.get(j).get(k))) {
-                        groups.get(j).add(arrayofstringslist.get(i));
-                        alr = 1;
-                        break;
-                    }
-                }
-            }
-            if (alr == 0) {
-                groups.add(new ArrayList<>());
-                numberGroup++;
-                groups.get(numberGroup - 1).add(arrayofstringslist.get(i));
-            }
-        }
-    }
 }
-
-
-

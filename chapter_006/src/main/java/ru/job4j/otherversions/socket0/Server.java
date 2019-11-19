@@ -1,4 +1,4 @@
-package ru.job4j.socket0;
+package ru.job4j.otherversions.socket0;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

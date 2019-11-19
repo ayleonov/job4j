@@ -1,4 +1,4 @@
-package ru.job4j.exam;
+package ru.job4j.otherversions;
 
 import org.junit.Test;
 
@@ -6,9 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;

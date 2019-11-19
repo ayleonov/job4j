@@ -1,4 +1,4 @@
-package ru.job4j.socket0;
+package ru.job4j.otherversions.socket0;
 
 import java.io.*;
 import java.net.*;

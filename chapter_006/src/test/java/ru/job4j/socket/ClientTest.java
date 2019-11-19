@@ -1,19 +1,8 @@
 package ru.job4j.socket;
 
-import com.google.common.base.Joiner;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.io.*;
-import java.net.Socket;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 
 
 public class ClientTest {

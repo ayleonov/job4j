@@ -1,4 +1,4 @@
-package ru.job4j.exam;
+package ru.job4j.otherversions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
