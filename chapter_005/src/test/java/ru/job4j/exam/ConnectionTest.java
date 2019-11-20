@@ -48,12 +48,15 @@ public class ConnectionTest {
         String str3 = "800;900;960";
 
         conn.writeInMap(str);
-        //assertThat(conn.getGroups().size(), is(1));
+        assertThat(conn.getGroups().size(), is(1));
         conn.writeInMap(str2);
-        conn.getGroups().size();
+        //conn.getGroups().size();
         assertThat(conn.getGroups().size(), is(1));
         conn.writeInMap(str3);
         assertThat(conn.getGroups().size(), is(2));
+
+        assertThat(conn.getGroups().get(0).toString(), is("300;400;600;300;500;700"));
+        assertThat(conn.getGroups().get(1).toString(), is("800;900;960"));
     }
 
     @Test
