@@ -32,12 +32,9 @@ public class SQLStorage {
                 stat.executeUpdate();
                 lookDatabase(conn);
 
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
 
        // добавление данных с получение данных о внесенном продукте
         /*Connection conn = null;
