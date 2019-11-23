@@ -1,7 +1,7 @@
 --drop table type CASCADE;
 --drop table product CASCADE;
 
-
+/*
 CREATE TABLE type(
 	id serial primary key,
 	name varchar(2000)
@@ -16,12 +16,12 @@ CREATE TABLE product(
 	quantity integer
 );
 
-insert into type (name) values ('напитки');
-insert into type (name) values ('молоко');
-insert into type (name) values ('хлеб');
-insert into type (name) values ('сыр');
-insert into type (name) values ('кефир');
-insert into type (name) values ('мороженое');
+insert into type (name) values ('НАПИТКИ');
+insert into type (name) values ('МОЛОКО');
+insert into type (name) values ('ХЛЕБ');
+insert into type (name) values ('СЫР');
+insert into type (name) values ('КЕФИР');
+insert into type (name) values ('МОРОЖЕНОЕ');
 
 insert into product (name, type_id, expired_date, price, quantity) values ('Российский сыр','4','2020-04-28 00:20','800','4');
 insert into product (name, type_id, expired_date, price, quantity) values ('мороженое Жемчужина','6','2019-11-28 04:00','40','20');
@@ -43,35 +43,51 @@ insert into product (name, type_id, expired_date, price, quantity) values ('Ла
 insert into product (name, type_id, expired_date, price, quantity) values ('Квас "Царские припасы"','1','2020-07-07 01:00','85','4');
 insert into product (name, type_id, expired_date, price, quantity) values ('мороженое Коровка','6','2020-04-28 03:00','64','2');
 insert into product (name, type_id, expired_date, price, quantity) values ('Фанта апельсин ','1','2020-04-07 01:00','185','5');
-
+*/
 
 
 --1
---SELECT * FROM product WHERE type_id = 4;
+
+--SELECT * FROM product as p
+--INNER JOIN type as t on type_id = t.id
+--WHERE t.name = 'СЫР';
 
 --2
 --SELECT * FROM product WHERE name like '%мороженое%';
 
 --3
---SELECT * FROM product WHERE expired_date between '2019-12-01 00:01:01' and '2019-12-31 23:59:00';
---SELECT * FROM product WHERE expired_date between '2019-11-01 00:01:01' and '2019-11-30 23:59:00';
+--SELECT * FROM product WHERE (SELECT EXTRACT(MONTH from expired_date) = EXTRACT(MONTH from now())+1);
 
 --4
 --SELECT * FROM product WHERE price = (SELECT MAX(price) FROM product);
 
 --5
---SELECT COUNT(p.id) FROM product AS p WHERE type_id=4;
+--SELECT COUNT(p.id) FROM product as p
+--INNER JOIN type as t on type_id = t.id
+--WHERE (t.name = 'КЕФИР');
 
 --6
---SELECT * FROM product WHERE (type_id = 2 OR type_id=4) ;
+---SELECT * FROM product as p
+---INNER JOIN type as t on type_id = t.id
+---WHERE (t.name = 'СЫР' OR t.name = 'МОЛОКО');
 
 --7
---SELECT * FROM product WHERE quantity>10 ;
+
+--НЕ ПОЛУЧИЛОСЬ решение вопроса...  получилось вот что:
+--7.1
+
+--SELECT type.name FROM product as p
+--INNER JOIN type as t on type_id = t.id
+--where COUNT(t.id)<10;
+
+-- 7.2
+--SELECT type.name, count(*) from type group by type.id
+--INNER JOIN product on type_id = type.id where count(*)<10;
+
+
+--SELECT * FROM product WHERE quantity<10 ;
 
 --8
 --SELECT p.name, t.name, p.quantity FROM product as p
 --INNER JOIN type as t on t.id = type_id ;
 
---8а - то же самое, но с количеством товаров в выборке.
---SELECT p.name, t.name, p.quantity FROM product as p
---INNER JOIN type as t on t.id = type_id ;
