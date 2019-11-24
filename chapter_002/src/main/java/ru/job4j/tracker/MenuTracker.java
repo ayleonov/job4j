@@ -8,10 +8,10 @@ public class MenuTracker {
     private final static int NUMBER_POINTS_MENU = 7;
     private Input input;
     private Consumer<String> output;
-    private Tracker tracker;
+    private ITracker tracker;
     private List<UserAction> actions = new ArrayList<>(NUMBER_POINTS_MENU);
 
-    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
+    public MenuTracker(Input input, ITracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
         this.output = output;
@@ -53,7 +53,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String name = input.ask("Please, enter the task's name: ");
             String desc = input.ask("Please, enter the task's desc: ");
             long time = System.currentTimeMillis();
@@ -68,7 +68,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             output.accept("---------------Items found (name description id): --------------");
             for (Item item : tracker.findAll()) {
                 output.accept(String.format("%s %s %s", item.getName(), item.getDesc(), item.getId()));
@@ -83,7 +83,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String id = input.ask("Please, enter the task's id: ");
             String name = input.ask("Please, enter the task's name: ");
             String desc = input.ask("Please, enter the task's desc: ");
@@ -103,7 +103,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String id = input.ask("Please, enter the task's id: ");
             output.accept("-------------- Delete item --------------");
             boolean result = tracker.delete(id);
@@ -123,7 +123,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             output.accept("------------ Id search --------------");
             String id = input.ask("Please, enter the task's id: ");
             Item item = tracker.findById(id);
@@ -142,7 +142,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             output.accept("------------ Search item by name --------------");
             String word = input.ask("Enter name for find the item :");
             List<Item> foundItems = tracker.findByName(word);
@@ -164,7 +164,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
 
             output.accept("Exit the program");
         }
