@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Tracker {
+public class Tracker implements ITracker{
     private final List<Item> items = new ArrayList<>();
 
     private static final Random RN = new Random();
-    private int position = 0;
 
     public Item add(Item item) {
 
