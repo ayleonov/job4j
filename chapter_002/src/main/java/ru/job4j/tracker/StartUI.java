@@ -5,10 +5,10 @@ import java.util.function.Consumer;
 
 public class StartUI {
     private Input input;
-    private Tracker tracker;
+    private ITracker tracker;
     private Consumer<String> output;
 
-    public StartUI(Input input, Tracker tracker, Consumer<String> output) {
+    public StartUI(Input input, ITracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
         this.output = output;
@@ -22,7 +22,7 @@ public class StartUI {
     }
 
     public void init() throws MenuOutException {
-        MenuTracker menu = new MenuTracker(this.input, tracker, output);
+        MenuTracker menu = new MenuTracker(this.input, this.tracker, this.output);
         List<Integer> ranges = menu.fillActions();
         do {
             menu.show();
