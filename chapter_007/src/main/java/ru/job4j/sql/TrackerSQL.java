@@ -92,11 +92,11 @@ public class TrackerSQL implements ITracker, AutoCloseable {
 
     @Override
     public List<Item> findByName(String key) {
-        List<Item> res = null;
+        List<Item> res = new ArrayList<>();
         ResultSet rs = null;
         Item newItem = null;
-        try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE item.name like '%?%'")) {
-            stat.setString(1,key);
+        try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE name like '%?%'")) {
+         stat.setString(1,key);
             rs = stat.executeQuery();
             while (rs.next()) {
                 newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
@@ -116,11 +116,9 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         ResultSet rs = null;
         Item newItem = null;
         try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE item.id = id")) {
+            rs = stat.executeQuery();
             if (rs.next()) {
-                Timestamp newItemTime = rs.getTimestamp("time");
-                String newItemTimeString = newItemTime.toString();
-                long newItemTimeLong = Long.parseLong(newItemTimeString);
-                res = new Item(rs.getString("name"),rs.getString("descr"),newItemTimeLong);
+                res = new Item(rs.getString("name"),rs.getString("descr"),rs.getTimestamp("time").getTime());
             }
         } catch (SQLException e) {
             e.printStackTrace();

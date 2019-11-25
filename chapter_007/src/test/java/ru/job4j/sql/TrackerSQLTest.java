@@ -26,87 +26,6 @@ public class TrackerSQLTest {
         isConnected = tr.init();
     }
 
-    public Timestamp convertDateToTimestamp(String dateStr) {
-        long time = 0;
-        try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = dateFormat.parse(dateStr);
-            time = date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Timestamp(time);
-    }
-
-    public long convertDateToLong(String dateStr) {
-        long time = 0;
-        try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = dateFormat.parse(dateStr);
-            time = date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return time;
-    }
-
-     public void inserted3ItemsInDB(){
-         list = new ArrayList();
-         try {
-             PreparedStatement stat = tr.getConn().prepareStatement("DELETE FROM item");
-             stat.execute();
-             String dateStr5 = "2020-10-14";
-             long time5 = convertDateToLong(dateStr5);
-             Item item5 = new Item("item5", "description5", time5);
-             stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item5','description5','2020-10-14')");
-             stat.execute();
-
-             String dateStr6 = "2020-10-15";
-             long time6 = convertDateToLong(dateStr6);
-             Item item6 = new Item("item6", "description6", time6);
-             stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item6','description6','2020-10-15')");
-             stat.execute();
-
-             String dateStr7 = "2020-10-16";
-             long time7 = convertDateToLong(dateStr7);
-             Item item7 = new Item("item7", "description7", time7);
-             stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item7','description7','2020-10-16')");
-             stat.execute();
-
-             stat = tr.getConn().prepareStatement("Select * from item");
-             ResultSet rs = stat.executeQuery();
-             list.add(item5);
-             list.add(item6);
-             list.add(item7);
-         } catch (SQLException sqle) {
-             sqle.printStackTrace();
-         }
-     }
-
-    @Test
-    public void whenCheckConnection() {
-        assertTrue(isConnected);
-    }
-
-    @Test
-    public void whenTestingAdd() throws SQLException {
-
-        String dateStr = "2020-08-23";
-        long time = convertDateToLong(dateStr);
-        Item item = new Item("item1", "description1", time);
-        tr.add(item);
-        PreparedStatement stat = tr.getConn().prepareStatement("SELECT * FROM item WHERE item.name='item1'");
-        ResultSet rs = stat.executeQuery();
-        if (rs.next()) {
-            assertNotNull(rs);
-            assertThat(rs.getString("descr"), is("description1"));
-            assertThat(rs.getTimestamp("time"), is(convertDateToTimestamp(dateStr)));
-        }
-        rs.close();
-        stat.close();
-        tr.getConn().close();
-    }
-
     @Test
     public void whenTestingReplace() throws SQLException {
         String dateStr = "2020-08-24";
@@ -167,29 +86,109 @@ public class TrackerSQLTest {
     @Test
     public void whenTestingFindAll() {
         inserted3ItemsInDB();
-
-            List<Item> res = tr.findAll();
-            assertEquals(res, list);
-            assertEquals(res.get(0).getName(), list.get(0).getName());
-            assertEquals(res.get(0).getDesc(), list.get(0).getDesc());
-            assertEquals(res.get(0).getTime(), list.get(0).getTime());
-
+        List<Item> res = tr.findAll();
+        assertEquals(res, list);
+        assertEquals(res.get(0).getName(), list.get(0).getName());
+        assertEquals(res.get(0).getDesc(), list.get(0).getDesc());
+        assertEquals(res.get(0).getTime(), list.get(0).getTime());
     }
 
     @Test
     public void whenTestingFindByName() {
         inserted3ItemsInDB();
-        List<Item> res = tr.findByName("item");
-        System.out.println(list.size());
-        System.out.println(res.size());
-        assertEquals(res, list);
+        List<Item> res = tr.findByName("ite");
+        assertThat(res, is(list));
+        //assertEquals(res, list);
         assertEquals(res.get(0).getName(), list.get(0).getName());
     }
 
     @Test
-    public void whenTestingFindById
-            () {
-        assertTrue(tr.init());
+    public void whenTestingFindById() {
+        inserted3ItemsInDB();
+        Item res = tr.findById("3");
+        assertThat(res, is(list.get(0)));
+
+        assertEquals(res.getName(), list.get(0).getName());
     }
 
+    public Timestamp convertDateToTimestamp(String dateStr) {
+        long time = 0;
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(dateStr);
+            time = date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Timestamp(time);
+    }
+
+    public long convertDateToLong(String dateStr) {
+        long time = 0;
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(dateStr);
+            time = date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return time;
+    }
+
+    public void inserted3ItemsInDB() {
+        list = new ArrayList();
+        try {
+            PreparedStatement stat = tr.getConn().prepareStatement("DELETE FROM item");
+            stat.execute();
+            String dateStr5 = "2020-10-14";
+            long time5 = convertDateToLong(dateStr5);
+            Item item5 = new Item("item5", "description5", time5);
+            stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item5','description5','2020-10-14')");
+            stat.execute();
+
+            String dateStr6 = "2020-10-15";
+            long time6 = convertDateToLong(dateStr6);
+            Item item6 = new Item("item6", "description6", time6);
+            stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item6','description6','2020-10-15')");
+            stat.execute();
+
+            String dateStr7 = "2020-10-16";
+            long time7 = convertDateToLong(dateStr7);
+            Item item7 = new Item("item7", "description7", time7);
+            stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item7','description7','2020-10-16')");
+            stat.execute();
+
+            stat = tr.getConn().prepareStatement("Select * from item");
+            ResultSet rs = stat.executeQuery();
+            list.add(item5);
+            list.add(item6);
+            list.add(item7);
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+    }
+
+    @Test
+    public void whenCheckConnection() {
+        assertTrue(isConnected);
+    }
+
+    @Test
+    public void whenTestingAdd() throws SQLException {
+
+        String dateStr = "2020-08-23";
+        long time = convertDateToLong(dateStr);
+        Item item = new Item("item1", "description1", time);
+        tr.add(item);
+        PreparedStatement stat = tr.getConn().prepareStatement("SELECT * FROM item WHERE item.name='item1'");
+        ResultSet rs = stat.executeQuery();
+        if (rs.next()) {
+            assertNotNull(rs);
+            assertThat(rs.getString("descr"), is("description1"));
+            assertThat(rs.getTimestamp("time"), is(convertDateToTimestamp(dateStr)));
+        }
+        rs.close();
+        stat.close();
+        tr.getConn().close();
+    }
 }
