@@ -26,6 +26,7 @@ public class StartUITest {
 
     private String showConsole(String insert) {
         String result = new StringBuilder()
+                .append(System.lineSeparator())
                 .append("0. Add new item")
                 .append(System.lineSeparator())
                 .append("1. Show all items")
