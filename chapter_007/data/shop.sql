@@ -73,19 +73,9 @@ insert into product (name, type_id, expired_date, price, quantity) values ('Фа
 
 --7
 
---НЕ ПОЛУЧИЛОСЬ решение вопроса...  получилось вот что:
---7.1
-
---SELECT type.name FROM product as p
+--SELECT COUNT(t.id) FROM product as p
 --INNER JOIN type as t on type_id = t.id
---where COUNT(t.id)<10;
-
--- 7.2
---SELECT type.name, count(*) from type group by type.id
---INNER JOIN product on type_id = type.id where count(*)<10;
-
-
---SELECT * FROM product WHERE quantity<10 ;
+--GROUP BY t HAVING count(t.id) < 10;
 
 --8
 --SELECT p.name, t.name, p.quantity FROM product as p
