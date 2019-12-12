@@ -104,13 +104,14 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public List<Item> findByName(String key) {
         List<Item> res = new ArrayList<>();
-        ResultSet rs = null;
-        Item newItem = null;
-        try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE name like '%?%'")) {
-            stat.setString(1, key);
+        ResultSet rs;
+        Item newItem;
+        try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE name like ?")) {
+            stat.setString(1, "%" + key + "%");
             rs = stat.executeQuery();
             while (rs.next()) {
                 newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
+                newItem.setId(String.valueOf(rs.getInt("id")));
                 res.add(newItem);
             }
 

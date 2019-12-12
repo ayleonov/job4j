@@ -29,7 +29,8 @@ public class TrackerSQLTest {
     @Test
     public void whenTestingFindByName() throws SQLException {
         insertItem();
-        tr.findByName("ite");
+        List<Item> res = tr.findByName("ite");
+        assertThat(res,is(list));
     }
 
 
