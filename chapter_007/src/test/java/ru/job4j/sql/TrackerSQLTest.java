@@ -27,6 +27,80 @@ public class TrackerSQLTest {
     }
 
     @Test
+    public void whenTestingFindByName() throws SQLException {
+        insertItem();
+        tr.findByName("ite");
+    }
+
+
+
+    @Test
+    public void whenTestingAdd() {
+
+    }
+
+    @Test
+    public void whenTestingReplace() {
+
+    }
+
+    @Test
+    public void whenTestingFindById() {
+
+    }
+
+    @Test
+    public void whenTestingDelete() {
+
+    }
+    @Test
+    public void whenTestingFindAll() {
+
+    }
+
+    private void insertItem() throws SQLException {
+        PreparedStatement stat = tr.getConn().prepareStatement("DELETE FROM item");
+        stat.execute();
+        PreparedStatement stat2 = tr.getConn().prepareStatement("insert into item (name, descr, time) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        stat2.setString(1,"item001");
+        stat2.setString(2,"descr001");
+        Timestamp a = convertDateToTimestamp("2020-10-14");
+        stat2.setTimestamp(3,a);
+        ResultSet rs = stat2.getGeneratedKeys();
+        if (rs.next()) {
+            int idItem = rs.getInt(0);
+            Item b = new Item("item001","descr001", a.getTime());
+            b.setId(String.valueOf(rs.getInt("id")));
+            list.add(b);
+        }
+    }
+
+    public Timestamp convertDateToTimestamp(String dateStr) {
+        long time = 0;
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(dateStr);
+            time = date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Timestamp(time);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    @Test
     public void whenTestingReplace() throws SQLException {
         String dateStr = "2020-08-24";
         long time = convertDateToLong(dateStr);
@@ -55,6 +129,8 @@ public class TrackerSQLTest {
         stat.close();
         tr.getConn().close();
     }
+
+
 
     @Test
     public void whenTestingDelete() throws SQLException {
@@ -179,7 +255,7 @@ public class TrackerSQLTest {
         String dateStr = "2020-08-23";
         long time = convertDateToLong(dateStr);
         Item item = new Item("item1", "description1", time);
-        tr.add(item);
+        Item added = tr.add(item);
         PreparedStatement stat = tr.getConn().prepareStatement("SELECT * FROM item WHERE item.name='item1'");
         ResultSet rs = stat.executeQuery();
         if (rs.next()) {
@@ -189,6 +265,36 @@ public class TrackerSQLTest {
         }
         rs.close();
         stat.close();
+
+
         tr.getConn().close();
     }
+
+    @Test
+    public void whenTestingReplace2() throws SQLException {
+        String dateStr = "2020-08-24";
+        long time = convertDateToLong(dateStr);
+        Item item = new Item("item2", "description2", time);
+        Item add = tr.add(item);
+        PreparedStatement stat = tr.getConn().prepareStatement("SELECT item.id FROM item WHERE item.name = item2", Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = stat.getGeneratedKeys();
+        int itemId = 0;
+        if (rs.next()) {
+            itemId = rs.getInt(1);
+        }
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -47,6 +47,11 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             stat.setString(1, item.getName());
             stat.setString(2, item.getDesc());
             stat.setTimestamp(3, new Timestamp(item.getTime()));
+            stat.executeUpdate();
+            ResultSet rs = stat.getGeneratedKeys();
+            if (rs.next()) {
+                item.setId(String.valueOf(rs.getInt(1)));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
