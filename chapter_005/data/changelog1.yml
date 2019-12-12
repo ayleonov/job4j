@@ -1,0 +1,6 @@
+---
+databaseChangelog:
+    - preConditions:
+    - runningAs:
+        username: root
+...
