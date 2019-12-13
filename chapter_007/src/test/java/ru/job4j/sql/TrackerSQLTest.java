@@ -1,5 +1,6 @@
 package ru.job4j.sql;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.tracker.Item;
@@ -21,171 +22,132 @@ public class TrackerSQLTest {
     private List<Item> list = null;
 
     @Before
-    public void beforeTest() {
+    public void beforeTest() throws SQLException {
         tr = new TrackerSQL();
         isConnected = tr.init();
-    }
-
-    @Test
-    public void whenTestingFindByName() throws SQLException {
         insertItem();
-        List<Item> res = tr.findByName("ite");
-        assertThat(res,is(list));
     }
 
-
-
-    @Test
-    public void whenTestingAdd() {
-
-    }
-
-    @Test
-    public void whenTestingReplace() {
-
-    }
-
-    @Test
-    public void whenTestingFindById() {
-
-    }
-
-    @Test
-    public void whenTestingDelete() {
-
-    }
-    @Test
-    public void whenTestingFindAll() {
-
-    }
-
-    private void insertItem() throws SQLException {
-        PreparedStatement stat = tr.getConn().prepareStatement("DELETE FROM item");
-        stat.execute();
-        PreparedStatement stat2 = tr.getConn().prepareStatement("insert into item (name, descr, time) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-        stat2.setString(1,"item001");
-        stat2.setString(2,"descr001");
-        Timestamp a = convertDateToTimestamp("2020-10-14");
-        stat2.setTimestamp(3,a);
-        ResultSet rs = stat2.getGeneratedKeys();
-        if (rs.next()) {
-            int idItem = rs.getInt(0);
-            Item b = new Item("item001","descr001", a.getTime());
-            b.setId(String.valueOf(rs.getInt("id")));
-            list.add(b);
-        }
-    }
-
-    public Timestamp convertDateToTimestamp(String dateStr) {
-        long time = 0;
-        try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = dateFormat.parse(dateStr);
-            time = date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Timestamp(time);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    @Test
-    public void whenTestingReplace() throws SQLException {
-        String dateStr = "2020-08-24";
-        long time = convertDateToLong(dateStr);
-        Item item = new Item("item2", "description2", time);
-        tr.add(item);
-        PreparedStatement stat = tr.getConn().prepareStatement("SELECT item.id FROM item WHERE item.name = item2", Statement.RETURN_GENERATED_KEYS);
-        ResultSet rs = stat.getGeneratedKeys();
-        int itemId = 0;
-        if (rs.next()) {
-            itemId = rs.getInt(1);
-        }
-        String dateStr2 = "2020-10-12";
-        long time2 = convertDateToLong(dateStr2);
-        Item item2 = new Item("item3", "description3", time2);
-        tr.replace(String.valueOf(itemId), item2);
-        PreparedStatement st = tr.getConn().prepareStatement("SELECT * FROM item WHERE item.id=?");
-        st.setInt(1, itemId);
-        ResultSet res = st.executeQuery();
-
-        if (res.next()) {
-            assertThat(res.getString("name"), is("item3"));
-            assertThat(res.getString("descr"), is("description3"));
-            assertThat(res.getTimestamp("time"), is(dateStr2));
-        }
-        rs.close();
-        stat.close();
+    @After
+    public void afterTest() throws SQLException {
         tr.getConn().close();
     }
 
 
-
     @Test
-    public void whenTestingDelete() throws SQLException {
-        int resId = 0;
-        String dateStr4 = "2020-10-12";
-        long time4 = convertDateToLong(dateStr4);
-        Item item4 = new Item("item4", "description4", time4);
-
-        PreparedStatement stat = tr.getConn().prepareStatement("SELECT item.id FROM item WHERE item.name='item4'");
-        ResultSet rs = stat.executeQuery();
-        if (rs.next()) {
-            resId = rs.getInt("id");
-        }
-
-        tr.delete(String.valueOf(resId));
-        stat = tr.getConn().prepareStatement("SELECT * FROM item WHERE item.id=?");
-        stat.setInt(1, resId);
-        ResultSet rs2 = stat.executeQuery();
-        boolean isExist = false;
-        if (rs2.next()) {
-            isExist = true;
-        }
-        assertFalse(isExist);
-        rs.close();
-        stat.close();
-        tr.getConn().close();
-    }
-
-    @Test
-    public void whenTestingFindAll() {
-        inserted3ItemsInDB();
-        List<Item> res = tr.findAll();
-        assertEquals(res, list);
-        assertEquals(res.get(0).getName(), list.get(0).getName());
-        assertEquals(res.get(0).getDesc(), list.get(0).getDesc());
-        assertEquals(res.get(0).getTime(), list.get(0).getTime());
+    public void whenTestingInit() {
+        assertTrue(isConnected);
     }
 
     @Test
     public void whenTestingFindByName() {
-        inserted3ItemsInDB();
         List<Item> res = tr.findByName("ite");
         assertThat(res, is(list));
-        //assertEquals(res, list);
-        assertEquals(res.get(0).getName(), list.get(0).getName());
+    }
+
+    @Test
+    public void whenTestingAdd() {
+        String dateStr = "2020-08-23";
+        long time = convertDateToLong(dateStr);
+        Item item = new Item("item2", "description2", time);
+        Item added = tr.add(item);
+
+        List<Item> expect = tr.findByName("item2");
+        System.out.println(expect.size());
+        System.out.println(expect.get(0).getName());
+        System.out.println(expect.get(0).getId());
+        System.out.println(added.getName());
+        System.out.println(added.getId());
+
+        Item expectItem = expect.get(0);
+        assertThat(expectItem.getName(), is("item2"));
+        assertThat(expectItem.getDesc(), is("description2"));
+        assertThat(expectItem.getTime(), is(time));
+
+
+        assertTrue(expect.contains(item));
+
+    }
+
+
+    @Test
+    public void whenTestingReplace() {
+
+        Item first = tr.findByName("item").get(0);
+        String idFirst = first.getId();
+        String timeDate = "2020-01-01";
+        long secondTime = convertDateToLong(timeDate);
+        Item second = new Item("second", "descrSecond", secondTime);
+        second.setId(idFirst);
+        tr.replace(idFirst, second);
+        List<Item> afterreplace = tr.findByName("seco");
+        Item third = afterreplace.get(0);
+        assertThat(third.getName(), is("second"));
+        assertThat(third.getDesc(), is("descrSecond"));
+        assertThat(third.getTime(), is(secondTime));
+        assertTrue(afterreplace.contains(second));
+    }
+
+    @Test
+    public void whenTestingDelete() {
+        List<Item> beforedelete = tr.findByName("item");
+        Item first = beforedelete.get(0);
+        String idFirst = first.getId();
+        assertTrue(tr.delete(idFirst));
+
+        List<Item> afterdelete = tr.findByName("item");
+
+        assertThat(beforedelete.size(), is(1));
+        assertThat(afterdelete.size(), is(0));
     }
 
     @Test
     public void whenTestingFindById() {
-        inserted3ItemsInDB();
-        Item res = tr.findById("3");
-        assertThat(res, is(list.get(0)));
+        List<Item> items = tr.findByName("item");
+        Item first = items.get(0);
+        String idFirst = first.getId();
+        Item res = tr.findById(idFirst);
 
-        assertEquals(res.getName(), list.get(0).getName());
+        assertEquals(first.getName(), res.getName());
+        assertEquals(first.getDesc(), res.getDesc());
+        assertEquals(first.getTime(), res.getTime());
+
+        res.setId(idFirst);
+
+        assertEquals(first.getId(), res.getId());
+        assertEquals(first, res);
+        assertTrue(items.contains(res));
+    }
+
+
+    @Test
+    public void whenTestingFindAll() {
+        String dateStr = "2020-08-23";
+        long time = convertDateToLong(dateStr);
+        Item item = new Item("item2", "description2", time);
+        tr.add(item);
+        List<Item> allItems = tr.findAll();
+        assertThat(allItems.size(), is(2));
+        assertThat(allItems.get(0).getName(), is("item001"));
+        assertThat(allItems.get(1).getName(), is("item2"));
+    }
+
+    private void insertItem() throws SQLException {
+        list = new ArrayList();
+        PreparedStatement stat = tr.getConn().prepareStatement("delete from item");
+        stat.executeUpdate();
+        PreparedStatement stat2 = tr.getConn().prepareStatement("insert into item (name, descr, time) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        stat2.setString(1, "item001");
+        stat2.setString(2, "descr001");
+        Timestamp a = convertDateToTimestamp("2020-10-14");
+        stat2.setTimestamp(3, a);
+        stat2.executeUpdate();
+        ResultSet rs = stat2.getGeneratedKeys();
+        if (rs.next()) {
+            Item b = new Item("item001", "descr001", a.getTime());
+            b.setId(String.valueOf(rs.getInt("id")));
+            list.add(b);
+        }
     }
 
     public Timestamp convertDateToTimestamp(String dateStr) {
@@ -211,91 +173,4 @@ public class TrackerSQLTest {
         }
         return time;
     }
-
-    public void inserted3ItemsInDB() {
-        list = new ArrayList();
-        try {
-            PreparedStatement stat = tr.getConn().prepareStatement("DELETE FROM item");
-            stat.execute();
-            String dateStr5 = "2020-10-14";
-            long time5 = convertDateToLong(dateStr5);
-            Item item5 = new Item("item5", "description5", time5);
-            stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item5','description5','2020-10-14')");
-            stat.execute();
-
-            String dateStr6 = "2020-10-15";
-            long time6 = convertDateToLong(dateStr6);
-            Item item6 = new Item("item6", "description6", time6);
-            stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item6','description6','2020-10-15')");
-            stat.execute();
-
-            String dateStr7 = "2020-10-16";
-            long time7 = convertDateToLong(dateStr7);
-            Item item7 = new Item("item7", "description7", time7);
-            stat = tr.getConn().prepareStatement("insert into item (name, descr, time) values ('item7','description7','2020-10-16')");
-            stat.execute();
-
-            stat = tr.getConn().prepareStatement("Select * from item");
-            ResultSet rs = stat.executeQuery();
-            list.add(item5);
-            list.add(item6);
-            list.add(item7);
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-    }
-
-    @Test
-    public void whenCheckConnection() {
-        assertTrue(isConnected);
-    }
-
-    @Test
-    public void whenTestingAdd() throws SQLException {
-
-        String dateStr = "2020-08-23";
-        long time = convertDateToLong(dateStr);
-        Item item = new Item("item1", "description1", time);
-        Item added = tr.add(item);
-        PreparedStatement stat = tr.getConn().prepareStatement("SELECT * FROM item WHERE item.name='item1'");
-        ResultSet rs = stat.executeQuery();
-        if (rs.next()) {
-            assertNotNull(rs);
-            assertThat(rs.getString("descr"), is("description1"));
-            assertThat(rs.getTimestamp("time"), is(convertDateToTimestamp(dateStr)));
-        }
-        rs.close();
-        stat.close();
-
-
-        tr.getConn().close();
-    }
-
-    @Test
-    public void whenTestingReplace2() throws SQLException {
-        String dateStr = "2020-08-24";
-        long time = convertDateToLong(dateStr);
-        Item item = new Item("item2", "description2", time);
-        Item add = tr.add(item);
-        PreparedStatement stat = tr.getConn().prepareStatement("SELECT item.id FROM item WHERE item.name = item2", Statement.RETURN_GENERATED_KEYS);
-        ResultSet rs = stat.getGeneratedKeys();
-        int itemId = 0;
-        if (rs.next()) {
-            itemId = rs.getInt(1);
-        }
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
 }

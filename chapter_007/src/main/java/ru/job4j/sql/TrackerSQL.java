@@ -43,14 +43,15 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Item add(Item item) {
 
-        try (PreparedStatement stat = conn.prepareStatement("insert into item (name,descr,time)values(item.getName(),item.getDesc(), item.getTime()")) {
+        try (PreparedStatement stat = conn.prepareStatement("insert into item (name,descr,time)values(?,?,?)",Statement.RETURN_GENERATED_KEYS)) {
             stat.setString(1, item.getName());
             stat.setString(2, item.getDesc());
             stat.setTimestamp(3, new Timestamp(item.getTime()));
             stat.executeUpdate();
             ResultSet rs = stat.getGeneratedKeys();
             if (rs.next()) {
-                item.setId(String.valueOf(rs.getInt(1)));
+
+                item.setId(String.valueOf(rs.getString(1)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,8 +62,13 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public boolean replace(String id, Item item) {
         boolean res = false;
-        try (PreparedStatement stat = conn.prepareStatement("update item set name = item.getName(), descr = item.getDesc(), time = item.getTime()")) {
-            //     stat.executeUpdate();
+        try (PreparedStatement stat = conn.prepareStatement("update item set name = ?, descr = ?, time = ? WHERE id=?")) {
+            stat.setString(1, item.getName());
+            stat.setString(2, item.getDesc());
+            stat.setTimestamp(3, new Timestamp(item.getTime()));
+            stat.setInt( 4, Integer.parseInt(id));
+
+            stat.executeUpdate();
             res = true;
         } catch (SQLException e) {
             e.printStackTrace();
