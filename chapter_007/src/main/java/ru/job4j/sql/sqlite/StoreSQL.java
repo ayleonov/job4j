@@ -33,7 +33,7 @@ public class StoreSQL implements AutoCloseable {
 
         try {
             connection = DriverManager.getConnection((totalURL), config.get("user"), config.get("password"));
-            //connection = DriverManager.getConnection((config.get("url") + filename), config.get("user"), config.get("password"));
+            connection.setAutoCommit(false);
             PreparedStatement st = connection.prepareStatement("   CREATE TABLE IF NOT EXISTS entry(id serial primary key, field integer)");
             st.execute();
             if (connection != null) {
@@ -41,6 +41,7 @@ public class StoreSQL implements AutoCloseable {
                 System.out.println("The driver name is: " + meta.getDriverName());
                 System.out.println("A new database has been created");
             }
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,17 +50,18 @@ public class StoreSQL implements AutoCloseable {
     public void generate(int size) {
         PreparedStatement statement;
         try {
-            connection = DriverManager.getConnection((config.get("url") + filename), config.get("user"), config.get("password"));
             statement = connection.prepareStatement("delete from entry");
-            boolean rs = statement.execute();
+            statement.addBatch();
 
             for (int i = 0; i < size; i++) {
                 int field = i + 1;
 
                 statement = connection.prepareStatement("insert into entry(field) values(?)");
                 statement.setInt(1, field);
-                statement.execute();
+                statement.addBatch();
+                statement.executeBatch();
             }
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,12 +73,13 @@ public class StoreSQL implements AutoCloseable {
         try {
             Statement stat = connection.createStatement();
             ResultSet rs = stat.executeQuery("SELECT*FROM entry");
+
             while (rs.next()) {
                 int value = rs.getInt("field");
                 Field f = new Field(value);
                 list.add(f);
             }
-
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }

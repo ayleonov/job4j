@@ -84,8 +84,8 @@ public class StoreSQLTest {
         List<Field> expected = List.of(new Field(1),new Field(2),new Field(3),new Field(4),new Field(5));
         List<Field> res = storeSQL.load();
         for (int i = 0; i < 5; i++) {
-            assertThat(res.get(i).getValue(), is(expected.get(i).getValue()));
-        }
 
+           assertThat(res.get(res.size()-5 + i).getValue(), is(expected.get(i).getValue()));
+        }
     }
 }
