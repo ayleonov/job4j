@@ -53,20 +53,11 @@ public class TrackerSQLTest {
         Item added = tr.add(item);
 
         List<Item> expect = tr.findByName("item2");
-        System.out.println(expect.size());
-        System.out.println(expect.get(0).getName());
-        System.out.println(expect.get(0).getId());
-        System.out.println(added.getName());
-        System.out.println(added.getId());
-
         Item expectItem = expect.get(0);
         assertThat(expectItem.getName(), is("item2"));
         assertThat(expectItem.getDesc(), is("description2"));
         assertThat(expectItem.getTime(), is(time));
-
-
         assertTrue(expect.contains(item));
-
     }
 
 

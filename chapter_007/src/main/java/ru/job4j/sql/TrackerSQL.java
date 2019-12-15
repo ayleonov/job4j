@@ -30,7 +30,8 @@ public class TrackerSQL implements ITracker, AutoCloseable {
                     config.getProperty("user"),
                     config.getProperty("password")
             );
-            PreparedStatement st = conn.prepareStatement("CREATE TABLE IF NOT EXISTS item (id serial primary key, name varchar(20), descr varchar(2000), time Timestamp);");
+            String sql = "CREATE TABLE IF NOT EXISTS item (id serial primary key, name varchar(20), descr varchar(2000), time Timestamp)";
+            PreparedStatement st = conn.prepareStatement(sql);
             st.executeUpdate();
             st.close();
 
@@ -43,7 +44,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Item add(Item item) {
 
-        try (PreparedStatement stat = conn.prepareStatement("insert into item (name,descr,time)values(?,?,?)",Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stat = conn.prepareStatement("insert into item (name,descr,time)values(?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             stat.setString(1, item.getName());
             stat.setString(2, item.getDesc());
             stat.setTimestamp(3, new Timestamp(item.getTime()));
@@ -66,7 +67,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             stat.setString(1, item.getName());
             stat.setString(2, item.getDesc());
             stat.setTimestamp(3, new Timestamp(item.getTime()));
-            stat.setInt( 4, Integer.parseInt(id));
+            stat.setInt(4, Integer.parseInt(id));
 
             stat.executeUpdate();
             res = true;
@@ -79,7 +80,8 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public boolean delete(String id) {
         boolean res = false;
-        try (PreparedStatement stat = conn.prepareStatement("DELETE FROM item where item.id = id")) {
+        try (PreparedStatement stat = conn.prepareStatement("DELETE FROM item where item.id = ?")) {
+            stat.setInt(1, Integer.parseInt(id));
             stat.executeUpdate();
             res = true;
         } catch (SQLException e) {
@@ -91,12 +93,11 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public List<Item> findAll() {
         List<Item> res = new ArrayList<>();
-        ResultSet rs = null;
-        Item newItem = null;
+
         try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item")) {
-            rs = stat.executeQuery();
+            ResultSet rs = stat.executeQuery();
             while (rs.next()) {
-                newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
+                Item newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
                 res.add(newItem);
             }
 
@@ -110,13 +111,12 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public List<Item> findByName(String key) {
         List<Item> res = new ArrayList<>();
-        ResultSet rs;
-        Item newItem;
+
         try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE name like ?")) {
             stat.setString(1, "%" + key + "%");
-            rs = stat.executeQuery();
+            ResultSet rs = stat.executeQuery();
             while (rs.next()) {
-                newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
+                Item newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
                 newItem.setId(String.valueOf(rs.getInt("id")));
                 res.add(newItem);
             }
@@ -131,10 +131,9 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Item findById(String id) {
         Item res = null;
-        ResultSet rs = null;
-        Item newItem = null;
+
         try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE item.id = id")) {
-            rs = stat.executeQuery();
+            ResultSet rs = stat.executeQuery();
             if (rs.next()) {
                 res = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
             }
