@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Tracker implements ITracker{
+public class Tracker implements ITracker {
     private final List<Item> items = new ArrayList<>();
 
     private static final Random RN = new Random();

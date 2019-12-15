@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.tracker.Item;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
@@ -19,18 +22,29 @@ import static org.hamcrest.Matchers.is;
 public class TrackerSQLTest {
     TrackerSQL tr;
     private boolean isConnected;
-    private List<Item> list = null;
+    private List<Item> list;
+    Connection connection;
 
     @Before
     public void beforeTest() throws SQLException {
-        tr = new TrackerSQL();
-        isConnected = tr.init();
-        insertItem();
+        try (InputStream in = TrackerSQLTest.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            connection = DriverManager.getConnection(
+            config.getProperty("url"), config.getProperty("user"),
+                    config.getProperty("password"));
+            tr = new TrackerSQL();
+            isConnected = tr.init();
+            insertItem();
+        } catch (IOException | ClassNotFoundException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     @After
     public void afterTest() throws SQLException {
-        tr.getConn().close();
+        connection.close();
     }
 
 
@@ -50,23 +64,13 @@ public class TrackerSQLTest {
         String dateStr = "2020-08-23";
         long time = convertDateToLong(dateStr);
         Item item = new Item("item2", "description2", time);
-        Item added = tr.add(item);
-
+        tr.add(item);
         List<Item> expect = tr.findByName("item2");
-        System.out.println(expect.size());
-        System.out.println(expect.get(0).getName());
-        System.out.println(expect.get(0).getId());
-        System.out.println(added.getName());
-        System.out.println(added.getId());
-
         Item expectItem = expect.get(0);
         assertThat(expectItem.getName(), is("item2"));
         assertThat(expectItem.getDesc(), is("description2"));
         assertThat(expectItem.getTime(), is(time));
-
-
         assertTrue(expect.contains(item));
-
     }
 
 
@@ -94,7 +98,6 @@ public class TrackerSQLTest {
         Item first = beforedelete.get(0);
         String idFirst = first.getId();
         assertTrue(tr.delete(idFirst));
-
         List<Item> afterdelete = tr.findByName("item");
 
         assertThat(beforedelete.size(), is(1));
@@ -134,9 +137,9 @@ public class TrackerSQLTest {
 
     private void insertItem() throws SQLException {
         list = new ArrayList();
-        PreparedStatement stat = tr.getConn().prepareStatement("delete from item");
+        PreparedStatement stat = connection.prepareStatement("delete from item");
         stat.executeUpdate();
-        PreparedStatement stat2 = tr.getConn().prepareStatement("insert into item (name, descr, time) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement stat2 = connection.prepareStatement("insert into item (name, descr, time) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         stat2.setString(1, "item001");
         stat2.setString(2, "descr001");
         Timestamp a = convertDateToTimestamp("2020-10-14");

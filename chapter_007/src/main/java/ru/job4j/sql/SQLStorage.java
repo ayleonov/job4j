@@ -12,31 +12,32 @@ import java.util.Properties;
 
 
 public class SQLStorage {
-    private static final Logger log = LoggerFactory.getLogger(SQLStorage.class);
+    //private static final Logger log = LoggerFactory.getLogger(SQLStorage.class);
 
     public static void main(String[] args) {
+        LoggerFactory.getLogger(SQLStorage.class);
         String url = "jdbc:postgresql://localhost:5432/work3";
         String user = "postgres";
         String password = "password";
         String sql = "select*from product";
 
-         Connection conn = null;
-         PreparedStatement stat = null;
-         ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement stat = null;
+        ResultSet rs = null;
 
-            try {
-                conn = DriverManager.getConnection(url, user, password);
-                stat = conn.prepareStatement("update product set price = ? where id = ? ");
-                stat.setInt(1,60);
-                stat.setInt(2,34);
-                stat.executeUpdate();
-                lookDatabase(conn);
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            stat = conn.prepareStatement("update product set price = ? where id = ? ");
+            stat.setInt(1, 60);
+            stat.setInt(2, 34);
+            stat.executeUpdate();
+            lookDatabase(conn);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
 
-       // добавление данных с получение данных о внесенном продукте
+
+            // добавление данных с получение данных о внесенном продукте
         /*Connection conn = null;
         PreparedStatement stat= null;
         ResultSet keys = null;
@@ -65,7 +66,7 @@ public class SQLStorage {
         }
 
 */
-        // delete
+            // delete
         /*
         Connection conn;
 
@@ -86,7 +87,7 @@ public class SQLStorage {
 
 
          */
-        // ИЗМЕНЕНИЕ ДАННЫХ
+            // ИЗМЕНЕНИЕ ДАННЫХ
       /*
         Connection conn;
 
@@ -123,7 +124,7 @@ public class SQLStorage {
 */
 
 
-        // ВЫБОР 2
+            // ВЫБОР 2
         /*Connection conn;
 
         try {
@@ -180,8 +181,7 @@ public class SQLStorage {
               }
 
 */
-
-finally{
+        } finally {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -193,8 +193,9 @@ finally{
                 e.printStackTrace();
             }
             try {
-                if (rs !=null)
-                rs.close();
+                if (rs != null) {
+                    rs.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -212,7 +213,9 @@ finally{
         }
         while (true) {
             try {
-                if (!rs.next()) break;
+                if (!rs.next()) {
+                    break;
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
