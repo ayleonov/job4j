@@ -30,6 +30,11 @@
                     <driver>${db.driver}</driver>
                     <username>${db.username}</username>
                     <password>${db.password}</password>
+        <!--
+                    <url>jdbc:postgresql://localhost:5432/tracker</url>
+                    <driver>org.postgresql.Driver</driver>
+                    <username>postgres</username>
+                    <password>password</password> -->
                 </configuration>
                 <executions>
                     <execution>

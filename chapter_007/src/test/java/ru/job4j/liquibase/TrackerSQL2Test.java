@@ -15,7 +15,8 @@ import static org.junit.Assert.*;
 public class TrackerSQL2Test {
     @Test
     public void createItem() throws ParseException {
-        TrackerSQL tracker = new TrackerSQL();
+
+        TrackerSQL tracker = new TrackerSQL(null);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         String timeStr = "2020-09-01";
