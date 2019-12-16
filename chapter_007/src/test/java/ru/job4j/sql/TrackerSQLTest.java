@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.tracker.Item;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
@@ -19,18 +22,29 @@ import static org.hamcrest.Matchers.is;
 public class TrackerSQLTest {
     TrackerSQL tr;
     private boolean isConnected;
-    private List<Item> list = null;
+    private List<Item> list;
+    Connection connection;
 
     @Before
     public void beforeTest() throws SQLException {
-        tr = new TrackerSQL();
-        isConnected = tr.init();
-        insertItem();
+        try (InputStream in = TrackerSQLTest.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            connection = DriverManager.getConnection(
+            config.getProperty("url"), config.getProperty("user"),
+                    config.getProperty("password"));
+            tr = new TrackerSQL();
+            isConnected = tr.init();
+            insertItem();
+        } catch (IOException | ClassNotFoundException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     @After
     public void afterTest() throws SQLException {
-        tr.getConn().close();
+        connection.close();
     }
 
 
@@ -125,9 +139,9 @@ public class TrackerSQLTest {
 
     private void insertItem() throws SQLException {
         list = new ArrayList();
-        PreparedStatement stat = tr.getConn().prepareStatement("delete from item");
+        PreparedStatement stat = connection.prepareStatement("delete from item");
         stat.executeUpdate();
-        PreparedStatement stat2 = tr.getConn().prepareStatement("insert into item (name, descr, time) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement stat2 = connection.prepareStatement("insert into item (name, descr, time) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         stat2.setString(1, "item001");
         stat2.setString(2, "descr001");
         Timestamp a = convertDateToTimestamp("2020-10-14");

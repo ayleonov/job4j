@@ -49,10 +49,12 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             stat.setString(2, item.getDesc());
             stat.setTimestamp(3, new Timestamp(item.getTime()));
             stat.executeUpdate();
-            ResultSet rs = stat.getGeneratedKeys();
-            if (rs.next()) {
 
-                item.setId(String.valueOf(rs.getString(1)));
+            try (ResultSet rs = stat.getGeneratedKeys()) {
+                if (rs.next()) {
+
+                    item.setId(String.valueOf(rs.getString(1)));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,8 +96,8 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public List<Item> findAll() {
         List<Item> res = new ArrayList<>();
 
-        try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item")) {
-            ResultSet rs = stat.executeQuery();
+        try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item");
+             ResultSet rs = stat.executeQuery();) {
             while (rs.next()) {
                 Item newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
                 res.add(newItem);
@@ -114,13 +116,13 @@ public class TrackerSQL implements ITracker, AutoCloseable {
 
         try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE name like ?")) {
             stat.setString(1, "%" + key + "%");
-            ResultSet rs = stat.executeQuery();
-            while (rs.next()) {
-                Item newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
-                newItem.setId(String.valueOf(rs.getInt("id")));
-                res.add(newItem);
+            try (ResultSet rs = stat.executeQuery()) {
+                while (rs.next()) {
+                    Item newItem = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
+                    newItem.setId(String.valueOf(rs.getInt("id")));
+                    res.add(newItem);
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -132,8 +134,8 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public Item findById(String id) {
         Item res = null;
 
-        try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE item.id = id")) {
-            ResultSet rs = stat.executeQuery();
+        try (PreparedStatement stat = conn.prepareStatement("SELECT * FROM item WHERE item.id = id");
+             ResultSet rs = stat.executeQuery();) {
             if (rs.next()) {
                 res = new Item(rs.getString("name"), rs.getString("descr"), rs.getTimestamp("time").getTime());
             }
@@ -145,10 +147,8 @@ public class TrackerSQL implements ITracker, AutoCloseable {
 
     @Override
     public void close() throws Exception {
-
-    }
-
-    public Connection getConn() {
-        return conn;
+        if (conn != null) {
+            conn.close();
+        }
     }
 }
