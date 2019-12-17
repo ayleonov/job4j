@@ -14,7 +14,7 @@ public class StringsComparatorTest {
         List<String[]> expect;
         @Before
         public void setUp() {
-            set = new TreeSet();
+            set = new TreeSet(new StringsComparator());
             String[] a1 = {"K1"};
             String[] a2 = {"K2"};
             String[] a3 = {"K1","SK1"};
