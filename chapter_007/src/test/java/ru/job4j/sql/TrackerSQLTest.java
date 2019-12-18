@@ -64,8 +64,7 @@ public class TrackerSQLTest {
         String dateStr = "2020-08-23";
         long time = convertDateToLong(dateStr);
         Item item = new Item("item2", "description2", time);
-        Item added = tr.add(item);
-
+        tr.add(item);
         List<Item> expect = tr.findByName("item2");
         Item expectItem = expect.get(0);
         assertThat(expectItem.getName(), is("item2"));
@@ -99,7 +98,6 @@ public class TrackerSQLTest {
         Item first = beforedelete.get(0);
         String idFirst = first.getId();
         assertTrue(tr.delete(idFirst));
-
         List<Item> afterdelete = tr.findByName("item");
 
         assertThat(beforedelete.size(), is(1));

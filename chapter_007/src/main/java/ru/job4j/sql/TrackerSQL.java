@@ -31,9 +31,10 @@ public class TrackerSQL implements ITracker, AutoCloseable {
                     config.getProperty("password")
             );
             String sql = "CREATE TABLE IF NOT EXISTS item (id serial primary key, name varchar(20), descr varchar(2000), time Timestamp)";
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.executeUpdate();
-            st.close();
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.executeUpdate();
+
+            stat.close();
 
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -48,17 +49,19 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             stat.setString(1, item.getName());
             stat.setString(2, item.getDesc());
             stat.setTimestamp(3, new Timestamp(item.getTime()));
-            stat.executeUpdate();
+            if (stat.executeUpdate() == 1) {
 
-            try (ResultSet rs = stat.getGeneratedKeys()) {
-                if (rs.next()) {
+                try (ResultSet rs = stat.getGeneratedKeys()) {
+                    if (rs.next()) {
 
-                    item.setId(String.valueOf(rs.getString(1)));
+                        item.setId(String.valueOf(rs.getString(1)));
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return item;
     }
 
@@ -70,9 +73,9 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             stat.setString(2, item.getDesc());
             stat.setTimestamp(3, new Timestamp(item.getTime()));
             stat.setInt(4, Integer.parseInt(id));
-
-            stat.executeUpdate();
-            res = true;
+            if (stat.executeUpdate() == 1) {
+                res = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,8 +87,10 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         boolean res = false;
         try (PreparedStatement stat = conn.prepareStatement("DELETE FROM item where item.id = ?")) {
             stat.setInt(1, Integer.parseInt(id));
-            stat.executeUpdate();
-            res = true;
+            if (stat.executeUpdate() == 1) {
+
+                res = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
