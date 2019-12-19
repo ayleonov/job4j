@@ -1,7 +1,7 @@
 package ru.job4j.sql;
 
-import ru.job4j.tracker.ITracker;
-import ru.job4j.tracker.Item;
+//import ru.job4j.tracker.ITracker;
+//import ru.job4j.tracker.Item;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -15,9 +15,9 @@ import java.util.Properties;
 import org.postgresql.Driver;
 
 import javax.xml.transform.Result;
-
-public class TrackerSQL implements ITracker, AutoCloseable {
-
+public class TrackerSQL {}
+//public class TrackerSQL implements ITracker, AutoCloseable {
+/*
     private Connection conn = null;
 
     public boolean init() {
@@ -157,3 +157,4 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         }
     }
 }
+*/
