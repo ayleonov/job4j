@@ -1,23 +1,20 @@
 package ru.job4j.sql;
 
-//import ru.job4j.tracker.ITracker;
+import ru.job4j.tracker.ITracker;
+import ru.job4j.tracker.Item;
 //import ru.job4j.tracker.Item;
 
 import java.io.InputStream;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Properties;
 
-import org.postgresql.Driver;
 
-import javax.xml.transform.Result;
-public class TrackerSQL {}
-//public class TrackerSQL implements ITracker, AutoCloseable {
-/*
+public class TrackerSQL implements ITracker, AutoCloseable {
+
     private Connection conn = null;
 
     public boolean init() {
@@ -157,4 +154,3 @@ public class TrackerSQL {}
         }
     }
 }
-*/

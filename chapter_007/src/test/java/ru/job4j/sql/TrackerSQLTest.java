@@ -1,11 +1,11 @@
 package ru.job4j.sql;
-import ru.job4j.tracker.*;
-import ru.job4j.tracker.Item*;
+
+import ru.job4j.tracker.Item;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.tracker.Item;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
 
 public class TrackerSQLTest {
     TrackerSQL tr;
