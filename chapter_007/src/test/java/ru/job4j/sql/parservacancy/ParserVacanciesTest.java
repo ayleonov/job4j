@@ -15,8 +15,9 @@ public class ParserVacanciesTest {
     Connection conn;
     @Before
     public void beforeTest() {
-        Properties config = new Properties();
         try (InputStream in = ParserVacancies.class.getClassLoader().getResourceAsStream("app2.properties")) {
+            Properties config = new Properties();
+            config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
             conn = DriverManager.getConnection(config.getProperty("url"), config.getProperty("username"), config.getProperty("password"));
             config.load(in);
@@ -28,6 +29,7 @@ public class ParserVacanciesTest {
     @Test
     public void testingInit() {
         ParserVacancies pw = new ParserVacancies();
+        pw.init();
     assertThat(pw.init(),is(conn));
     }
 
