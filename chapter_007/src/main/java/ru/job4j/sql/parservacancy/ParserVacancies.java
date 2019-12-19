@@ -23,11 +23,12 @@ public class ParserVacancies implements AutoCloseable {
     }
 
     public Connection init() {
-        Properties config = new Properties();
         try (InputStream in = ParserVacancies.class.getClassLoader().getResourceAsStream("app2.properties")) {
+            Properties config = new Properties();
+            config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
             conn = DriverManager.getConnection(config.getProperty("url"), config.getProperty("username"), config.getProperty("password"));
-            config.load(in);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,14 +41,11 @@ public class ParserVacancies implements AutoCloseable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     public void workJsoup() {
         //String url ="https://www.sql.ru/forum/job-offers";
-        String url = "yandex.ru";
+        String url = "http://alekseyleonov.narod.ru";
         try {
             Document doc = Jsoup.connect(url).
                     get();
@@ -57,6 +55,7 @@ public class ParserVacancies implements AutoCloseable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Objects;
 import java.util.Properties;
 
 import static org.junit.Assert.*;
@@ -13,8 +14,11 @@ import static org.hamcrest.Matchers.*;
 
 public class ParserVacanciesTest {
     Connection conn;
+    ParserVacancies pw;
+
     @Before
     public void beforeTest() {
+        pw = new ParserVacancies();
         try (InputStream in = ParserVacancies.class.getClassLoader().getResourceAsStream("app2.properties")) {
             Properties config = new Properties();
             config.load(in);
@@ -28,13 +32,18 @@ public class ParserVacanciesTest {
 
     @Test
     public void testingInit() {
-        ParserVacancies pw = new ParserVacancies();
-        pw.init();
-    assertThat(pw.init(),is(conn));
+        assertNotNull(pw.init());
+        assertNotNull(conn);
     }
 
     @Test
-    public void testingJsout() {
+    public void testingCreateTable() {
 
     }
+
+    @Test
+    public void testingWorkJsoup() {
+        pw.workJsoup();
+    }
+
 }
