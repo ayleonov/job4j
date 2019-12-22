@@ -1,6 +1,6 @@
-package ru.job4j.calculator;
+package ru.job4j.calculator.interact.assembly;
 
-public class Calculator {
+public class Calculator implements IAssembly {
 
     public static void add(int first, int second) {
         int result = first + second;
