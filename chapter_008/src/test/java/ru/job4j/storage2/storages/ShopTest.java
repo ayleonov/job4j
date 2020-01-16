@@ -38,8 +38,5 @@ public class ShopTest {
         System.out.println(percent3);
         // тестирование проводится 2020-01-03.  percent = 79;
         //assertThat(percent3, is(79));
-        assertTrue(shop.accept(food3));
-        double c1 = food3.getPrice();
-        assertThat(food3.getPrice(), is(18.0));
     }
 }
