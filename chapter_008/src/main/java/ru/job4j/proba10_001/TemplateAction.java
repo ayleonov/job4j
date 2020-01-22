@@ -10,7 +10,7 @@ public class TemplateAction implements ITemplate {
         for (int i = 0; i < dataLength; i++) {
             arr[i] = template + data[i];
         }
-        name = arr[(int)Math.random()];
+        name = arr[(int)(dataLength*Math.random())];
 
         return template;
     }
