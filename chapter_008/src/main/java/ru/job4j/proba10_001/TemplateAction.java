@@ -8,7 +8,7 @@ public class TemplateAction implements ITemplate {
         int dataLength = data.length;
         String[] arr = new String[dataLength];
         for (int i = 0; i < dataLength; i++) {
-            arr[i] = template + data[i];
+            arr[i] = (String)data[i];
         }
         name = arr[(int)(dataLength*Math.random())];
 
