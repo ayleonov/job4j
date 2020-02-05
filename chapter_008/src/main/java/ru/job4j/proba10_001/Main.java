@@ -1,7 +1,9 @@
 package ru.job4j.proba10_001;
 
+import java.rmi.NoSuchObjectException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class Main {
 
@@ -51,6 +53,9 @@ public class Main {
         String newText = "";
         String res = template;
         for (Map.Entry<String, String> pair : map.entrySet()) {
+            if (map.size() == 0){
+                throw new NoSuchElementException();
+            }
             int indexBeginSearchingWord = res.indexOf(pair.getKey());
             if (indexBeginSearchingWord > -1) {
                 textBefore = res.substring(0, indexBeginSearchingWord);
@@ -58,6 +63,8 @@ public class Main {
                 int lengthNew = newText.length();
                 textAfter = template.substring(indexBeginSearchingWord + lengthNew + 1);
                 res = textBefore + newText + textAfter;
+            }   else {
+                throw new NoSuchElementException();
             }
         }
         return res;
