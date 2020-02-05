@@ -1,10 +1,16 @@
 package ru.job4j.proba10_001;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(new Main().firstVersionStart());
-        System.out.println(new Main().secondVersionStart());
+        //System.out.println(new Main().firstVersionStart());
+        //System.out.println(new Main().secondVersionStart());
+        Map<String, String> changing = new HashMap();
+        changing.put("washes", "kills");
+        System.out.println(new Main().generate("Mother washes a cat", changing));
     }
 
     public String firstVersionStart() {
@@ -36,8 +42,24 @@ public class Main {
         for (String el : arr) {
             res += el;
         }
-
         return res;
     }
 
+    public String generate(String template, Map<String, String> map) {
+        String textBefore = "";
+        String textAfter = "";
+        String newText = "";
+        String res = template;
+        for (Map.Entry<String, String> pair : map.entrySet()) {
+            int indexBeginSearchingWord = res.indexOf(pair.getKey());
+            if (indexBeginSearchingWord > -1) {
+                textBefore = res.substring(0, indexBeginSearchingWord);
+                newText = pair.getValue();
+                int lengthNew = newText.length();
+                textAfter = template.substring(indexBeginSearchingWord + lengthNew + 1);
+                res = textBefore + newText + textAfter;
+            }
+        }
+        return res;
+    }
 }
