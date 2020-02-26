@@ -1,4 +1,4 @@
-package gerbagefirst;
+package ru.job4j.gerbagefirst;
 
 public class Sizecalculate {
 

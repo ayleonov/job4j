@@ -1,7 +1,4 @@
-package gerbagefirst;
-
-import java.util.ArrayList;
-import java.util.List;
+package ru.job4j.gerbagefirst;
 
 public class Research {
     @Override
