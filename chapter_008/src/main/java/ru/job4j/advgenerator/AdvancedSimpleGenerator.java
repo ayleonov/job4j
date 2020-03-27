@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdvancedSimpleGenerator implements ITemplate {
+public class AdvancedSimpleGenerator implements IGenerator {
     Map<String, String> map = new HashMap();
 
     public Map<String, String> getMap() {

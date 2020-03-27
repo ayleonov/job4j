@@ -1,6 +1,5 @@
 package ru.job4j.advgenerator;
 
-import com.mchange.v2.collection.MapEntry;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import static org.hamcrest.Matchers.*;
 public class MainTest {
     @Test
     public void when() {
-        ITemplate generator = new AdvancedSimpleGenerator();
+        IGenerator generator = new AdvancedSimpleGenerator();
         Map<String, String> map = ((AdvancedSimpleGenerator)generator).getMap();
         Map<String,String> mapTest = new HashMap();
         String template = "I am a ${name}, Who are ${subject}? ";
