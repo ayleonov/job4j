@@ -15,16 +15,14 @@ import static org.junit.Assert.*;
 public class TrackerSQL2Test {
     @Test
     public void createItem() throws ParseException {
-        TrackerSQL tracker = new TrackerSQL();
-        tracker.init();
-        int numberItemsBeforeCreate = tracker.findByName("name").size();
+
+        TrackerSQL tracker = new TrackerSQL(null);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         String timeStr = "2020-09-01";
         Date date = df.parse(timeStr);
         long time = date.getTime();
         tracker.add(new Item("name", "desc", time ));
-        int numberItemsafterCreate = tracker.findByName("name").size();
-        assertThat(numberItemsafterCreate-numberItemsBeforeCreate, is(1));
+        assertThat(tracker.findByName("name").size(), is(1));
     }
 }
