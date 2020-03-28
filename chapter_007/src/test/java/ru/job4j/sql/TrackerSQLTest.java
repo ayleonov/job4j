@@ -3,7 +3,6 @@ package ru.job4j.sql;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.sql.liquibase.ConnectionRollback;
 import ru.job4j.tracker.Item;
 
 import java.io.IOException;
@@ -35,10 +34,8 @@ public class TrackerSQLTest {
             connection = DriverManager.getConnection(
                     config.getProperty("url"), config.getProperty("user"),
                     config.getProperty("password"));
-            tr = new TrackerSQL(ConnectionRollback.create(connection));
-            if (connection != null) {
-                isConnected = true;
-            }
+            tr = new TrackerSQL();
+            isConnected = tr.init();
             insertItem();
         } catch (IOException | ClassNotFoundException ioe) {
             ioe.printStackTrace();
@@ -53,7 +50,7 @@ public class TrackerSQLTest {
 
     @Test
     public void whenTestingInit() {
-        assertThat(tr.init(), is(connection));
+        assertTrue(isConnected);
     }
 
     @Test
@@ -67,8 +64,7 @@ public class TrackerSQLTest {
         String dateStr = "2020-08-23";
         long time = convertDateToLong(dateStr);
         Item item = new Item("item2", "description2", time);
-        Item added = tr.add(item);
-
+        tr.add(item);
         List<Item> expect = tr.findByName("item2");
         Item expectItem = expect.get(0);
         assertThat(expectItem.getName(), is("item2"));
@@ -102,7 +98,6 @@ public class TrackerSQLTest {
         Item first = beforedelete.get(0);
         String idFirst = first.getId();
         assertTrue(tr.delete(idFirst));
-
         List<Item> afterdelete = tr.findByName("item");
 
         assertThat(beforedelete.size(), is(1));
