@@ -2,6 +2,10 @@
 language: java
 jdk:
   - openjdk12
+ services:
+  - postrgresql
+before_install:
+  - psql -c 'create database tracker;' -U postgres
 
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
