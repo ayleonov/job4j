@@ -1,4 +1,4 @@
-package ru.job4j.AdvSimpleGenerator;
+package ru.job4j.advsimplegenerator;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -21,8 +21,8 @@ public class Generator implements IGenerator {
                 throw new NoSuchElementException();
             }
 
-            res = res.substring(0, indexBeginSearchingWord) + pair.getValue() +
-                    res.substring(indexBeginSearchingWord + pair.getKey().length());
+            res = res.substring(0, indexBeginSearchingWord) + pair.getValue()
+                    + res.substring(indexBeginSearchingWord + pair.getKey().length());
         }
         return res;
     }

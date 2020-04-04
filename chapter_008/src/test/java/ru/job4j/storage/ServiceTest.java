@@ -11,8 +11,9 @@ import static org.hamcrest.Matchers.*;
 
 public class ServiceTest {
     Service service;
+
     @Before
-    public void beforeTest(){
+    public void beforeTest() {
         service = new Service();
     }
 
@@ -39,11 +40,11 @@ public class ServiceTest {
         String data2 = "2020-11-30";
         long a = service.converterToLong(data);
         long b = service.converterToLong(data2);
-        int res = service.calculPercent(a,b);
-        int expected = (int)((curr-a)*100/(b-a));
+        int res = service.calculPercent(a, b);
+        int expected = (int) ((curr - a) * 100 / (b - a));
 
         assertThat(res, is(expected));
-        assertThat(res, is(8));
+        //assertThat(res, is(8));  проверялась раньше. зависит от даты проверки
     }
 
     @Test
@@ -53,15 +54,15 @@ public class ServiceTest {
         assertTrue(res instanceof Warehouse);
         assertFalse(res instanceof Shop);
 
-        StoragePlace res2= service.separate(food, 30);
+        StoragePlace res2 = service.separate(food, 30);
         assertTrue(res2 instanceof Shop);
         assertFalse(res2 instanceof Trash);
 
-        StoragePlace res3= service.separate(food, 80);
+        StoragePlace res3 = service.separate(food, 80);
         assertTrue(res3 instanceof Shop);
         assertFalse(res3 instanceof Trash);
 
-        StoragePlace res4= service.separate(food, 103);
+        StoragePlace res4 = service.separate(food, 103);
         assertTrue(res4 instanceof Trash);
         assertFalse(res4 instanceof Shop);
     }

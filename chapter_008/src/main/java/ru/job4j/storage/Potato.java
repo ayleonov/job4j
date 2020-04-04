@@ -1,6 +1,6 @@
 package ru.job4j.storage;
 
-public class Potato  extends Food {
+public class Potato extends Food {
     private String name = "potato";
     private long expireDate;
     private long createDate;

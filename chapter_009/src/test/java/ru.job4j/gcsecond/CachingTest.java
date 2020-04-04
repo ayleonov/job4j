@@ -1,10 +1,9 @@
-package ru.job4j.gc_second;
+package ru.job4j.gcsecond;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.ref.SoftReference;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;

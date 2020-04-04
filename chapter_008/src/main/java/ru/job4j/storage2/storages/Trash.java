@@ -9,8 +9,8 @@ public class Trash implements StoragePlace {
     @Override
     public boolean accept(Food food) {
         boolean res = false;
-        if (Service.calculPercent(food.getCreateDate(), food.getExpireDate())>100) {
-            res =  true;
+        if (Service.calculPercent(food.getCreateDate(), food.getExpireDate()) > 100) {
+            res = true;
         }
         return res;
     }

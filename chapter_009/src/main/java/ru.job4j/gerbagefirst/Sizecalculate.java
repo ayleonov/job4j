@@ -6,7 +6,7 @@ public class Sizecalculate {
 /**
  partFirst (variable, not dependence of fields size)
  */
-    int headingObject = 16;
+        int headingObject = 16;
         /**
          * fields of string Class (3 fields * 4 bytes (type int))
          */
@@ -25,10 +25,10 @@ public class Sizecalculate {
         int nchars = field.length();
         int memorychars = 2 * nchars;
         int varyable = heading + memorychars;
-        while (varyable % 8 != 0){
+        while (varyable % 8 != 0) {
             varyable++;
         }
-            return partFirst + varyable;
+        return partFirst + varyable;
     }
 
     public static void main(String[] args) {

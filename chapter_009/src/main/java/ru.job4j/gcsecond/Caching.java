@@ -1,4 +1,4 @@
-package ru.job4j.gc_second;
+package ru.job4j.gcsecond;
 
 import java.util.HashMap;
 import java.lang.ref.SoftReference;
@@ -11,9 +11,9 @@ public class Caching {
     public SoftReference get(String key, String value) {
         SoftReference ref = map.get(key);
 
-        if (ref == null)
+        if (ref == null) {
             ref = put(key, value);
-
+        }
         return ref;
     }
 

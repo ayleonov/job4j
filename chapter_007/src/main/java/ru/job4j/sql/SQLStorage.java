@@ -19,7 +19,7 @@ public class SQLStorage {
         String url = "jdbc:postgresql://localhost:5432/work3";
         String user = "postgres";
         String password = "password";
-        String sql = "select*from product";
+        //String sql = "select*from product";
 
         Connection conn = null;
         PreparedStatement stat = null;
@@ -35,9 +35,59 @@ public class SQLStorage {
 
         } catch (SQLException e) {
             e.printStackTrace();
+ //добавлено внизу страницы
 
 
-            // добавление данных с получение данных о внесенном продукте
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public static void lookDatabase(Connection conn) {
+        String sql = "select*from product";
+        ResultSet rs = null;
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        while (true) {
+            try {
+                if (!rs.next()) {
+                    break;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                System.out.println(String.format("%d %s %s", rs.getInt("id"), rs.getString("name"), rs.getInt("type_id")));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+}
+
+// добавление данных с получение данных о внесенном продукте
         /*Connection conn = null;
         PreparedStatement stat= null;
         ResultSet keys = null;
@@ -66,7 +116,7 @@ public class SQLStorage {
         }
 
 */
-            // delete
+// delete
         /*
         Connection conn;
 
@@ -87,7 +137,7 @@ public class SQLStorage {
 
 
          */
-            // ИЗМЕНЕНИЕ ДАННЫХ
+// ИЗМЕНЕНИЕ ДАННЫХ
       /*
         Connection conn;
 
@@ -124,7 +174,7 @@ public class SQLStorage {
 */
 
 
-            // ВЫБОР 2
+// ВЫБОР 2
         /*Connection conn;
 
         try {
@@ -181,51 +231,3 @@ public class SQLStorage {
               }
 
 */
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                stat.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    public static void lookDatabase(Connection conn) {
-        String sql = "select*from product";
-        ResultSet rs = null;
-        try {
-            rs = conn.createStatement().executeQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        while (true) {
-            try {
-                if (!rs.next()) {
-                    break;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                System.out.println(String.format("%d %s %s", rs.getInt("id"), rs.getString("name"), rs.getInt("type_id")));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-}

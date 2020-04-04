@@ -7,7 +7,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 
-
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +33,7 @@ public class Main {
                 //boolean a = (nameVacWS.split("Java/JavaScript")).length >1;
                 boolean a = false;
                 //if (linkText.contains("java ") || linkText.contains("Java ")){
-                if ((((nameVacWS.split("Java")).length >1) && (!((nameVacWS.split("JavaScript")).length >1))&& (!(nameVacWS.startsWith("JavaScript"))) && (!(nameVacWS.endsWith("JavaScript")))) || a){
+                if ((((nameVacWS.split("Java")).length > 1) && (!((nameVacWS.split("JavaScript")).length > 1)) && (!(nameVacWS.startsWith("JavaScript"))) && (!(nameVacWS.endsWith("JavaScript")))) || a) {
                     String linkVac = link.attr("href");
                     System.out.println(nameVac);
                     System.out.println(linkVac);

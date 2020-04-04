@@ -180,9 +180,11 @@
 			<executions>
 				<execution>
 					<id>validate</id>
+                    <phase>validate</phase>
 					<!--<phase>validate</phase> -->
-                   <phase>none</phase>
+                    <!--<phase>none</phase>  -->
 					<configuration>
+
 						<!--<skip>true</skip> -->
                        <configLocation>checkstyle.xml</configLocation>
 						<encoding>UTF-8</encoding>

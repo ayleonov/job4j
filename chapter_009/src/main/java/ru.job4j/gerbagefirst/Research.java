@@ -34,11 +34,11 @@ public class Research {
 
         // System.out.println("====================");
 
-        user1= null;
-        user2= null;
-        user3= null;
-        user4= null;
-        user5= null;
+        user1 = null;
+        user2 = null;
+        user3 = null;
+        user4 = null;
+        user5 = null;
 
         info();
 

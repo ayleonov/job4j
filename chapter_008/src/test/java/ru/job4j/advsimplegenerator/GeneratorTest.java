@@ -1,4 +1,4 @@
-package ru.job4j.AdvSimpleGenerator;
+package ru.job4j.advsimplegenerator;
 
 import org.junit.Before;
 import org.junit.Test;

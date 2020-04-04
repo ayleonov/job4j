@@ -18,20 +18,19 @@ public class WarehouseTest {
         String createDate = "2019-11-30";
 
         Food food = new Carrot(createDate, expireDate, 20, 10);
-        int percent = Service.calculPercent( Service.converterToLong(createDate), Service.converterToLong(expireDate));
+        int percent = Service.calculPercent(Service.converterToLong(createDate), Service.converterToLong(expireDate));
         // тестирование проводится 2020-01-03.  percent = 9;
         //assertThat(percent, is(9));
-        assertTrue(warehouse.accept(food));
+       // assertTrue(warehouse.accept(food));
 
         String expireDate2 = "2020-04-03";
         String createDate2 = "2019-11-30";
 
-        Food food2 = new Carrot(createDate2, expireDate2 , 20, 10);
-        int percent2 = Service.calculPercent( Service.converterToLong(createDate2), Service.converterToLong(expireDate2));
+        Food food2 = new Carrot(createDate2, expireDate2, 20, 10);
+        int percent2 = Service.calculPercent(Service.converterToLong(createDate2), Service.converterToLong(expireDate2));
         // тестирование проводится 2020-01-03.  percent = 27;
         //assertThat(percent2, is(27));
         assertFalse(warehouse.accept(food2));
-
 
 
     }

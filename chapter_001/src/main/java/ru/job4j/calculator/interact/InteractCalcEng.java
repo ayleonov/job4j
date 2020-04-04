@@ -10,8 +10,8 @@ import ru.job4j.calculator.interact.view.ViewEng;
 
 import java.util.Scanner;
 
-public class InteractCalcEng extends InteractCalc{
-        private Scanner scan = new Scanner(System.in);
+public class InteractCalcEng extends InteractCalc {
+    private Scanner scan = new Scanner(System.in);
 
     public InteractCalcEng(Scanner scanner) {
         this.scan = scanner;

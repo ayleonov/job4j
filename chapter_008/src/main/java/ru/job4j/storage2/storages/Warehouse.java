@@ -11,8 +11,8 @@ public class Warehouse implements StoragePlace {
     public boolean accept(Food food) {
         boolean res = false;
 
-        if (Service.calculPercent(food.getCreateDate(), food.getExpireDate())<25) {
-            res =  true;
+        if (Service.calculPercent(food.getCreateDate(), food.getExpireDate()) < 25) {
+            res = true;
         }
         return res;
     }

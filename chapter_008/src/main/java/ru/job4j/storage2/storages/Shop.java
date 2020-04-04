@@ -14,7 +14,7 @@ public class Shop implements StoragePlace {
         if (percent >= 25 && percent <= 75) {
             res = true;
         } else if (percent > 75 && percent <= 100) {
-            food.setPrice((1- (food.getDiscount() / 100)) * food.getPrice());
+            food.setPrice((1 - (food.getDiscount() / 100)) * food.getPrice());
             res = true;
         }
         return res;

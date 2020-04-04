@@ -4,7 +4,7 @@ import ru.job4j.calculator.interact.view.View;
 
 import java.util.Scanner;
 
-public class Data implements IData{
+public class Data implements IData {
     private Scanner scanner;
     private View view;
 
@@ -20,7 +20,7 @@ public class Data implements IData{
         return res;
     }
 
-    public void assistViewMenu(){
+    public void assistViewMenu() {
         view.print("Введите первое число или приняв за него текущее, выберите действие:");
         view.showMenu();
     }

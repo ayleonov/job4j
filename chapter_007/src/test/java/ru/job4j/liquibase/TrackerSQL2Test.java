@@ -7,7 +7,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import ru.job4j.tracker.*;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -25,7 +27,7 @@ public class TrackerSQL2Test {
         String timeStr = "2020-09-01";
         Date date = df.parse(timeStr);
         long time = date.getTime();
-        tracker.add(new Item("name", "desc", time ));
+        tracker.add(new Item("name", "desc", time));
         int numberItemsAfterCreate = tracker.findByName("name").size();
         assertThat(numberItemsAfterCreate - numberItemsBeforeCreate, is(1));
     }

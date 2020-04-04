@@ -1,6 +1,6 @@
 package ru.job4j.calculator.interact.view;
 
-public class ViewEng extends View{
+public class ViewEng extends View {
     @Override
     public void showMenu() {
         System.out.println("   \"+\" (сложение)                         \"-\"  (вычитание)\"");

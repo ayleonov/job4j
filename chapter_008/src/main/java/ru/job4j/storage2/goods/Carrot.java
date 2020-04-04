@@ -1,7 +1,6 @@
 package ru.job4j.storage2.goods;
 
 
-
 public class Carrot extends Food {
     private String name = "carrot";
     private String expireDate;
@@ -10,12 +9,8 @@ public class Carrot extends Food {
     private double discount;
 
     public Carrot(String createDate, String expireDate, double price, double discount) {
-        super(createDate,expireDate, price, discount);
+        super(createDate, expireDate, price, discount);
     }
-
-
-
-
 
 
 }

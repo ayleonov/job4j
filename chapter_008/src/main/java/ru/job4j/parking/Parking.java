@@ -2,8 +2,8 @@ package ru.job4j.parking;
 
 public class Parking implements CarsOperations {
     // SIZE - количество машино-мест при проектировании.
-    private final int SIZE = 5;
-    private Car[] places = new Car[SIZE];
+    private final int size = 5;
+    private Car[] places = new Car[size];
 
     @Override
     public int accept(Car car) {
@@ -22,7 +22,7 @@ public class Parking implements CarsOperations {
                 if (temp == numberPlaces) {
                     break;
                 } else {
-                    if (i==places.length-1){
+                    if (i == places.length - 1) {
                         startPlace = -1;
                     }
                     continue;
@@ -53,19 +53,19 @@ public class Parking implements CarsOperations {
         boolean ifDeleted = false;
         boolean ifCarWasEarlier = false;
         for (int i = 0; i < places.length; i++) {
-             if (places[i] !=null) {
-            if (places[i].equals(car)) {
-                places[i] = null;
-                ifCarWasEarlier = true;
-            } else {
-                if (ifCarWasEarlier) {
-                    ifDeleted = true;
-                    break;
+            if (places[i] != null) {
+                if (places[i].equals(car)) {
+                    places[i] = null;
+                    ifCarWasEarlier = true;
+                } else {
+                    if (ifCarWasEarlier) {
+                        ifDeleted = true;
+                        break;
+                    }
                 }
             }
         }
-        }
-        if (ifDeleted = false) {
+        if (!ifDeleted) {
             System.out.println("Данная машина на парковке не значится");
         }
         return ifDeleted;

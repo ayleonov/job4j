@@ -11,7 +11,7 @@ public class Context {
         this.strategy = strategy;
     }
 
-    public void executeStrategy(Food food){
+    public void executeStrategy(Food food) {
         strategy.accept(food);
     }
 }

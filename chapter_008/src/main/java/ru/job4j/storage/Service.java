@@ -45,8 +45,8 @@ public class Service {
         return storagePlace;
     }
 
-       public void shipment(StoragePlace place, double weight) {
-           context = new Context(place);
-           context.executeStrategy(weight);
-       }
+    public void shipment(StoragePlace place, double weight) {
+        context = new Context(place);
+        context.executeStrategy(weight);
+    }
 }

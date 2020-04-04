@@ -27,28 +27,27 @@ public class CalculatorEng extends CalculatorExt {
     }
 
 
-    
     public static int sin(String firstNumber) {
-        
-        return (int)Math.sin(Math.toRadians(parse(firstNumber)));
+
+        return (int) Math.sin(Math.toRadians(parse(firstNumber)));
     }
 
-    public static int cos(String firstNumber) {        
-        return (int)Math.cos(Math.toRadians(parse(firstNumber)));
+    public static int cos(String firstNumber) {
+        return (int) Math.cos(Math.toRadians(parse(firstNumber)));
     }
 
     public static int sqrt(String firstNumber) {
-        
-        return (int)Math.sqrt(parse(firstNumber));
+
+        return (int) Math.sqrt(parse(firstNumber));
     }
 
     public static int cbrt(String firstNumber) {
-        return (int)Math.cbrt(parse(firstNumber));
+        return (int) Math.cbrt(parse(firstNumber));
     }
-    
-    public static int parse (String str){        
-         return Integer.parseInt(str);
-                
-        
+
+    public static int parse(String str) {
+        return Integer.parseInt(str);
+
+
     }
 }

@@ -19,11 +19,10 @@ public abstract class Food {
         this.discount = discount;
     }
 
-    public long getExpireDate()
-    {
+    public long getExpireDate() {
         long res = 0;
         try {
-            res =  Service.converterToLong(expireDate);
+            res = Service.converterToLong(expireDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -34,7 +33,7 @@ public abstract class Food {
 
         long res = 0;
         try {
-            res =  Service.converterToLong(createDate);
+            res = Service.converterToLong(createDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }

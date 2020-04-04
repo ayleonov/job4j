@@ -26,6 +26,7 @@ public class InteractCalcTest {
     private Model model;
     private Model model2;
     private View view;
+
     @Before
     public void beforeTest() throws FileNotFoundException {
         File file = new File("./data/calc_insert.txt");
@@ -43,10 +44,10 @@ public class InteractCalcTest {
 
     @After
     public void afterTest() {
-        if (scanner !=null) {
+        if (scanner != null) {
             scanner.close();
         }
-        if (scanner2 !=null) {
+        if (scanner2 != null) {
             scanner2.close();
         }
     }
@@ -148,7 +149,7 @@ public class InteractCalcTest {
 
     @Test
     public void whenTestingShowCurrentNumber() {
-       int res = view.showScoreboard(701);
+        int res = view.showScoreboard(701);
         assertThat(res, is(701));
     }
 

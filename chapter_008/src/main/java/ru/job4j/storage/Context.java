@@ -7,7 +7,7 @@ public class Context {
         this.strategy = strategy;
     }
 
-    public void executeStrategy(double weight){
+    public void executeStrategy(double weight) {
         strategy.moving(weight);
     }
 }

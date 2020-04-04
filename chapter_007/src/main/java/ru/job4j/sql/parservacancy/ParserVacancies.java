@@ -36,7 +36,7 @@ public class ParserVacancies implements AutoCloseable {
     }
 
     public void creatTables() {
-        try (  PreparedStatement stat = conn.prepareStatement("CREATE TABLE IF NOT EXISTS vacancy(id serial primery key , name varchar(2000), text varchar(2000), link varchar(2000)")){
+        try (PreparedStatement stat = conn.prepareStatement("CREATE TABLE IF NOT EXISTS vacancy(id serial primery key , name varchar(2000), text varchar(2000), link varchar(2000)")) {
             stat.execute();
         } catch (SQLException e) {
             e.printStackTrace();
